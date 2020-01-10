@@ -34,6 +34,17 @@ public class DatabaseHandler {
             e.printStackTrace();
         }
     }
+    
+    public Product getProduct(Product product) {
+        // TODO refactor to recommended way to do this (from ormlite pdf)
+        for (Product x : productDao) {
+            if (x.getId() == product.getId()) {
+                return x;
+            } else {
+                throw new IllegalArgumentException(); // TODO find better exception? add text
+            }
+        }
+    }
 
     public void close() {
         db.close();
