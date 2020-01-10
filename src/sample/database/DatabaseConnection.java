@@ -15,7 +15,6 @@ public class DatabaseConnection {
     private static final String DB_PASSWORD = "";
 
     protected DatabaseConnection() {
-        connect();
     }
 
     public void connect() {

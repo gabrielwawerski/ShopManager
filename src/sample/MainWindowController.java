@@ -26,6 +26,7 @@ public class MainWindowController {
     @FXML
     private void initialize() {
         db = DatabaseHandler.getInstance();
+        db.connect();
         isConnected = true;
     }
 
