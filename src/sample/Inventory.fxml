@@ -33,7 +33,7 @@
         <Button focusTraversable="false" mnemonicParsing="false" onAction="#handleCashRegistersButton" text="Cash Registers" />
         <Button focusTraversable="false" mnemonicParsing="false" onAction="#handleTransactionsButton" text="Transactions" />
     </HBox>
-   <TableView focusTraversable="false" layoutY="81.0" pickOnBounds="false">
+   <TableView fx:id="productTable" focusTraversable="false" layoutY="81.0" pickOnBounds="false">
      <columns>
        <TableColumn fx:id="idColumn" editable="false" prefWidth="44.13043028116226" resizable="false" text="ID" />
        <TableColumn fx:id="nameColumn" prefWidth="150.73047637939453" resizable="false" text="Name" />

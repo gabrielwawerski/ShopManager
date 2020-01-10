@@ -6,7 +6,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
-import sample.database.DatabaseConnection;
 import sample.database.DatabaseHandler;
 
 import java.io.IOException;
@@ -21,8 +20,14 @@ public class MainWindowController {
     @FXML
     public Button databaseButton;
 
-    private boolean isConnected = true;
-    private DatabaseHandler db = new DatabaseHandler();
+    private boolean isConnected;
+    private DatabaseHandler db;
+
+    @FXML
+    private void initialize() {
+        db = DatabaseHandler.getInstance();
+        isConnected = true;
+    }
 
     public void handleInventoryButton(ActionEvent actionEvent) {
         db.test();

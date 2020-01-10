@@ -3,20 +3,32 @@ package sample.database;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import sample.product.Product;
+import sample.product.ProductConverter;
+import sample.product.ProductProperty;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class DatabaseHandler {
-    private DatabaseConnection db;
+    private static DatabaseConnection db;
     private static Dao<Product, Integer> productDao;
 
-    public DatabaseHandler() {
-        db = DatabaseConnection.getInstance();
-        try {
-            productDao = DaoManager.createDao(db.getConnectionSource(), Product.class);
-        } catch (SQLException e) {
-            e.printStackTrace();
+    private static DatabaseHandler instance;
+
+    private DatabaseHandler() {
+    }
+
+    public static DatabaseHandler getInstance() {
+        if (instance == null) {
+            instance = new DatabaseHandler();
+            db = new DatabaseConnection();
+            try {
+                productDao = DaoManager.createDao(db.getConnectionSource(), Product.class);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
+        return instance;
     }
 
     public void update(Product product) {
@@ -34,16 +46,36 @@ public class DatabaseHandler {
             e.printStackTrace();
         }
     }
-    
-    public Product getProduct(Product product) {
+
+    public ArrayList<Product> getProductArrayList() {
+        ArrayList<Product> products = new ArrayList<>();
+
+        for (Product x : productDao) {
+            products.add(x);
+        }
+        return products;
+    }
+
+
+    public Product getDatabaseObject(Product product) {
         // TODO refactor to recommended way to do this (from ormlite pdf)
         for (Product x : productDao) {
             if (x.getId() == product.getId()) {
                 return x;
-            } else {
-                throw new IllegalArgumentException(); // TODO find better exception? add text
             }
         }
+        throw new IllegalArgumentException(); // TODO find better exception? add text
+    }
+
+    public Product getDatabaseObject(ProductProperty prodProperty) {
+        Product product = ProductConverter.toProduct(prodProperty);
+
+        for (Product x : productDao) {
+            if (x.getId() == product.getId()) {
+                return x;
+            }
+        }
+        return Product.EMPTY_PRODUCT;
     }
 
     public void close() {

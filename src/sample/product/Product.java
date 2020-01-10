@@ -14,6 +14,8 @@ public class Product {
     @DatabaseField
     private double price;
 
+    public static final Product EMPTY_PRODUCT = new Product(999999);
+
     public Product() {
     }
 
@@ -28,6 +30,13 @@ public class Product {
         this.name = name;
         this.quantity = quantity;
         this.price = price;
+    }
+
+    private Product(int id) {
+        this.id = id;
+        name = "";
+        quantity = 0;
+        price = 0;
     }
 
     public int getId() {

@@ -1,26 +1,36 @@
 package sample;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableView;
 import javafx.stage.Stage;
-import sample.database.DatabaseConnection;
 import sample.database.DatabaseHandler;
+import sample.product.Product;
 
 import java.io.IOException;
 
 public class InventoryController {
+    @FXML
     public Button backButton;
+    @FXML
+    public TableView<Product> productTable;
+
+    private final ObservableList<Product> data
+            = FXCollections.observableArrayList(DatabaseHandler.getInstance().getProductArrayList());
 
     @FXML
     private void initialize() {
-        System.out.println("loaded.");
+
+        System.out.println("Inventory scene loaded.");
     }
 
     public void handleBackButton(ActionEvent actionEvent) {
-        DatabaseHandler db = new DatabaseHandler();
+        DatabaseHandler db = DatabaseHandler.getInstance();
         db.close();
 
         try {
