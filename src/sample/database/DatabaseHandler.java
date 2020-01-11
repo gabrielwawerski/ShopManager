@@ -22,11 +22,6 @@ public class DatabaseHandler {
         if (instance == null) {
             instance = new DatabaseHandler();
             db = new DatabaseConnection();
-            try {
-                productDao = DaoManager.createDao(db.getConnectionSource(), Product.class);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
         return instance;
     }
@@ -85,20 +80,19 @@ public class DatabaseHandler {
 
     public void connect() {
         db.connect();
+        try {
+            productDao = DaoManager.createDao(db.getConnectionSource(), Product.class);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         System.out.println("Connected to database.");
     }
 
     public void test() {
         Product apple = new Product("Apple", 15, 0.49);
         Product kiszki = new Product("Krokiety", 9, 2.29);
-        try {
 //            TableUtils.createTable(connectionSource, Product.class);
 //            productDao.create(apple);
 //            productDao.create(kiszki);
-            Product retrievedProduct = productDao.queryForId(1);
-            System.out.println(retrievedProduct.getFullInfo());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 }
