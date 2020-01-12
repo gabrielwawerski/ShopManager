@@ -31,12 +31,13 @@ public class MainWindowController {
     }
 
     public void handleInventoryButton(ActionEvent actionEvent) {
-        db.test();
+        db.initDatabase();
 
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("Inventory.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("view/Inventory.fxml"));
             Stage stage = (Stage) inventoryButton.getScene().getWindow();
             Scene scene = new Scene(loader.load());
+            stage.setResizable(false);
             stage.setScene(scene);
         } catch (IOException io) {
             io.printStackTrace();

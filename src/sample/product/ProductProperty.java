@@ -18,12 +18,20 @@ public class ProductProperty {
         this.price = new SimpleDoubleProperty(price);
     }
 
+    public IntegerProperty idProperty() {
+        return id;
+    }
+
     public int getId() {
         return id.get();
     }
 
     public void setId(int id) {
         this.id.set(id);
+    }
+
+    public StringProperty nameProperty() {
+        return name;
     }
 
     public String getName() {
@@ -34,12 +42,20 @@ public class ProductProperty {
         this.name.set(name);
     }
 
+    public IntegerProperty quantityProperty() {
+        return quantity;
+    }
+
     public int getQuantity() {
         return quantity.get();
     }
 
     public void setQuantity(int quantity) {
         this.quantity.set(quantity);
+    }
+
+    public DoubleProperty priceProperty() {
+        return price;
     }
 
     public double getPrice() {

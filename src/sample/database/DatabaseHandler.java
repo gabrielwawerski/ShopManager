@@ -34,6 +34,14 @@ public class DatabaseHandler {
         }
     }
 
+    public void update(ProductProperty property) {
+        try {
+            productDao.update(ProductConverter.toProduct(property));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void refresh(Product product) {
         try {
             productDao.refresh(product);
@@ -51,8 +59,16 @@ public class DatabaseHandler {
         return products;
     }
 
+    public ArrayList<ProductProperty> getPropertyArrayList() {
+        ArrayList<ProductProperty> properties = new ArrayList<>();
 
-    public Product getDatabaseObject(Product product) {
+        for (Product x : productDao) {
+            properties.add(ProductConverter.toProperty(x));
+        }
+        return properties;
+    }
+
+    public Product findProductDao(Product product) {
         // TODO refactor to recommended way to do this (from ormlite pdf)
         for (Product x : productDao) {
             if (x.getId() == product.getId()) {
@@ -62,8 +78,8 @@ public class DatabaseHandler {
         throw new IllegalArgumentException(); // TODO find better exception? add text
     }
 
-    public Product getDatabaseObject(ProductProperty prodProperty) {
-        Product product = ProductConverter.toProduct(prodProperty);
+    public Product findProductDao(ProductProperty productProperty) {
+        Product product = ProductConverter.toProduct(productProperty);
 
         for (Product x : productDao) {
             if (x.getId() == product.getId()) {
@@ -88,11 +104,20 @@ public class DatabaseHandler {
         System.out.println("Connected to database.");
     }
 
-    public void test() {
-        Product apple = new Product("Apple", 15, 0.49);
-        Product kiszki = new Product("Krokiety", 9, 2.29);
+    public void initDatabase() {
+//        Product apple = new Product("Apple", 15, 0.49);
+//        Product krokiety = new Product("Krokiety", 9, 2.29);
+//        Product ham = new Product("Ham", 29, 1.29);
+//        Product milk = new Product("Milk", 40, 0.99);
+
 //            TableUtils.createTable(connectionSource, Product.class);
+//        try {
 //            productDao.create(apple);
-//            productDao.create(kiszki);
+//            productDao.create(krokiety);
+//            productDao.create(ham);
+//            productDao.create(milk);
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
     }
 }
