@@ -1,4 +1,4 @@
-package sample;
+package sample.controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -16,14 +16,15 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import sample.Main;
 import sample.database.DatabaseHandler;
+import sample.product.Product;
+import sample.product.ProductConverter;
 import sample.product.ProductProperty;
 
 import java.io.IOException;
 
 public class InventoryController {
-    @FXML
-    public Button backButton;
     @FXML
     public TableView<ProductProperty> productTable;
     @FXML
@@ -35,13 +36,16 @@ public class InventoryController {
     @FXML
     public TableColumn<ProductProperty, Double> priceColumn;
     @FXML
+    public Button backButton;
+    @FXML
     public Button addDeliveryButton;
     @FXML
     public Button editButton;
+    @FXML
+    public AnchorPane anchorPane;
 
     private final ObservableList<ProductProperty> data
             = FXCollections.observableArrayList(DatabaseHandler.getInstance().getPropertyArrayList());
-    public AnchorPane anchorPane;
 
     @FXML
     private void initialize() {
@@ -50,14 +54,16 @@ public class InventoryController {
         quantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
         priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
         productTable.setItems(data);
-        editButton.setDisable(true);
 
+        editButton.setDisable(true);
         productTable.addEventFilter(MouseEvent.MOUSE_CLICKED, tableClicked);
-//        anchorPane.addEventFilter(MouseEvent.MOUSE_CLICKED, backgroundClicked);
 
         System.out.println("Inventory scene loaded.");
     }
 
+    /**
+     * EventHandler for enabling {@link #editButton} when a table row is selected.
+     */
     EventHandler<MouseEvent> tableClicked = new EventHandler<MouseEvent>() {
         @Override
         public void handle(MouseEvent event) {
@@ -67,25 +73,19 @@ public class InventoryController {
         }
     };
 
-    EventHandler<MouseEvent> backgroundClicked = new EventHandler<MouseEvent>() {
-        @Override
-        public void handle(MouseEvent event) {
-            editButton.setDisable(true);
-        }
-    };
-
     public void handleEditEntry(ActionEvent actionEvent) {
         try {
             // Load the fxml file and create a new stage for the popup dialog.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(Main.class.getResource("view/EditDialog.fxml"));
-            GridPane page = (GridPane) loader.load();
+            GridPane page = loader.load();
 
             ProductProperty selectedProduct = productTable.getSelectionModel().getSelectedItem();
 
             // Create the dialog Stage.
             Stage dialogStage = new Stage();
             dialogStage.setTitle("Edit Product");
+            dialogStage.setResizable(false);
             dialogStage.initModality(Modality.WINDOW_MODAL);
             dialogStage.initOwner(Main.getStage());
             Scene scene = new Scene(page);
@@ -105,14 +105,14 @@ public class InventoryController {
     }
 
     public void handleAddDelivery(ActionEvent actionEvent) {
+        Product product = new Product("Pierozki Gieni", 123, 0.40);
+        DatabaseHandler.getInstance().create(product);
+        productTable.getItems().add(ProductConverter.toProperty(product));
     }
 
     public void handleBackButton(ActionEvent actionEvent) {
-        DatabaseHandler db = DatabaseHandler.getInstance();
-        db.close();
-
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("MainWindow.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../MainWindow.fxml"));
             Stage stage = (Stage) backButton.getScene().getWindow();
             Scene scene = new Scene(loader.load());
             stage.setScene(scene);
@@ -122,6 +122,14 @@ public class InventoryController {
     }
 
     public void handleCashRegistersButton(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/CashRegisters.fxml"));
+            Stage stage = (Stage) backButton.getScene().getWindow();
+            Scene scene = new Scene(loader.load());
+            stage.setScene(scene);
+        } catch (IOException io) {
+            io.printStackTrace();
+        }
     }
 
     public void handleTransactionsButton(ActionEvent actionEvent) {

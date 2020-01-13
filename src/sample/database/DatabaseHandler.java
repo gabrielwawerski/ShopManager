@@ -26,6 +26,14 @@ public class DatabaseHandler {
         return instance;
     }
 
+    public void create(Product product) {
+        try {
+            productDao.create(product);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void update(Product product) {
         try {
             productDao.update(product);

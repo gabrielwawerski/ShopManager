@@ -1,11 +1,8 @@
-package sample;
+package sample.controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Tooltip;
-import javafx.scene.effect.Bloom;
-import javafx.scene.effect.Effect;
 import javafx.stage.Stage;
 import sample.database.DatabaseHandler;
 import sample.product.ProductProperty;
@@ -29,6 +26,7 @@ public class EditDialogController {
         this.dialogStage = dialogStage;
     }
 
+    // TODO only 1 dot . permitted; currently crashes when more than 1 is in textfield
     public void handleOkButton(ActionEvent actionEvent) {
         // if price text field doesn't contain number, set it's text to original price
         if (!priceTextField.getText().matches("[0-9.]+")) {

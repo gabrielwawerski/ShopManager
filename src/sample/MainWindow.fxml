@@ -11,7 +11,7 @@
       <font>
          <Font size="14.0" />
       </font></Button>
-   <Button fx:id="cashRegistersButton" disable="true" focusTraversable="false" onAction="#handleCashRegistersButton" prefHeight="100.0" prefWidth="100.0" text="Cash Registers" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1">
+   <Button fx:id="cashRegistersButton" focusTraversable="false" onAction="#handleCashRegistersButton" prefHeight="100.0" prefWidth="100.0" text="Cash Registers" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1">
       <font>
          <Font size="14.0" />
       </font></Button>

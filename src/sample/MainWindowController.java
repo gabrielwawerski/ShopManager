@@ -45,6 +45,15 @@ public class MainWindowController {
     }
 
     public void handleCashRegistersButton(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("view/CashRegisters.fxml"));
+            Stage stage = (Stage) cashRegistersButton.getScene().getWindow();
+            Scene scene = new Scene(loader.load());
+            stage.setResizable(false);
+            stage.setScene(scene);
+        } catch (IOException io) {
+            io.printStackTrace();
+        }
     }
 
     public void handleTransactionsButton(ActionEvent actionEvent) {
