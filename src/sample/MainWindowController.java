@@ -20,14 +20,12 @@ public class MainWindowController {
     @FXML
     public Button databaseButton;
 
-    private boolean isConnected;
     private DatabaseHandler db;
 
     @FXML
     private void initialize() {
         db = DatabaseHandler.getInstance();
         db.connect();
-        isConnected = true;
     }
 
     public void handleInventoryButton(ActionEvent actionEvent) {
@@ -57,17 +55,5 @@ public class MainWindowController {
     }
 
     public void handleTransactionsButton(ActionEvent actionEvent) {
-    }
-
-    public void handleDatabaseButton(ActionEvent actionEvent) {
-        if (isConnected) {
-            databaseButton.setText("Connect DB");
-            db.close();
-            isConnected = false;
-        } else {
-            databaseButton.setText("Disconnect DB");
-            db.connect();
-            isConnected = true;
-        }
     }
 }

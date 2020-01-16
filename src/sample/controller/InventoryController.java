@@ -2,6 +2,7 @@ package sample.controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -20,9 +21,11 @@ import sample.Main;
 import sample.database.DatabaseHandler;
 import sample.product.Product;
 import sample.product.ProductConverter;
+import sample.product.DataHandler;
 import sample.product.ProductProperty;
 
 import java.io.IOException;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class InventoryController {
     @FXML
@@ -44,16 +47,36 @@ public class InventoryController {
     @FXML
     public AnchorPane anchorPane;
 
-    private final ObservableList<ProductProperty> data
-            = FXCollections.observableArrayList(DatabaseHandler.getInstance().getPropertyArrayList());
-
     @FXML
     private void initialize() {
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         quantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
         priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
-        productTable.setItems(data);
+
+//        productTable.setItems(FXCollections.observableArrayList(DatabaseHandler.getInstance().getPropertyArrayList()));
+
+        Task<ObservableList<ProductProperty>> task = new Task<ObservableList<ProductProperty>>() {
+            @Override protected ObservableList<ProductProperty> call() throws Exception {
+                DataHandler dataHandler = DataHandler.getInstance();
+                productTable.setItems(FXCollections.observableArrayList(DatabaseHandler.getInstance().getPropertyArrayList()));
+
+//                while (true) {
+//                    for (int i = 0; i < 20; i++) {
+////                        productTable.getItems().add(new ProductProperty(10 + i, "Product " + i, 99, 0.99));
+//                        data.get(ThreadLocalRandom.current().nextInt(0, data.size()))
+//                                .setQuantity(ThreadLocalRandom.current().nextInt(1, 100));
+//                        Thread.sleep(1000);
+//                    }
+//                    break;
+//                }
+                return null;
+            }
+        };
+
+        Thread thread = new Thread(task);
+        thread.setDaemon(true);
+        thread.start();
 
         editButton.setDisable(true);
         productTable.addEventFilter(MouseEvent.MOUSE_CLICKED, tableClicked);
@@ -78,7 +101,7 @@ public class InventoryController {
             // Load the fxml file and create a new stage for the popup dialog.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(Main.class.getResource("view/EditDialog.fxml"));
-            GridPane page = loader.load();
+            GridPane page = (GridPane) loader.load();
 
             ProductProperty selectedProduct = productTable.getSelectionModel().getSelectedItem();
 

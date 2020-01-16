@@ -19,7 +19,6 @@
       <font>
          <Font size="14.0" />
       </font></Button>
-   <Button fx:id="databaseButton" mnemonicParsing="false" onAction="#handleDatabaseButton" prefWidth="100.0" text="Disconnect DB" GridPane.columnIndex="1" GridPane.rowIndex="1" />
    <columnConstraints>
       <ColumnConstraints />
       <ColumnConstraints minWidth="10.0" />
