@@ -14,9 +14,40 @@ public class Transaction {
     private ProductBundle productBundle;
     @DatabaseField(dataType = DataType.SERIALIZABLE)
     private Cost cost;
+    private String date;
 
     public Transaction() {
     }
 
+    public int getTransactionId() {
+        return transactionId;
+    }
 
+    public void setTransactionId(int transactionId) {
+        this.transactionId = transactionId;
+    }
+
+    public String getCashier() {
+        return cashier;
+    }
+
+    public void setCashier(String cashier) {
+        this.cashier = cashier;
+    }
+
+    public ProductBundle getProductBundle() {
+        return productBundle;
+    }
+
+    public void setProductBundle(ProductBundle productBundle) {
+        this.productBundle = productBundle;
+    }
+
+    public Cost getCost() {
+        return cost;
+    }
+
+    public void setCost(Cost cost) {
+        this.cost = cost;
+    }
 }

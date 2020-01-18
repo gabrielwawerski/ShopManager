@@ -1,11 +1,11 @@
 package sample.database;
 
+import com.j256.ormlite.dao.CloseableWrappedIterable;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import sample.product.Product;
-import sample.product.ProductConverter;
-import sample.product.ProductProperty;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -42,14 +42,6 @@ public class DatabaseHandler {
         }
     }
 
-    public void update(ProductProperty property) {
-        try {
-            productDao.update(ProductConverter.toProduct(property));
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
     public void refresh(Product product) {
         try {
             productDao.refresh(product);
@@ -60,41 +52,41 @@ public class DatabaseHandler {
 
     public ArrayList<Product> getProductArrayList() {
         ArrayList<Product> products = new ArrayList<>();
+        CloseableWrappedIterable<Product> wrappedIterable = productDao.getWrappedIterable();
 
-        for (Product x : productDao) {
-            products.add(x);
+        try {
+            for (Product x : wrappedIterable) {
+                products.add(x);
+            }
+            return products;
+        } finally {
+            try {
+                wrappedIterable.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-        return products;
-    }
-
-    public ArrayList<ProductProperty> getPropertyArrayList() {
-        ArrayList<ProductProperty> properties = new ArrayList<>();
-
-        for (Product x : productDao) {
-            properties.add(ProductConverter.toProperty(x));
-        }
-        return properties;
     }
 
     public Product findProductDao(Product product) {
-        // TODO refactor to recommended way to do this (from ormlite pdf)
-        for (Product x : productDao) {
-            if (x.getId() == product.getId()) {
-                return x;
+        CloseableWrappedIterable<Product> wrappedIterable = productDao.getWrappedIterable();
+        Product foundProduct = null;
+
+        try {
+            for (Product x : wrappedIterable) {
+                if (x.getId() == product.getId()) {
+                    foundProduct = x;
+                }
+            }
+            return foundProduct;
+        } finally {
+            try {
+                wrappedIterable.close();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
-        throw new IllegalArgumentException(); // TODO find better exception? add text
-    }
 
-    public Product findProductDao(ProductProperty productProperty) {
-        Product product = ProductConverter.toProduct(productProperty);
-
-        for (Product x : productDao) {
-            if (x.getId() == product.getId()) {
-                return x;
-            }
-        }
-        return Product.EMPTY_PRODUCT;
     }
 
     public void close() {

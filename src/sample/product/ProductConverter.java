@@ -1,6 +1,6 @@
 package sample.product;
 
-public class ProductConverter {
+public final class ProductConverter {
     public static Product toProduct(ProductProperty prodProperty) {
         return new Product(prodProperty.getId(), prodProperty.getName(),
                 prodProperty.getQuantity(), prodProperty.getPrice());

@@ -4,7 +4,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import sample.database.DatabaseHandler;
 import sample.product.ProductProperty;
 
 public class EditDialogController {
@@ -16,19 +15,9 @@ public class EditDialogController {
     private Stage dialogStage;
     private ProductProperty product;
 
-    DatabaseHandler db = DatabaseHandler.getInstance();
-
-    @FXML
-    private void initialize() {
-    }
-
-    public void setDialogStage(Stage dialogStage) {
-        this.dialogStage = dialogStage;
-    }
-
-    // TODO only 1 dot . permitted; currently crashes when more than 1 is in textfield
     public void handleOkButton(ActionEvent actionEvent) {
         // if price text field doesn't contain number, set it's text to original price
+        // TODO only 1 dot should be permitted; currently crashes when more than 1 is in textfield
         if (!priceTextField.getText().matches("[0-9.]+")) {
             priceTextField.setText(Double.toString(product.getPrice()));
             return;
@@ -37,16 +26,17 @@ public class EditDialogController {
         // if changes to input fields have been made - save them, otherwise close the dialog
         if (!product.getName().equals(nameTextField.getText())
                 || product.getPrice() != Double.parseDouble(priceTextField.getText())) {
-
             product.setName(nameTextField.getText());
             product.setPrice(Double.parseDouble(priceTextField.getText()));
-            db.update(product);
         }
         dialogStage.close();
     }
-
     public void handleCancelButton(ActionEvent actionEvent) {
         dialogStage.close();
+    }
+
+    public void setDialogStage(Stage dialogStage) {
+        this.dialogStage = dialogStage;
     }
 
     /**
@@ -58,5 +48,9 @@ public class EditDialogController {
 
         nameTextField.setText(product.getName());
         priceTextField.setText(Double.toString(product.getPrice()));
+    }
+
+    public ProductProperty getProduct() {
+        return product;
     }
 }

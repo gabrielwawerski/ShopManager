@@ -16,7 +16,6 @@ public class SomeService extends Service<ObservableList<ProductProperty>> {
         return new Task<ObservableList<ProductProperty>>() {
             @Override
             protected ObservableList<ProductProperty> call() throws Exception {
-                updateValue(FXCollections.observableArrayList(DatabaseHandler.getInstance().getPropertyArrayList()));
                 return null;
             }
         };
