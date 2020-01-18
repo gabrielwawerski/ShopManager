@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
@@ -13,4 +14,7 @@
     <Button fx:id="inventoryButton" focusTraversable="false" mnemonicParsing="false" onAction="#handleInventoryButton" prefWidth="105.0" text="Inventory" />
     <Button fx:id="cashRegistersButton" focusTraversable="false" mnemonicParsing="false" onAction="#handleCashRegistersButton" prefWidth="115.0" text="Cash Registers" />
     <Button fx:id="transactionsButton" focusTraversable="false" mnemonicParsing="false" onAction="#handleTransactionsButton" prefWidth="105.0" text="Transactions" />
+   <padding>
+      <Insets bottom="10.0" />
+   </padding>
 </HBox>

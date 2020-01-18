@@ -38,7 +38,7 @@ public class InventoryController {
     public Button editButton;
 
     @FXML
-    private URL location;
+    public URL location;
 
     @FXML
     public TableView<ProductProperty> productTable;
@@ -78,12 +78,6 @@ public class InventoryController {
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         quantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
         priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
-
-
-        // editable row (not working atm)
-//        priceColumn.setOnEditCommit(event -> {
-//            event.getTableView().getItems().get(event.getTablePosition().getRow()).setPrice(event.getNewValue());
-//        });
 
         Task<ObservableList<ProductProperty>> getPropertyTask = new Task<ObservableList<ProductProperty>>() {
             @Override

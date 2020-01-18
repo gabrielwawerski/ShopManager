@@ -31,12 +31,9 @@ public class NavbarController {
     }
 
     public void disableButton(String location) {
-        System.out.println("location received: " + location);
         for (Button x : buttons) {
-            System.out.println(x.getText().replaceAll("\\s+",""));
-            if (location.contains(x.getText().replaceAll("\\s+",""))) {
-                System.out.println("BUTTON TEXT AFTER TRIM: " + x.getText().trim());
-                System.out.println("Found button!\nDisabling: " + x.getText());
+            if (location.contains(x.getText().replaceAll("\\s+", ""))) {
+                System.out.println("Disabling button: " + x.getText());
                 x.setDisable(true);
                 revertExcept(x);
             }
@@ -85,5 +82,13 @@ public class NavbarController {
     }
 
     public void handleTransactionsButton(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/Transactions.fxml"));
+            Stage stage = (Stage) transactionsButton.getScene().getWindow();
+            Scene scene = new Scene(loader.load());
+            stage.setScene(scene);
+        } catch (IOException io) {
+            io.printStackTrace();
+        }
     }
 }

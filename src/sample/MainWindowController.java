@@ -57,7 +57,7 @@ public class MainWindowController {
 
     public void handleTransactionsButton(ActionEvent actionEvent) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("view/Transaction.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("view/Transactions.fxml"));
             Stage stage = (Stage) transactionsButton.getScene().getWindow();
             Scene scene = new Scene(loader.load());
             stage.setResizable(false);
