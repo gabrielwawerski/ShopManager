@@ -6,7 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import sample.database.DatabaseHandler;
-import sample.model.DataModel;
+import sample.model.Context;
 
 // TODO split data from view / controller
 // so that i retain the data when switching back and forth between scenes!!!
@@ -20,7 +20,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        DataModel model = DataModel.getInstance();
+        Context model = Context.getInstance();
 
         Parent root = FXMLLoader.load(getClass().getResource("MainWindow.fxml"));
         stage = primaryStage;

@@ -15,10 +15,7 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import sample.Main;
-import sample.database.DatabaseHandler;
-import sample.model.DataModel;
-import sample.model.task.PopulateProductTableTask;
-import sample.product.ProductConverter;
+import sample.model.Context;
 import sample.product.ProductProperty;
 
 import java.io.IOException;
@@ -45,24 +42,23 @@ public class InventoryController {
     @FXML
     public TableColumn<ProductProperty, Double> priceColumn;
 
-    private DatabaseHandler db = DatabaseHandler.getInstance();
+    private Context context;
 
     @FXML
     private void initialize() {
+        context = Context.getInstance();
+
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/Navbar.fxml"));
         try {
             loader.load();
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         borderPane.setTop(loader.getRoot());
         NavbarController navbarController = loader.getController();
         navbarController.disableButton(location.toString());
 
-        System.out.println(this.getClass().getSimpleName() + ": " + productTable.getId());
-
-        PopulateProductTableTask task = new PopulateProductTableTask(productTable);
+        context.populateInventory(productTable);
 
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -117,7 +113,7 @@ public class InventoryController {
         // check if data has changed, if it did, update database entry
         if (controller.getProduct().getPrice() != priceStamp
                 || !controller.getProduct().getName().equals(nameStamp)) {
-            db.update(ProductConverter.toProduct(controller.getProduct()));
+            context.update(controller.getProduct());
         }
     }
 

@@ -3,66 +3,67 @@ package sample.transaction;
 import javafx.beans.property.*;
 
 public class TransactionEntry {
-    private IntegerProperty productId;
-    private StringProperty productName;
-    private IntegerProperty productQuantity;
-    private DoubleProperty productPrice;
+    private StringProperty transactionDate;
+    private IntegerProperty transactionId;
+    private StringProperty cashier;
+    private DoubleProperty transactionPrice;
 
     public TransactionEntry() {
     }
 
-    public TransactionEntry(int id, String productName, int productQuantity, double productPrice) {
-        this.productId = new SimpleIntegerProperty(id);
-        this.productName = new SimpleStringProperty(productName);
-        this.productQuantity = new SimpleIntegerProperty(productQuantity);
-        this.productPrice = new SimpleDoubleProperty(productPrice);
+    public TransactionEntry(String transactionDate, int transactionId,
+                            String cashier, double transactionPrice) {
+        this.transactionDate = new SimpleStringProperty(transactionDate);
+        this.transactionId = new SimpleIntegerProperty(transactionId);
+        this.cashier = new SimpleStringProperty(cashier);
+        this.transactionPrice = new SimpleDoubleProperty(transactionPrice);
     }
 
-    public int getProductId() {
-        return productId.get();
+    public String getTransactionDate() {
+        return transactionDate.get();
     }
 
-    public IntegerProperty productIdProperty() {
-        return productId;
+    public StringProperty transactionDateProperty() {
+        return transactionDate;
     }
 
-    public void setProductId(int productId) {
-        this.productId.set(productId);
+    public void setTransactionDate(String transactionDate) {
+        this.transactionDate.set(transactionDate);
     }
 
-    public String getProductName() {
-        return productName.get();
+    public int getTransactionId() {
+        return transactionId.get();
     }
 
-    public StringProperty productNameProperty() {
-        return productName;
+    public IntegerProperty transactionIdProperty() {
+        return transactionId;
     }
 
-    public void setProductName(String productName) {
-        this.productName.set(productName);
+    public void setTransactionId(int transactionId) {
+        this.transactionId.set(transactionId);
     }
 
-    public int getProductQuantity() {
-        return productQuantity.get();
+    public String getCashier() {
+        return cashier.get();
     }
 
-    public IntegerProperty productQuantityProperty() {
-        return productQuantity;
+    public StringProperty cashierProperty() {
+        return cashier;
     }
 
-    public void setProductQuantity(int productQuantity) {
-        this.productQuantity.set(productQuantity);
+    public void setCashier(String cashier) {
+        this.cashier.set(cashier);
     }
 
-    public double getProductPrice() {
-        return productPrice.get();
+    public double getTransactionPrice() {
+        return transactionPrice.get();
     }
 
-    public DoubleProperty productPriceProperty() {
-        return productPrice;
+    public DoubleProperty transactionPriceProperty() {
+        return transactionPrice;
     }
 
-    public void setProductPrice(double productPrice) {
-        this.productPrice.set(productPrice);
+    public void setTransactionPrice(double transactionPrice) {
+        this.transactionPrice.set(transactionPrice);
     }
 }

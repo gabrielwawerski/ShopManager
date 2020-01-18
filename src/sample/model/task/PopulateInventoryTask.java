@@ -1,5 +1,6 @@
 package sample.model.task;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
@@ -11,13 +12,13 @@ import sample.product.ProductProperty;
 
 import java.util.ArrayList;
 
-public class PopulateProductTableTask extends Task<ObservableList<ProductProperty>> {
-    public PopulateProductTableTask(TableView<ProductProperty> productTable) {
+public class PopulateInventoryTask extends Task<ObservableList<ProductProperty>> {
+    public PopulateInventoryTask(TableView<ProductProperty> productTable) {
         Thread thread = new Thread(this);
         thread.setDaemon(true);
         thread.start();
-
-        this.setOnSucceeded(event -> productTable.setItems(this.getValue()));
+        this.setOnSucceeded(event -> Platform.runLater(()
+                -> productTable.setItems(this.getValue())));
     }
 
     @Override

@@ -6,7 +6,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
-import sample.model.DataModel;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -34,14 +33,13 @@ public class NavbarController {
     public void disableButton(String location) {
         for (Button x : buttons) {
             if (location.contains(x.getText().replaceAll("\\s+", ""))) {
-                System.out.println("Disabling button: " + x.getText());
                 x.setDisable(true);
-                revertExcept(x);
+                enableExcept(x);
             }
         }
     }
 
-    private void revertExcept(Button button) {
+    private void enableExcept(Button button) {
         for (Button x : buttons) {
             if (!x.getText().equals(button.getText())) {
                 x.setDisable(false);

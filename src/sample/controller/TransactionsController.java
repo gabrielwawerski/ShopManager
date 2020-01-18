@@ -3,7 +3,7 @@ package sample.controller;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.BorderPane;
-import sample.model.DataModel;
+import sample.model.Context;
 
 import java.io.IOException;
 import java.net.URL;
@@ -14,7 +14,7 @@ public class TransactionsController {
     @FXML
     private URL location;
 
-    private DataModel model;
+    private Context context;
 
     @FXML
     private void initialize() {
@@ -28,12 +28,5 @@ public class TransactionsController {
         borderPane.setTop(loader.getRoot());
         NavbarController navbarController = loader.getController();
         navbarController.disableButton(location.toString());
-    }
-
-    public void initModel(DataModel model) {
-        if (this.model != null) {
-            throw new IllegalStateException("Model already initialized!");
-        }
-        this.model = model;
     }
 }
