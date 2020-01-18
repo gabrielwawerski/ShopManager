@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?><?import javafx.scene.control.*?><?import javafx.scene.layout.*?><?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<BorderPane fx:id="borderPane" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1"
-    fx:controller="sample.controller.CashRegisterController">
-    <center>
-        <AnchorPane>
+<BorderPane fx:id="borderPane" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.CashRegisterController">
+    <padding>
+        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+    </padding>
+   <center>
+        <AnchorPane BorderPane.alignment="CENTER">
             <Pane fx:id="cashRegister1" layoutX="10.0" layoutY="53.0" style="-fx-border-color: #000000;">
                 <opaqueInsets>
                     <Insets />
@@ -15,16 +20,12 @@
                 </padding>
                 <GridPane layoutX="13.0" layoutY="-1.0" prefHeight="60.0" prefWidth="247.0">
                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="108.00000318444305" minWidth="10.0"
-                            prefWidth="103.67826427553473" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="214.07826554931194" minWidth="10.0"
-                            prefWidth="143.97391891392977" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="108.00000318444305" minWidth="10.0" prefWidth="103.67826427553473" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="214.07826554931194" minWidth="10.0" prefWidth="143.97391891392977" />
                     </columnConstraints>
                     <rowConstraints>
-                        <RowConstraints maxHeight="30.052174909912605" minHeight="10.0" prefHeight="30.052174909912605"
-                            vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="30.052174909912605" minHeight="10.0" prefHeight="30.052174909912605"
-                            vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="30.052174909912605" minHeight="10.0" prefHeight="30.052174909912605" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="30.052174909912605" minHeight="10.0" prefHeight="30.052174909912605" vgrow="SOMETIMES" />
                     </rowConstraints>
                     <Label fx:id="cashierLabel1" text="Cashier" />
                     <Label fx:id="cashierName1" GridPane.columnIndex="1" />
@@ -38,17 +39,12 @@
                         </font>
                     </Label>
                 </AnchorPane>
-                <TableView fx:id="currentTransactionTable1" focusTraversable="false" layoutX="12.0" layoutY="85.0"
-                    pickOnBounds="false" prefHeight="170.0">
+                <TableView fx:id="currentTransactionTable1" focusTraversable="false" layoutX="12.0" layoutY="85.0" pickOnBounds="false" prefHeight="170.0">
                     <columns>
-                        <TableColumn fx:id="transactionIdCol1" editable="false" prefWidth="30.130493819713593"
-                            resizable="false" sortable="false" text="#" />
-                        <TableColumn fx:id="transactionProductCol1" editable="false" prefWidth="168.91301727294922"
-                            resizable="false" sortable="false" text="Product" />
-                        <TableColumn fx:id="transactionQtyCol1" editable="false" prefWidth="49.23480224609375"
-                            resizable="false" sortable="false" text="Qty" />
-                        <TableColumn fx:id="transactionPriceCol1" editable="false" prefWidth="90.17388916015625"
-                            resizable="false" sortable="false" text="Price" />
+                        <TableColumn fx:id="transactionIdCol1" editable="false" prefWidth="30.130493819713593" resizable="false" sortable="false" text="#" />
+                        <TableColumn fx:id="transactionProductCol1" editable="false" prefWidth="168.91301727294922" resizable="false" sortable="false" text="Product" />
+                        <TableColumn fx:id="transactionQtyCol1" editable="false" prefWidth="49.23480224609375" resizable="false" sortable="false" text="Qty" />
+                        <TableColumn fx:id="transactionPriceCol1" editable="false" prefWidth="90.17388916015625" resizable="false" sortable="false" text="Price" />
                     </columns>
                     <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -56,10 +52,8 @@
                 </TableView>
                 <GridPane alignment="CENTER_LEFT" layoutX="12.0" layoutY="256.0" prefHeight="51.0" prefWidth="340.0">
                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="274.7130659920419" minWidth="10.0"
-                            prefWidth="231.47827000753222" />
-                        <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="122.17391636637535"
-                            minWidth="0.7130475488097829" prefWidth="109.113045638144" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="274.7130659920419" minWidth="10.0" prefWidth="231.47827000753222" />
+                        <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="122.17391636637535" minWidth="0.7130475488097829" prefWidth="109.113045638144" />
                     </columnConstraints>
                     <rowConstraints>
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -71,8 +65,7 @@
                             <Font size="13.0" />
                         </font>
                     </Label>
-                    <Label fx:id="transactionSubtotal1" alignment="TOP_RIGHT" contentDisplay="RIGHT"
-                        GridPane.columnIndex="1">
+                    <Label fx:id="transactionSubtotal1" alignment="TOP_RIGHT" contentDisplay="RIGHT" GridPane.columnIndex="1">
                         <font>
                             <Font size="13.0" />
                         </font>
@@ -107,16 +100,12 @@
                 </padding>
                 <GridPane layoutX="13.0" layoutY="-1.0" prefHeight="60.0" prefWidth="247.0">
                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="108.00000318444305" minWidth="10.0"
-                            prefWidth="103.67826427553473" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="214.07826554931194" minWidth="10.0"
-                            prefWidth="143.97391891392977" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="108.00000318444305" minWidth="10.0" prefWidth="103.67826427553473" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="214.07826554931194" minWidth="10.0" prefWidth="143.97391891392977" />
                     </columnConstraints>
                     <rowConstraints>
-                        <RowConstraints maxHeight="30.052174909912605" minHeight="10.0" prefHeight="30.052174909912605"
-                            vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="30.052174909912605" minHeight="10.0" prefHeight="30.052174909912605"
-                            vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="30.052174909912605" minHeight="10.0" prefHeight="30.052174909912605" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="30.052174909912605" minHeight="10.0" prefHeight="30.052174909912605" vgrow="SOMETIMES" />
                     </rowConstraints>
                     <Label fx:id="cashierLabel11" text="Cashier" />
                     <Label fx:id="cashierName11" text="CashierName" GridPane.columnIndex="1" />
@@ -130,17 +119,12 @@
                         </font>
                     </Label>
                 </AnchorPane>
-                <TableView fx:id="currentTransactionTable2" focusTraversable="false" layoutX="12.0" layoutY="85.0"
-                    pickOnBounds="false" prefHeight="170.0">
+                <TableView fx:id="currentTransactionTable2" focusTraversable="false" layoutX="12.0" layoutY="85.0" pickOnBounds="false" prefHeight="170.0">
                     <columns>
-                        <TableColumn fx:id="transactionIdRow11" editable="false" prefWidth="30.130493819713593"
-                            resizable="false" sortable="false" text="#" />
-                        <TableColumn fx:id="transactionProductRow11" editable="false" prefWidth="168.91301727294922"
-                            resizable="false" sortable="false" text="Product" />
-                        <TableColumn fx:id="transactionQtyRow11" editable="false" prefWidth="49.23480224609375"
-                            resizable="false" sortable="false" text="Qty" />
-                        <TableColumn fx:id="transactionPriceRow11" editable="false" prefWidth="90.17388916015625"
-                            resizable="false" sortable="false" text="Price" />
+                        <TableColumn fx:id="transactionIdRow11" editable="false" prefWidth="30.130493819713593" resizable="false" sortable="false" text="#" />
+                        <TableColumn fx:id="transactionProductRow11" editable="false" prefWidth="168.91301727294922" resizable="false" sortable="false" text="Product" />
+                        <TableColumn fx:id="transactionQtyRow11" editable="false" prefWidth="49.23480224609375" resizable="false" sortable="false" text="Qty" />
+                        <TableColumn fx:id="transactionPriceRow11" editable="false" prefWidth="90.17388916015625" resizable="false" sortable="false" text="Price" />
                     </columns>
                     <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -148,10 +132,8 @@
                 </TableView>
                 <GridPane alignment="CENTER_LEFT" layoutX="12.0" layoutY="256.0" prefHeight="51.0" prefWidth="340.0">
                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="274.7130659920419" minWidth="10.0"
-                            prefWidth="231.47827000753222" />
-                        <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="122.17391636637535"
-                            minWidth="0.7130475488097829" prefWidth="109.113045638144" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="274.7130659920419" minWidth="10.0" prefWidth="231.47827000753222" />
+                        <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="122.17391636637535" minWidth="0.7130475488097829" prefWidth="109.113045638144" />
                     </columnConstraints>
                     <rowConstraints>
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -198,16 +180,12 @@
                 </padding>
                 <GridPane layoutX="13.0" layoutY="-1.0" prefHeight="60.0" prefWidth="247.0">
                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="108.00000318444305" minWidth="10.0"
-                            prefWidth="103.67826427553473" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="214.07826554931194" minWidth="10.0"
-                            prefWidth="143.97391891392977" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="108.00000318444305" minWidth="10.0" prefWidth="103.67826427553473" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="214.07826554931194" minWidth="10.0" prefWidth="143.97391891392977" />
                     </columnConstraints>
                     <rowConstraints>
-                        <RowConstraints maxHeight="30.052174909912605" minHeight="10.0" prefHeight="30.052174909912605"
-                            vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="30.052174909912605" minHeight="10.0" prefHeight="30.052174909912605"
-                            vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="30.052174909912605" minHeight="10.0" prefHeight="30.052174909912605" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="30.052174909912605" minHeight="10.0" prefHeight="30.052174909912605" vgrow="SOMETIMES" />
                     </rowConstraints>
                     <Label fx:id="cashierLabel111" text="Cashier" />
                     <Label fx:id="cashierName111" text="CashierName" GridPane.columnIndex="1" />
@@ -221,17 +199,12 @@
                         </font>
                     </Label>
                 </AnchorPane>
-                <TableView fx:id="currentTransactionTable11" focusTraversable="false" layoutX="12.0" layoutY="85.0"
-                    pickOnBounds="false" prefHeight="170.0">
+                <TableView fx:id="currentTransactionTable11" focusTraversable="false" layoutX="12.0" layoutY="85.0" pickOnBounds="false" prefHeight="170.0">
                     <columns>
-                        <TableColumn fx:id="transactionIdRow111" editable="false" prefWidth="30.130493819713593"
-                            resizable="false" sortable="false" text="#" />
-                        <TableColumn fx:id="transactionProductRow111" editable="false" prefWidth="168.91301727294922"
-                            resizable="false" sortable="false" text="Product" />
-                        <TableColumn fx:id="transactionQtyRow111" editable="false" prefWidth="49.23480224609375"
-                            resizable="false" sortable="false" text="Qty" />
-                        <TableColumn fx:id="transactionPriceRow111" editable="false" prefWidth="90.17388916015625"
-                            resizable="false" sortable="false" text="Price" />
+                        <TableColumn fx:id="transactionIdRow111" editable="false" prefWidth="30.130493819713593" resizable="false" sortable="false" text="#" />
+                        <TableColumn fx:id="transactionProductRow111" editable="false" prefWidth="168.91301727294922" resizable="false" sortable="false" text="Product" />
+                        <TableColumn fx:id="transactionQtyRow111" editable="false" prefWidth="49.23480224609375" resizable="false" sortable="false" text="Qty" />
+                        <TableColumn fx:id="transactionPriceRow111" editable="false" prefWidth="90.17388916015625" resizable="false" sortable="false" text="Price" />
                     </columns>
                     <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -239,10 +212,8 @@
                 </TableView>
                 <GridPane alignment="CENTER_LEFT" layoutX="12.0" layoutY="256.0" prefHeight="51.0" prefWidth="340.0">
                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="274.7130659920419" minWidth="10.0"
-                            prefWidth="231.47827000753222" />
-                        <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="122.17391636637535"
-                            minWidth="0.7130475488097829" prefWidth="109.113045638144" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="274.7130659920419" minWidth="10.0" prefWidth="231.47827000753222" />
+                        <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="122.17391636637535" minWidth="0.7130475488097829" prefWidth="109.113045638144" />
                     </columnConstraints>
                     <rowConstraints>
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -289,16 +260,12 @@
                 </padding>
                 <GridPane layoutX="13.0" layoutY="-1.0" prefHeight="60.0" prefWidth="247.0">
                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="108.00000318444305" minWidth="10.0"
-                            prefWidth="103.67826427553473" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="214.07826554931194" minWidth="10.0"
-                            prefWidth="143.97391891392977" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="108.00000318444305" minWidth="10.0" prefWidth="103.67826427553473" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="214.07826554931194" minWidth="10.0" prefWidth="143.97391891392977" />
                     </columnConstraints>
                     <rowConstraints>
-                        <RowConstraints maxHeight="30.052174909912605" minHeight="10.0" prefHeight="30.052174909912605"
-                            vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="30.052174909912605" minHeight="10.0" prefHeight="30.052174909912605"
-                            vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="30.052174909912605" minHeight="10.0" prefHeight="30.052174909912605" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="30.052174909912605" minHeight="10.0" prefHeight="30.052174909912605" vgrow="SOMETIMES" />
                     </rowConstraints>
                     <Label fx:id="cashierLabel1111" text="Cashier" />
                     <Label fx:id="cashierName1111" text="CashierName" GridPane.columnIndex="1" />
@@ -312,17 +279,12 @@
                         </font>
                     </Label>
                 </AnchorPane>
-                <TableView fx:id="currentTransactionTable111" focusTraversable="false" layoutX="12.0" layoutY="85.0"
-                    pickOnBounds="false" prefHeight="170.0">
+                <TableView fx:id="currentTransactionTable111" focusTraversable="false" layoutX="12.0" layoutY="85.0" pickOnBounds="false" prefHeight="170.0">
                     <columns>
-                        <TableColumn fx:id="transactionIdRow1111" editable="false" prefWidth="30.130493819713593"
-                            resizable="false" sortable="false" text="#" />
-                        <TableColumn fx:id="transactionProductRow1111" editable="false" prefWidth="168.91301727294922"
-                            resizable="false" sortable="false" text="Product" />
-                        <TableColumn fx:id="transactionQtyRow1111" editable="false" prefWidth="49.23480224609375"
-                            resizable="false" sortable="false" text="Qty" />
-                        <TableColumn fx:id="transactionPriceRow1111" editable="false" prefWidth="90.17388916015625"
-                            resizable="false" sortable="false" text="Price" />
+                        <TableColumn fx:id="transactionIdRow1111" editable="false" prefWidth="30.130493819713593" resizable="false" sortable="false" text="#" />
+                        <TableColumn fx:id="transactionProductRow1111" editable="false" prefWidth="168.91301727294922" resizable="false" sortable="false" text="Product" />
+                        <TableColumn fx:id="transactionQtyRow1111" editable="false" prefWidth="49.23480224609375" resizable="false" sortable="false" text="Qty" />
+                        <TableColumn fx:id="transactionPriceRow1111" editable="false" prefWidth="90.17388916015625" resizable="false" sortable="false" text="Price" />
                     </columns>
                     <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -330,10 +292,8 @@
                 </TableView>
                 <GridPane alignment="CENTER_LEFT" layoutX="12.0" layoutY="256.0" prefHeight="51.0" prefWidth="340.0">
                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="274.7130659920419" minWidth="10.0"
-                            prefWidth="231.47827000753222" />
-                        <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="122.17391636637535"
-                            minWidth="0.7130475488097829" prefWidth="109.113045638144" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="274.7130659920419" minWidth="10.0" prefWidth="231.47827000753222" />
+                        <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="122.17391636637535" minWidth="0.7130475488097829" prefWidth="109.113045638144" />
                     </columnConstraints>
                     <rowConstraints>
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -375,8 +335,5 @@
                 </Label>
             </Pane>
         </AnchorPane>
-    </center>
-    <padding>
-        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-    </padding>
+   </center>
 </BorderPane>

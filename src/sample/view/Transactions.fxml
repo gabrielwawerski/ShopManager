@@ -3,12 +3,13 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
 <BorderPane fx:id="borderPane" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.TransactionsController">
    <center>
       <HBox spacing="5.0">
          <children>
-            <TableView fx:id="transactionTable">
+            <TableView fx:id="transactionTable" focusTraversable="false">
               <columns>
                   <TableColumn fx:id="dateColumn" prefWidth="93.4956905418357" text="Date" />
                 <TableColumn fx:id="idColumn" prefWidth="75.0" text="ID" />
@@ -16,7 +17,7 @@
                   <TableColumn fx:id="costColumn" prefWidth="79.59996032714844" text="Cost" />
               </columns>
             </TableView>
-            <VBox spacing="10.0">
+            <VBox>
                <children>
                   <GridPane nodeOrientation="LEFT_TO_RIGHT">
                     <columnConstraints>
@@ -32,7 +33,10 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Label fx:id="transactionId" text="Transaction ID" GridPane.columnSpan="2147483647" />
+                        <Label fx:id="transactionId" text="Transaction ID" GridPane.columnSpan="2147483647">
+                           <font>
+                              <Font size="15.0" />
+                           </font></Label>
                         <Label text="Cashier" GridPane.rowIndex="2" />
                         <Label text="Date" GridPane.rowIndex="1" />
                         <Label fx:id="cashierName" text="cashierName" GridPane.columnIndex="1" GridPane.rowIndex="2" />
@@ -48,10 +52,15 @@
                         <Insets />
                      </opaqueInsets>
                      <padding>
-                        <Insets left="10.0" />
+                        <Insets bottom="5.0" />
                      </padding>
                   </GridPane>
-                  <TableView prefHeight="242.0" prefWidth="250.0">
+                  <Label text="Products sold:">
+                     <padding>
+                        <Insets bottom="2.0" />
+                     </padding>
+                  </Label>
+                  <TableView focusTraversable="false" prefHeight="242.0" prefWidth="250.0">
                     <columns>
                       <TableColumn prefWidth="128.53039568662643" text="Name" />
                       <TableColumn prefWidth="39.382568359375" text="Qty" />

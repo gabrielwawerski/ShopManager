@@ -5,7 +5,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import sample.controller.InventoryController;
 import sample.database.DatabaseHandler;
 import sample.model.DataModel;
 
@@ -21,21 +20,9 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        DataModel model = new DataModel();
+        DataModel model = DataModel.getInstance();
 
         Parent root = FXMLLoader.load(getClass().getResource("MainWindow.fxml"));
-
-        FXMLLoader mainWindowLoader = new FXMLLoader(getClass().getResource("MainWindow.fxml"));
-        mainWindowLoader.load();
-        MainWindowController mainWindowController = mainWindowLoader.getController();
-        mainWindowController.initModel(model);
-
-//        FXMLLoader inventoryLoader = new FXMLLoader(getClass().getResource("view/Inventory.fxml"));
-//        inventoryLoader.load();
-//        InventoryController inventoryController = inventoryLoader.getController();
-//        inventoryController.initModel(model);
-//        inventoryController.addDeliveryButton.setText("KURWA!!");
-
         stage = primaryStage;
         stage.setTitle("Hello World");
         stage.setScene(new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT));
@@ -44,7 +31,7 @@ public class Main extends Application {
     }
 
     @Override
-    public void stop() throws Exception {
+    public void stop() {
         DatabaseHandler.getInstance().close();
     }
 

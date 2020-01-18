@@ -6,7 +6,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
-import sample.model.DataModel;
 
 import java.io.IOException;
 
@@ -18,17 +17,8 @@ public class MainWindowController {
     @FXML
     public Button transactionsButton;
 
-    private DataModel model;
-
     @FXML
     private void initialize() {
-    }
-
-    public void initModel(DataModel model) {
-        if (this.model != null) {
-            throw new IllegalStateException("Model already initialized!");
-        }
-        this.model = model;
     }
 
     public void handleInventoryButton(ActionEvent actionEvent) {
