@@ -7,7 +7,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
-import sample.transaction.TransactionEntry;
+import sample.transaction.TransactionProperty;
 
 import java.io.IOException;
 import java.net.URL;
@@ -30,15 +30,15 @@ public class CashRegisterController {
     @FXML
     public Label currentTransactionId1;
     @FXML
-    public TableView<TransactionEntry> currentTransactionTable1;
+    public TableView<TransactionProperty> currentTransactionTable1;
     @FXML
-    public TableColumn<TransactionEntry, Integer> transactionIdCol1;
+    public TableColumn<TransactionProperty, Integer> transactionIdCol1;
     @FXML
-    public TableColumn<TransactionEntry, String> transactionProductCol1;
+    public TableColumn<TransactionProperty, String> transactionProductCol1;
     @FXML
-    public TableColumn<TransactionEntry, Integer> transactionQtyCol1;
+    public TableColumn<TransactionProperty, Integer> transactionQtyCol1;
     @FXML
-    public TableColumn<TransactionEntry, Double> transactionPriceCol1;
+    public TableColumn<TransactionProperty, Double> transactionPriceCol1;
     @FXML
     public Label transactionSubtotal1;
     @FXML

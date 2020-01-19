@@ -1,8 +1,8 @@
-package sample.model;
+package sample.context;
 
 import javafx.scene.control.TableView;
 import sample.database.DatabaseHandler;
-import sample.model.task.PopulateInventoryTask;
+import sample.context.task.PopulateInventoryTask;
 import sample.product.ProductConverter;
 import sample.product.ProductProperty;
 

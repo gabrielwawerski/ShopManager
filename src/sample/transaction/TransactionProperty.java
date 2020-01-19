@@ -2,24 +2,24 @@ package sample.transaction;
 
 import javafx.beans.property.*;
 
-public class TransactionEntry {
+public class TransactionProperty {
     private StringProperty transactionDate;
     private IntegerProperty transactionId;
     private StringProperty cashier;
     private DoubleProperty transactionPrice;
 
-    public TransactionEntry() {
+    public TransactionProperty() {
     }
 
-    public TransactionEntry(String transactionDate, int transactionId,
-                            String cashier, double transactionPrice) {
+    public TransactionProperty(String transactionDate, int transactionId,
+                               String cashier, double transactionPrice) {
         this.transactionDate = new SimpleStringProperty(transactionDate);
         this.transactionId = new SimpleIntegerProperty(transactionId);
         this.cashier = new SimpleStringProperty(cashier);
         this.transactionPrice = new SimpleDoubleProperty(transactionPrice);
     }
 
-    public String getTransactionDate() {
+    public final String getTransactionDate() {
         return transactionDate.get();
     }
 
@@ -27,11 +27,11 @@ public class TransactionEntry {
         return transactionDate;
     }
 
-    public void setTransactionDate(String transactionDate) {
+    public final void setTransactionDate(String transactionDate) {
         this.transactionDate.set(transactionDate);
     }
 
-    public int getTransactionId() {
+    public final int getTransactionId() {
         return transactionId.get();
     }
 
@@ -39,7 +39,7 @@ public class TransactionEntry {
         return transactionId;
     }
 
-    public void setTransactionId(int transactionId) {
+    public final void setTransactionId(int transactionId) {
         this.transactionId.set(transactionId);
     }
 
@@ -51,11 +51,11 @@ public class TransactionEntry {
         return cashier;
     }
 
-    public void setCashier(String cashier) {
+    public final void setCashier(String cashier) {
         this.cashier.set(cashier);
     }
 
-    public double getTransactionPrice() {
+    public final double getTransactionPrice() {
         return transactionPrice.get();
     }
 
@@ -63,7 +63,7 @@ public class TransactionEntry {
         return transactionPrice;
     }
 
-    public void setTransactionPrice(double transactionPrice) {
+    public final void setTransactionPrice(double transactionPrice) {
         this.transactionPrice.set(transactionPrice);
     }
 }

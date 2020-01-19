@@ -6,7 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import sample.database.DatabaseHandler;
-import sample.model.Context;
+import sample.context.Context;
 
 // TODO split data from view / controller
 // so that i retain the data when switching back and forth between scenes!!!

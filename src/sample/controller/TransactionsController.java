@@ -3,7 +3,7 @@ package sample.controller;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.BorderPane;
-import sample.model.Context;
+import sample.context.Context;
 
 import java.io.IOException;
 import java.net.URL;

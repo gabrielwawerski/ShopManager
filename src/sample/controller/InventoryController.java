@@ -15,7 +15,7 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import sample.Main;
-import sample.model.Context;
+import sample.context.Context;
 import sample.product.ProductProperty;
 
 import java.io.IOException;

@@ -3,6 +3,8 @@ package sample.transaction;
 import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
+import sample.transaction.util.Cost;
+import sample.transaction.util.ProductLog;
 
 @DatabaseTable
 public class Transaction {
@@ -11,9 +13,10 @@ public class Transaction {
     @DatabaseField
     private String cashier;
     @DatabaseField(dataType = DataType.SERIALIZABLE)
-    private ProductBundle productBundle;
+    private ProductLog productLog;
     @DatabaseField(dataType = DataType.SERIALIZABLE)
     private Cost cost;
+    @DatabaseField
     private String date;
 
     public Transaction() {
@@ -35,12 +38,12 @@ public class Transaction {
         this.cashier = cashier;
     }
 
-    public ProductBundle getProductBundle() {
-        return productBundle;
+    public ProductLog getProductLog() {
+        return productLog;
     }
 
-    public void setProductBundle(ProductBundle productBundle) {
-        this.productBundle = productBundle;
+    public void setProductLog(ProductLog productLog) {
+        this.productLog = productLog;
     }
 
     public Cost getCost() {

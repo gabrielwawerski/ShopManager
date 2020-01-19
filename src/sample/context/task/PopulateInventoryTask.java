@@ -1,4 +1,4 @@
-package sample.model.task;
+package sample.context.task;
 
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
