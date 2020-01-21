@@ -20,7 +20,8 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Context model = Context.getInstance();
+        Context context = Context.getInstance();
+        context.initData();
 
         Parent root = FXMLLoader.load(getClass().getResource("MainWindow.fxml"));
         stage = primaryStage;

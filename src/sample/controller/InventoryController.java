@@ -58,13 +58,13 @@ public class InventoryController {
         NavbarController navbarController = loader.getController();
         navbarController.disableButton(location.toString());
 
-        context.populateInventory(productTable);
+        context.initInventory();
+        productTable.setItems(context.getProductProperties());
 
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         quantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
         priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
-
         editButton.setDisable(true);
         productTable.addEventFilter(MouseEvent.MOUSE_CLICKED, tableClicked);
     }
@@ -77,7 +77,6 @@ public class InventoryController {
             editButton.setDisable(false);
         }
     };
-
 
     public void handleEditEntry(ActionEvent actionEvent) {
         // Load the fxml file and create a new stage for the popup dialog.
