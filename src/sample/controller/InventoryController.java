@@ -58,7 +58,6 @@ public class InventoryController {
         NavbarController navbarController = loader.getController();
         navbarController.disableButton(location.toString());
 
-        context.initInventory();
         productTable.setItems(context.getProductProperties());
 
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));

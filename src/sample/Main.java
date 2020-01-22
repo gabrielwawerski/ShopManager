@@ -11,7 +11,7 @@ import sample.context.Context;
 // TODO split data from view / controller
 // so that i retain the data when switching back and forth between scenes!!!
 
-// TODO find a way to add navbar to every app window programmatically
+// TODO switch double to BigDecimal for representing moneys
 public class Main extends Application {
     private static final int WINDOW_WIDTH = 450;
     private static final int WINDOW_HEIGHT = 300;
@@ -21,7 +21,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         Context context = Context.getInstance();
-        context.initData();
+        context.init();
 
         Parent root = FXMLLoader.load(getClass().getResource("MainWindow.fxml"));
         stage = primaryStage;

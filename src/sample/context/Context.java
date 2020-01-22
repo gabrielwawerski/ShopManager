@@ -3,7 +3,7 @@ package sample.context;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import sample.database.DatabaseHandler;
-import sample.context.task.PopulateInventoryTask;
+import sample.context.task.InitProductPropertiesTask;
 import sample.product.ProductConverter;
 import sample.product.ProductProperty;
 
@@ -12,7 +12,6 @@ public class Context {
     private static Context instance;
 
     private ObservableList<ProductProperty> productProperties;
-    private boolean inventoryInitialized;
 
     public static Context getInstance() {
         if (instance == null) {
@@ -22,25 +21,26 @@ public class Context {
     }
 
     private Context() {
+    }
+
+    public void init() {
+        initData();
+        initInventory();
+    }
+
+    private void initData() {
+        productProperties = FXCollections.observableArrayList();
         db = DatabaseHandler.getInstance();
         db.connect();
     }
 
-    public void initData() {
-        productProperties = FXCollections.observableArrayList();
-        inventoryInitialized = false;
-    }
+    private void initInventory() {
+        InitProductPropertiesTask task = new InitProductPropertiesTask(productProperties, db.getProductArrayList());
+        Thread thread = new Thread(task);
+        thread.setDaemon(true);
+        thread.start();
 
-    public void initInventory() {
-        if (!isInventoryInitialized()) {
-            PopulateInventoryTask task = new PopulateInventoryTask(productProperties);
-            Thread thread = new Thread(task);
-            thread.setDaemon(true);
-            thread.start();
-
-            task.setOnSucceeded(event -> productProperties = task.getValue());
-            setInventoryInitialized();
-        }
+        task.setOnSucceeded(event -> productProperties = task.getValue());
     }
 
     public ObservableList<ProductProperty> getProductProperties() {
@@ -49,13 +49,5 @@ public class Context {
 
     public void update(ProductProperty property) {
         db.update(ProductConverter.toProduct(property));
-    }
-
-    private boolean isInventoryInitialized() {
-        return inventoryInitialized;
-    }
-
-    private void setInventoryInitialized() {
-        inventoryInitialized = true;
     }
 }
