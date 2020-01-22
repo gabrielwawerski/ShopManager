@@ -73,12 +73,12 @@ public class DatabaseHandler {
         Product foundProduct = null;
 
         try {
-            for (Product x : wrappedIterable) {
-                if (x.getId() == product.getId()) {
-                    foundProduct = x;
+            for (Product dbProduct : wrappedIterable) {
+                if (dbProduct.getId() == product.getId()) {
+                    foundProduct = dbProduct;
                 }
             }
-            return foundProduct;
+            return foundProduct == null ? Product.EMPTY_PRODUCT : foundProduct;
         } finally {
             try {
                 wrappedIterable.close();
@@ -86,7 +86,6 @@ public class DatabaseHandler {
                 e.printStackTrace();
             }
         }
-
     }
 
     public void close() {
