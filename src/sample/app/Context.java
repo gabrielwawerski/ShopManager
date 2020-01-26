@@ -1,17 +1,20 @@
-package sample.context;
+package sample.app;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import sample.app.task.InitTransactionPropertiesTask;
 import sample.database.DatabaseHandler;
-import sample.context.task.InitProductPropertiesTask;
+import sample.app.task.InitProductPropertiesTask;
 import sample.product.ProductConverter;
 import sample.product.ProductProperty;
+import sample.transaction.TransactionLogProperty;
 
 public class Context {
     public DatabaseHandler db;
     private static Context instance;
 
     private ObservableList<ProductProperty> productProperties;
+    private ObservableList<TransactionLogProperty> transactionProperties;
 
     public static Context getInstance() {
         if (instance == null) {
@@ -26,21 +29,32 @@ public class Context {
     public void init() {
         initData();
         initInventory();
+//        initTransactions();
     }
 
     private void initData() {
         productProperties = FXCollections.observableArrayList();
+        transactionProperties = FXCollections.observableArrayList();
         db = DatabaseHandler.getInstance();
         db.connect();
     }
 
     private void initInventory() {
-        InitProductPropertiesTask task = new InitProductPropertiesTask(productProperties, db.getProductArrayList());
-        Thread thread = new Thread(task);
-        thread.setDaemon(true);
-        thread.start();
+        InitProductPropertiesTask initProductsTask
+                = new InitProductPropertiesTask(productProperties, db.getProductArrayList());
 
-        task.setOnSucceeded(event -> productProperties = task.getValue());
+        Thread initProductsThread = new Thread(initProductsTask);
+        initProductsThread.setDaemon(true);
+        initProductsThread.start();
+    }
+
+    private void initTransactions() {
+        InitTransactionPropertiesTask initTransactionsTask
+                = new InitTransactionPropertiesTask(transactionProperties, db.getTransactionArrayList());
+
+        Thread initTransactionsThread = new Thread(initTransactionsTask);
+        initTransactionsThread.setDaemon(true);
+        initTransactionsThread.start();
     }
 
     public ObservableList<ProductProperty> getProductProperties() {

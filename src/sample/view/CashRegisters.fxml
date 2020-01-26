@@ -9,9 +9,9 @@
     <padding>
         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
     </padding>
-   <center>
-        <AnchorPane BorderPane.alignment="CENTER">
-            <Pane fx:id="cashRegister1" layoutX="10.0" layoutY="53.0" style="-fx-border-color: #000000;">
+    <center>
+        <Pane BorderPane.alignment="CENTER">
+            <Pane fx:id="cashRegister1" layoutY="1.0" style="-fx-border-color: #000000;">
                 <opaqueInsets>
                     <Insets />
                 </opaqueInsets>
@@ -83,7 +83,7 @@
                         </font>
                     </Label>
                 </GridPane>
-                <Label layoutX="264.0" layoutY="-1.0" text="Register 1">
+                <Label fx:id="cashRegisterId1" layoutX="264.0" layoutY="-1.0" text="Register 1">
                     <font>
                         <Font size="20.0" />
                     </font>
@@ -94,7 +94,7 @@
                     </font>
                 </Label>
             </Pane>
-            <Pane fx:id="cashRegister2" layoutX="390.0" layoutY="53.0" style="-fx-border-color: #000000;">
+            <Pane fx:id="cashRegister2" layoutX="380.0" layoutY="1.0" style="-fx-border-color: #000000;">
                 <padding>
                     <Insets bottom="10.0" right="10.0" />
                 </padding>
@@ -174,7 +174,7 @@
                     </font>
                 </Label>
             </Pane>
-            <Pane fx:id="cashRegister3" layoutX="10.0" layoutY="388.0" style="-fx-border-color: #000000;">
+            <Pane fx:id="cashRegister3" layoutY="336.0" style="-fx-border-color: #000000;">
                 <padding>
                     <Insets bottom="10.0" right="10.0" />
                 </padding>
@@ -254,7 +254,7 @@
                     </font>
                 </Label>
             </Pane>
-            <Pane fx:id="cashRegister4" layoutX="390.0" layoutY="388.0" style="-fx-border-color: #000000;">
+            <Pane fx:id="cashRegister4" layoutX="380.0" layoutY="336.0" style="-fx-border-color: #000000;">
                 <padding>
                     <Insets bottom="10.0" right="10.0" />
                 </padding>
@@ -334,6 +334,6 @@
                     </font>
                 </Label>
             </Pane>
-        </AnchorPane>
-   </center>
+        </Pane>
+    </center>
 </BorderPane>

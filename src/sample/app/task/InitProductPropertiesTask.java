@@ -1,4 +1,4 @@
-package sample.context.task;
+package sample.app.task;
 
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
@@ -9,7 +9,7 @@ import sample.product.ProductProperty;
 
 import java.util.ArrayList;
 
-public class InitProductPropertiesTask extends Task<ObservableList<ProductProperty>> {
+public class InitProductPropertiesTask extends Task<Void> {
     private final ObservableList<ProductProperty> productProperties;
     private final ArrayList<Product> databaseProducts;
 
@@ -20,7 +20,7 @@ public class InitProductPropertiesTask extends Task<ObservableList<ProductProper
     }
 
     @Override
-    protected ObservableList<ProductProperty> call() throws Exception {
+    protected Void call() throws Exception {
         for (Product dbProduct : databaseProducts) {
             if (isCancelled()) {
                 break;
@@ -30,6 +30,6 @@ public class InitProductPropertiesTask extends Task<ObservableList<ProductProper
             });
         }
         System.out.println("TASK DONE!");
-        return productProperties;
+        return null;
     }
 }

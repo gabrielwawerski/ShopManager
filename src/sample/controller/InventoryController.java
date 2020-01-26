@@ -15,7 +15,7 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import sample.Main;
-import sample.context.Context;
+import sample.app.Context;
 import sample.product.ProductProperty;
 
 import java.io.IOException;
@@ -101,17 +101,17 @@ public class InventoryController {
         Scene scene = new Scene(page);
         dialogStage.setScene(scene);
 
-        EditDialogController controller = loader.getController();
-        controller.setDialogStage(dialogStage);
-        controller.setProduct(selectedProduct);
+        EditDialogController editDialog = loader.getController();
+        editDialog.setDialogStage(dialogStage);
+        editDialog.setProduct(selectedProduct);
 
         // Show the dialog and wait until the user closes it
         dialogStage.showAndWait();
 
         // check if data has changed, if it did, update database entry
-        if (controller.getProduct().getPrice() != priceStamp
-                || !controller.getProduct().getName().equals(nameStamp)) {
-            context.update(controller.getProduct());
+        if (editDialog.getProduct().getPrice() != priceStamp
+                || !editDialog.getProduct().getName().equals(nameStamp)) {
+            context.update(editDialog.getProduct());
         }
     }
 

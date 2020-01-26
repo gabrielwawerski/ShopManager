@@ -7,7 +7,10 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
-import sample.transaction.TransactionProperty;
+import sample.cash_register.bundle.BundleBuilder;
+import sample.cash_register.bundle.CashRegisterBundle;
+import sample.cash_register.CashRegisterProperty;
+import sample.cash_register.CashRegisterTask;
 
 import java.io.IOException;
 import java.net.URL;
@@ -20,6 +23,8 @@ public class CashRegisterController {
 
     //region Register 1
     @FXML
+    public Label cashRegisterId1;
+    @FXML
     public Label cashierLabel1;
     @FXML
     public Label cashierName1;
@@ -30,15 +35,15 @@ public class CashRegisterController {
     @FXML
     public Label currentTransactionId1;
     @FXML
-    public TableView<TransactionProperty> currentTransactionTable1;
+    public TableView<CashRegisterProperty> currentTransactionTable1;
     @FXML
-    public TableColumn<TransactionProperty, Integer> transactionIdCol1;
+    public TableColumn<CashRegisterProperty, Integer> transactionIdCol1;
     @FXML
-    public TableColumn<TransactionProperty, String> transactionProductCol1;
+    public TableColumn<CashRegisterProperty, String> transactionProductCol1;
     @FXML
-    public TableColumn<TransactionProperty, Integer> transactionQtyCol1;
+    public TableColumn<CashRegisterProperty, Integer> transactionQtyCol1;
     @FXML
-    public TableColumn<TransactionProperty, Double> transactionPriceCol1;
+    public TableColumn<CashRegisterProperty, Double> transactionPriceCol1;
     @FXML
     public Label transactionSubtotal1;
     @FXML
@@ -65,5 +70,21 @@ public class CashRegisterController {
         transactionProductCol1.setCellValueFactory(new PropertyValueFactory<>("productName"));
         transactionQtyCol1.setCellValueFactory(new PropertyValueFactory<>("productQuantity"));
         transactionPriceCol1.setCellValueFactory(new PropertyValueFactory<>("productPrice"));
+
+        CashRegisterBundle bundle = new BundleBuilder(cashRegisterId1)
+                .cashierName(cashierName1)
+                .transactionCount(transactionsCount1)
+                .currentTransactionId(currentTransactionId1)
+                .subtotalCost(transactionSubtotal1)
+                .tax(transactionTax1)
+                .totalCost(transactionTotal1)
+                .build();
+
+
+        CashRegisterTask task = new CashRegisterTask(bundle);
+
+        Thread thread = new Thread(task);
+        thread.setDaemon(true);
+        thread.start();
     }
 }

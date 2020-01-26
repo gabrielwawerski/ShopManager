@@ -3,8 +3,6 @@ package sample.transaction;
 import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
-import sample.transaction.util.Cost;
-import sample.transaction.util.ProductLog;
 
 @DatabaseTable
 public class Transaction {
@@ -20,6 +18,21 @@ public class Transaction {
     private String date;
 
     public Transaction() {
+    }
+
+    public Transaction(String cashier, ProductLog productLog, Cost cost, String date) {
+        this.cashier = cashier;
+        this.productLog = productLog;
+        this.cost = cost;
+        this.date = date;
+    }
+
+    public Transaction(int transactionId, String cashier, ProductLog productLog, Cost cost, String date) {
+        this.transactionId = transactionId;
+        this.cashier = cashier;
+        this.productLog = productLog;
+        this.cost = cost;
+        this.date = date;
     }
 
     public int getTransactionId() {
@@ -52,5 +65,13 @@ public class Transaction {
 
     public void setCost(Cost cost) {
         this.cost = cost;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 }

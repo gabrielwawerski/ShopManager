@@ -1,19 +1,19 @@
-package sample.transaction.util;
+package sample.transaction.single_product;
 
 import javafx.beans.property.*;
 
-public class ProductLogProperty {
+public class SingleProductProperty {
     private StringProperty name;
     private IntegerProperty quantity;
     private DoubleProperty price;
 
-    public ProductLogProperty(String name, int quantity, double price) {
+    public SingleProductProperty(String name, int quantity, double price) {
         this.name = new SimpleStringProperty(name);
         this.quantity = new SimpleIntegerProperty(quantity);
         this.price = new SimpleDoubleProperty(price);
     }
 
-    public String getName() {
+    public final String getName() {
         return name.get();
     }
 
@@ -21,11 +21,11 @@ public class ProductLogProperty {
         return name;
     }
 
-    public void setName(String name) {
+    public final void setName(String name) {
         this.name.set(name);
     }
 
-    public int getQuantity() {
+    public final int getQuantity() {
         return quantity.get();
     }
 
@@ -33,11 +33,11 @@ public class ProductLogProperty {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public final void setQuantity(int quantity) {
         this.quantity.set(quantity);
     }
 
-    public double getPrice() {
+    public final double getPrice() {
         return price.get();
     }
 
@@ -45,7 +45,7 @@ public class ProductLogProperty {
         return price;
     }
 
-    public void setPrice(double price) {
+    public final void setPrice(double price) {
         this.price.set(price);
     }
 }

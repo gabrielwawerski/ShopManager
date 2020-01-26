@@ -1,4 +1,4 @@
-package sample.transaction.util;
+package sample.transaction;
 
 import java.io.Serializable;
 

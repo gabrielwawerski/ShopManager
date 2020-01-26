@@ -1,20 +1,22 @@
-package sample.transaction.util;
+package sample.transaction.single_product;
 
 import sample.product.Product;
 
-public class ProductLog {
+import java.io.Serializable;
+
+public class SingleProduct implements Serializable {
     private final String name;
     private final int quantity;
     private final double price;
 
-    public ProductLog(String name, int quantity, double price) {
+    public SingleProduct(String name, int quantity, double price) {
         this.name = name;
         this.quantity = quantity;
         this.price = price;
     }
 
-    public static ProductLog fromProduct(Product product) {
-        return new ProductLog(product.getName(), product.getQuantity(), product.getPrice());
+    public static SingleProduct fromProduct(Product product) {
+        return new SingleProduct(product.getName(), product.getQuantity(), product.getPrice());
     }
 
     public String getName() {

@@ -22,11 +22,11 @@ public class ProductProperty {
         return id;
     }
 
-    public int getId() {
+    public final int getId() {
         return id.get();
     }
 
-    public void setId(int id) {
+    public final void setId(int id) {
         this.id.set(id);
     }
 
@@ -34,11 +34,11 @@ public class ProductProperty {
         return name;
     }
 
-    public String getName() {
+    public final String getName() {
         return name.get();
     }
 
-    public void setName(String name) {
+    public final void setName(String name) {
         this.name.set(name);
     }
 
@@ -46,11 +46,11 @@ public class ProductProperty {
         return quantity;
     }
 
-    public int getQuantity() {
+    public final int getQuantity() {
         return quantity.get();
     }
 
-    public void setQuantity(int quantity) {
+    public final void setQuantity(int quantity) {
         this.quantity.set(quantity);
     }
 
@@ -58,11 +58,11 @@ public class ProductProperty {
         return price;
     }
 
-    public double getPrice() {
+    public final double getPrice() {
         return price.get();
     }
 
-    public void setPrice(double price) {
+    public final void setPrice(double price) {
         this.price.set(price);
     }
 }

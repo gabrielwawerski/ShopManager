@@ -2,21 +2,21 @@ package sample.transaction;
 
 import javafx.beans.property.*;
 
-public class TransactionProperty {
+public class TransactionLogProperty {
     private StringProperty transactionDate;
     private IntegerProperty transactionId;
     private StringProperty cashier;
-    private DoubleProperty transactionPrice;
+    private DoubleProperty transactionCost;
 
-    public TransactionProperty() {
+    public TransactionLogProperty() {
     }
 
-    public TransactionProperty(String transactionDate, int transactionId,
-                               String cashier, double transactionPrice) {
+    public TransactionLogProperty(String transactionDate, int transactionId,
+                                  String cashier, double transactionCost) {
         this.transactionDate = new SimpleStringProperty(transactionDate);
         this.transactionId = new SimpleIntegerProperty(transactionId);
         this.cashier = new SimpleStringProperty(cashier);
-        this.transactionPrice = new SimpleDoubleProperty(transactionPrice);
+        this.transactionCost = new SimpleDoubleProperty(transactionCost);
     }
 
     public final String getTransactionDate() {
@@ -55,15 +55,15 @@ public class TransactionProperty {
         this.cashier.set(cashier);
     }
 
-    public final double getTransactionPrice() {
-        return transactionPrice.get();
+    public final double getTransactionCost() {
+        return transactionCost.get();
     }
 
-    public DoubleProperty transactionPriceProperty() {
-        return transactionPrice;
+    public DoubleProperty transactionCostProperty() {
+        return transactionCost;
     }
 
-    public final void setTransactionPrice(double transactionPrice) {
-        this.transactionPrice.set(transactionPrice);
+    public final void setTransactionCost(double transactionCost) {
+        this.transactionCost.set(transactionCost);
     }
 }

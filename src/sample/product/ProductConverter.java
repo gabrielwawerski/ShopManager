@@ -10,4 +10,7 @@ public final class ProductConverter {
         return new ProductProperty(product.getId(), product.getName(),
                 product.getQuantity(), product.getPrice());
     }
+
+    private ProductConverter() {
+    }
 }

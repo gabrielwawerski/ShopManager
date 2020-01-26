@@ -4,6 +4,7 @@ import com.j256.ormlite.dao.CloseableWrappedIterable;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import sample.product.Product;
+import sample.transaction.Transaction;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 public class DatabaseHandler {
     private static DatabaseConnection db;
     private static Dao<Product, Integer> productDao;
+    private static Dao<Transaction, Integer> transactionDao;
 
     private static DatabaseHandler instance;
 
@@ -24,6 +26,14 @@ public class DatabaseHandler {
             db = new DatabaseConnection();
         }
         return instance;
+    }
+
+    public void create(Transaction transaction) {
+        try {
+            transactionDao.create(transaction);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public void create(Product product) {
@@ -68,7 +78,7 @@ public class DatabaseHandler {
         }
     }
 
-    public Product findProductDao(Product product) {
+    public Product findDbProduct(Product product) {
         CloseableWrappedIterable<Product> wrappedIterable = productDao.getWrappedIterable();
         Product foundProduct = null;
 
@@ -97,10 +107,29 @@ public class DatabaseHandler {
         db.connect();
         try {
             productDao = DaoManager.createDao(db.getConnectionSource(), Product.class);
+            transactionDao = DaoManager.createDao(db.getConnectionSource(), Transaction.class);
         } catch (SQLException e) {
             e.printStackTrace();
         }
         System.out.println("Connected to database.");
+    }
+
+    public ArrayList<Transaction> getTransactionArrayList() {
+        ArrayList<Transaction> transactions = new ArrayList<>();
+        CloseableWrappedIterable<Transaction> wrappedIterable = transactionDao.getWrappedIterable();
+
+        try {
+            for (Transaction x : wrappedIterable) {
+                transactions.add(x);
+            }
+            return transactions;
+        } finally {
+            try {
+                wrappedIterable.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public void initDatabase() {
