@@ -39,7 +39,7 @@
                         </font>
                     </Label>
                 </AnchorPane>
-                <TableView fx:id="currentTransactionTable1" focusTraversable="false" layoutX="12.0" layoutY="85.0" pickOnBounds="false" prefHeight="170.0">
+                <TableView fx:id="transactionProductLog1" focusTraversable="false" layoutX="12.0" layoutY="85.0" pickOnBounds="false" prefHeight="170.0">
                     <columns>
                         <TableColumn fx:id="transactionIdCol1" editable="false" prefWidth="30.130493819713593" resizable="false" sortable="false" text="#" />
                         <TableColumn fx:id="transactionProductCol1" editable="false" prefWidth="168.91301727294922" resizable="false" sortable="false" text="Product" />

@@ -35,7 +35,7 @@ public class CashRegisterController {
     @FXML
     public Label currentTransactionId1;
     @FXML
-    public TableView<CashRegisterProperty> currentTransactionTable1;
+    public TableView<CashRegisterProperty> transactionProductLog1;
     @FXML
     public TableColumn<CashRegisterProperty, Integer> transactionIdCol1;
     @FXML
@@ -81,7 +81,7 @@ public class CashRegisterController {
                 .build();
 
 
-        CashRegisterTask task = new CashRegisterTask(bundle);
+        CashRegisterTask task = new CashRegisterTask();
 
         Thread thread = new Thread(task);
         thread.setDaemon(true);

@@ -21,12 +21,22 @@ public final class TransactionBuilder {
     }
 
     public Transaction build() {
+        calculateCost();
+        getDate();
+
         Transaction transaction = new Transaction();
         transaction.setProductLog(productLog);
         transaction.setCost(Cost.of(subtotalCost, totalCost));
         transaction.setDate("DummyDate");
 
         return transaction;
+    }
+
+    private void calculateCost() {
+        // set subtotalcost, totalcost
+    }
+
+    private void getDate() {
     }
 
     public void addProduct() {

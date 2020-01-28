@@ -1,38 +1,39 @@
 package sample.cash_register;
 
-import javafx.application.Platform;
+import javafx.beans.property.*;
 import javafx.concurrent.Task;
-import javafx.scene.control.Label;
-import sample.cash_register.bundle.CashRegisterBundle;
 import sample.transaction.TransactionBuilder;
 
 // 4 kasy - kazda oddzielny watek?
 public class CashRegisterTask extends Task<Void> {
-    private Label cashRegisterId;
-    private Label cashierName;
-    private Label transactionCount;
-    private Label currentTransactionId;
-    private Label subtotalCost;
-    private Label tax;
-    private Label totalCost;
+    private StringProperty cashRegisterId;
+    private StringProperty cashierName;
+    private StringProperty transactionCount;
+    private StringProperty currentTransactionId;
+    private DoubleProperty subtotalCost;
+    private DoubleProperty tax;
+    private DoubleProperty totalCost;
 
-    public CashRegisterTask(CashRegisterBundle cashRegisterBundle) {
-        cashRegisterId = cashRegisterBundle.getCashRegisterId();
-        cashierName = cashRegisterBundle.getCashierName();
-        transactionCount = cashRegisterBundle.getTransactionCount();
-        currentTransactionId = cashRegisterBundle.getCurrentTransactionId();
-        subtotalCost = cashRegisterBundle.getSubtotalCost();
-        tax = cashRegisterBundle.getTax();
-        totalCost = cashRegisterBundle.getTotalCost();
+
+    public CashRegisterTask() {
     }
 
     private void init() {
+        initProperties();
         TransactionBuilder builder = new TransactionBuilder();
 
-        Platform.runLater(() -> {
-            cashierName.setText(CashRegisterHelper.randomCashierName());
-            transactionCount.setText("0");
-        });
+        cashierName.set(CashRegisterHelper.randomCashierName());
+        transactionCount.set("0");
+    }
+
+    private void initProperties() {
+        cashRegisterId = new SimpleStringProperty();
+        cashierName = new SimpleStringProperty();
+        transactionCount = new SimpleStringProperty();
+        currentTransactionId = new SimpleStringProperty();
+        subtotalCost = new SimpleDoubleProperty();
+        tax = new SimpleDoubleProperty();
+        totalCost = new SimpleDoubleProperty();
     }
 
     @Override
@@ -40,7 +41,6 @@ public class CashRegisterTask extends Task<Void> {
         init();
 
         while (true) {
-
 
 
             //region proper thread.sleep()
@@ -55,5 +55,89 @@ public class CashRegisterTask extends Task<Void> {
             //endregion
         }
 //            return null;
+    }
+
+    public String getCashRegisterId() {
+        return cashRegisterId.get();
+    }
+
+    public StringProperty cashRegisterIdProperty() {
+        return cashRegisterId;
+    }
+
+    public void setCashRegisterId(String cashRegisterId) {
+        this.cashRegisterId.set(cashRegisterId);
+    }
+
+    public String getCashierName() {
+        return cashierName.get();
+    }
+
+    public StringProperty cashierNameProperty() {
+        return cashierName;
+    }
+
+    public void setCashierName(String cashierName) {
+        this.cashierName.set(cashierName);
+    }
+
+    public String getTransactionCount() {
+        return transactionCount.get();
+    }
+
+    public StringProperty transactionCountProperty() {
+        return transactionCount;
+    }
+
+    public void setTransactionCount(String transactionCount) {
+        this.transactionCount.set(transactionCount);
+    }
+
+    public String getCurrentTransactionId() {
+        return currentTransactionId.get();
+    }
+
+    public StringProperty currentTransactionIdProperty() {
+        return currentTransactionId;
+    }
+
+    public void setCurrentTransactionId(String currentTransactionId) {
+        this.currentTransactionId.set(currentTransactionId);
+    }
+
+    public double getSubtotalCost() {
+        return subtotalCost.get();
+    }
+
+    public DoubleProperty subtotalCostProperty() {
+        return subtotalCost;
+    }
+
+    public void setSubtotalCost(double subtotalCost) {
+        this.subtotalCost.set(subtotalCost);
+    }
+
+    public double getTax() {
+        return tax.get();
+    }
+
+    public DoubleProperty taxProperty() {
+        return tax;
+    }
+
+    public void setTax(double tax) {
+        this.tax.set(tax);
+    }
+
+    public double getTotalCost() {
+        return totalCost.get();
+    }
+
+    public DoubleProperty totalCostProperty() {
+        return totalCost;
+    }
+
+    public void setTotalCost(double totalCost) {
+        this.totalCost.set(totalCost);
     }
 }
