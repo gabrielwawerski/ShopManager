@@ -6,7 +6,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
-import sample.database.DatabaseHandler;
 
 import java.io.IOException;
 
@@ -17,22 +16,12 @@ public class MainWindowController {
     public Button cashRegistersButton;
     @FXML
     public Button transactionsButton;
-    @FXML
-    public Button databaseButton;
-
-    private boolean isConnected;
-    private DatabaseHandler db;
 
     @FXML
     private void initialize() {
-        db = DatabaseHandler.getInstance();
-        db.connect();
-        isConnected = true;
     }
 
     public void handleInventoryButton(ActionEvent actionEvent) {
-        db.initDatabase();
-
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("view/Inventory.fxml"));
             Stage stage = (Stage) inventoryButton.getScene().getWindow();
@@ -57,17 +46,14 @@ public class MainWindowController {
     }
 
     public void handleTransactionsButton(ActionEvent actionEvent) {
-    }
-
-    public void handleDatabaseButton(ActionEvent actionEvent) {
-        if (isConnected) {
-            databaseButton.setText("Connect DB");
-            db.close();
-            isConnected = false;
-        } else {
-            databaseButton.setText("Disconnect DB");
-            db.connect();
-            isConnected = true;
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("view/Transactions.fxml"));
+            Stage stage = (Stage) transactionsButton.getScene().getWindow();
+            Scene scene = new Scene(loader.load());
+            stage.setResizable(false);
+            stage.setScene(scene);
+        } catch (IOException io) {
+            io.printStackTrace();
         }
     }
 }

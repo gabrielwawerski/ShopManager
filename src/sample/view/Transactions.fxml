@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane fx:id="borderPane" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.TransactionsController">
+   <center>
+      <HBox spacing="5.0">
+         <children>
+            <TableView fx:id="transactionTable" focusTraversable="false">
+              <columns>
+                  <TableColumn fx:id="dateColumn" prefWidth="93.4956905418357" text="Date" />
+                <TableColumn fx:id="idColumn" prefWidth="75.0" text="ID" />
+                <TableColumn fx:id="cashierColumn" prefWidth="130.35651397705078" text="Cashier" />
+                  <TableColumn fx:id="costColumn" prefWidth="79.59996032714844" text="Cost" />
+              </columns>
+            </TableView>
+            <VBox>
+               <children>
+                  <GridPane nodeOrientation="LEFT_TO_RIGHT">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Label fx:id="transactionId" text="Transaction ID" GridPane.columnSpan="2147483647">
+                           <font>
+                              <Font size="15.0" />
+                           </font></Label>
+                        <Label text="Cashier" GridPane.rowIndex="2" />
+                        <Label text="Date" GridPane.rowIndex="1" />
+                        <Label fx:id="cashierName" text="cashierName" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Label fx:id="date" text="date" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label text="Total Cost" GridPane.rowIndex="5" />
+                        <Label fx:id="totalCost" text="totalCost" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                        <Label text="Tax" GridPane.rowIndex="4" />
+                        <Label fx:id="taxCost" text="taxCost" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <Label text="Subtotal" GridPane.rowIndex="3" />
+                        <Label fx:id="subtotalCost" text="subtotalCost" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                     </children>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <padding>
+                        <Insets bottom="5.0" />
+                     </padding>
+                  </GridPane>
+                  <Label text="Products sold:">
+                     <padding>
+                        <Insets bottom="2.0" />
+                     </padding>
+                  </Label>
+                  <TableView focusTraversable="false" prefHeight="242.0" prefWidth="250.0">
+                    <columns>
+                      <TableColumn prefWidth="128.53039568662643" text="Name" />
+                      <TableColumn prefWidth="39.382568359375" text="Qty" />
+                        <TableColumn prefWidth="78.46955128314616" text="Price" />
+                    </columns>
+                  </TableView>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+   </center>
+   <padding>
+      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+   </padding>
+</BorderPane>

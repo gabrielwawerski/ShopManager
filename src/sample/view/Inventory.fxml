@@ -1,35 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?><?import javafx.scene.control.*?><?import javafx.scene.layout.*?>
 
-<AnchorPane fx:id="anchorPane" prefHeight="500.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.InventoryController">
-    <HBox alignment="CENTER_LEFT" layoutX="28.0" layoutY="14.0" spacing="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
-        <opaqueInsets>
-            <Insets />
-        </opaqueInsets>
-        <Button fx:id="backButton" focusTraversable="false" mnemonicParsing="false" onAction="#handleBackButton" text="&lt;">
-            <font>
-              <Font name="Symbol" size="12.0" />
-            </font>
-        </Button>
-        <Button disable="true" focusTraversable="false" mnemonicParsing="false" prefWidth="105.0" text="Inventory" />
-        <Button focusTraversable="false" mnemonicParsing="false" onAction="#handleCashRegistersButton" prefWidth="115.0" text="Cash Registers" />
-        <Button focusTraversable="false" mnemonicParsing="false" onAction="#handleTransactionsButton" prefWidth="105.0" text="Transactions" />
-    </HBox>
-   <TableView fx:id="productTable" focusTraversable="false" layoutY="81.0" pickOnBounds="false" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="60.0">
-     <columns>
-       <TableColumn fx:id="idColumn" editable="false" prefWidth="44.13043028116226" resizable="false" text="ID" />
-       <TableColumn fx:id="nameColumn" prefWidth="156.0956802368164" resizable="false" text="Name" />
-         <TableColumn fx:id="quantityColumn" prefWidth="85.156494140625" resizable="false" text="Quantity" />
-         <TableColumn fx:id="priceColumn" prefWidth="92.49566650390625" resizable="false" text="Price" />
-     </columns>
-      <columnResizePolicy>
-         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-      </columnResizePolicy>
-   </TableView>
-   <Button fx:id="addDeliveryButton" focusTraversable="false" layoutX="10.0" layoutY="439.0" mnemonicParsing="false" onAction="#handleAddDelivery" prefWidth="120.0" text="Add Delivery" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" />
-   <Button fx:id="editButton" focusTraversable="false" layoutX="301.0" layoutY="439.0" mnemonicParsing="false" onAction="#handleEditEntry" prefWidth="85.0" text="Edit" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" />
-</AnchorPane>
+<BorderPane fx:id="borderPane" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1"
+    fx:controller="sample.controller.InventoryController">
+    <padding>
+        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+    </padding>
+    <center>
+        <AnchorPane BorderPane.alignment="CENTER">
+            <VBox spacing="5.0">
+                <TableView fx:id="productTable" editable="true" focusTraversable="false" pickOnBounds="false">
+                    <columns>
+                        <TableColumn fx:id="idColumn" editable="false" prefWidth="44.13043028116226" resizable="false"
+                            text="ID" />
+                        <TableColumn fx:id="nameColumn" prefWidth="156.0956802368164" resizable="false" text="Name" />
+                        <TableColumn fx:id="quantityColumn" prefWidth="85.156494140625" resizable="false"
+                            text="Quantity" />
+                        <TableColumn fx:id="priceColumn" prefWidth="92.49566650390625" resizable="false" text="Price" />
+                    </columns>
+                    <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                    </columnResizePolicy>
+                </TableView>
+                <AnchorPane>
+                    <Button fx:id="editButton" alignment="CENTER" contentDisplay="CENTER" focusTraversable="false"
+                        layoutX="295.0" layoutY="1.0" mnemonicParsing="false" onAction="#handleEditEntry"
+                        prefWidth="85.0" text="Edit" />
+                    <Button fx:id="addDeliveryButton" focusTraversable="false" layoutY="1.0" mnemonicParsing="false"
+                        onAction="#handleAddDelivery" prefWidth="120.0" text="Add Delivery" />
+                </AnchorPane>
+            </VBox>
+        </AnchorPane>
+    </center>
+</BorderPane>

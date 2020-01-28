@@ -1,17 +1,19 @@
 package sample.database;
 
+import com.j256.ormlite.dao.CloseableWrappedIterable;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import sample.product.Product;
-import sample.product.ProductConverter;
-import sample.product.ProductProperty;
+import sample.transaction.Transaction;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class DatabaseHandler {
     private static DatabaseConnection db;
     private static Dao<Product, Integer> productDao;
+    private static Dao<Transaction, Integer> transactionDao;
 
     private static DatabaseHandler instance;
 
@@ -24,6 +26,14 @@ public class DatabaseHandler {
             db = new DatabaseConnection();
         }
         return instance;
+    }
+
+    public void create(Transaction transaction) {
+        try {
+            transactionDao.create(transaction);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public void create(Product product) {
@@ -42,14 +52,6 @@ public class DatabaseHandler {
         }
     }
 
-    public void update(ProductProperty property) {
-        try {
-            productDao.update(ProductConverter.toProduct(property));
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
     public void refresh(Product product) {
         try {
             productDao.refresh(product);
@@ -60,41 +62,40 @@ public class DatabaseHandler {
 
     public ArrayList<Product> getProductArrayList() {
         ArrayList<Product> products = new ArrayList<>();
+        CloseableWrappedIterable<Product> wrappedIterable = productDao.getWrappedIterable();
 
-        for (Product x : productDao) {
-            products.add(x);
-        }
-        return products;
-    }
-
-    public ArrayList<ProductProperty> getPropertyArrayList() {
-        ArrayList<ProductProperty> properties = new ArrayList<>();
-
-        for (Product x : productDao) {
-            properties.add(ProductConverter.toProperty(x));
-        }
-        return properties;
-    }
-
-    public Product findProductDao(Product product) {
-        // TODO refactor to recommended way to do this (from ormlite pdf)
-        for (Product x : productDao) {
-            if (x.getId() == product.getId()) {
-                return x;
+        try {
+            for (Product x : wrappedIterable) {
+                products.add(x);
+            }
+            return products;
+        } finally {
+            try {
+                wrappedIterable.close();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
-        throw new IllegalArgumentException(); // TODO find better exception? add text
     }
 
-    public Product findProductDao(ProductProperty productProperty) {
-        Product product = ProductConverter.toProduct(productProperty);
+    public Product findDbProduct(Product product) {
+        CloseableWrappedIterable<Product> wrappedIterable = productDao.getWrappedIterable();
+        Product foundProduct = null;
 
-        for (Product x : productDao) {
-            if (x.getId() == product.getId()) {
-                return x;
+        try {
+            for (Product dbProduct : wrappedIterable) {
+                if (dbProduct.getId() == product.getId()) {
+                    foundProduct = dbProduct;
+                }
+            }
+            return foundProduct == null ? Product.EMPTY_PRODUCT : foundProduct;
+        } finally {
+            try {
+                wrappedIterable.close();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
-        return Product.EMPTY_PRODUCT;
     }
 
     public void close() {
@@ -106,10 +107,29 @@ public class DatabaseHandler {
         db.connect();
         try {
             productDao = DaoManager.createDao(db.getConnectionSource(), Product.class);
+            transactionDao = DaoManager.createDao(db.getConnectionSource(), Transaction.class);
         } catch (SQLException e) {
             e.printStackTrace();
         }
         System.out.println("Connected to database.");
+    }
+
+    public ArrayList<Transaction> getTransactionArrayList() {
+        ArrayList<Transaction> transactions = new ArrayList<>();
+        CloseableWrappedIterable<Transaction> wrappedIterable = transactionDao.getWrappedIterable();
+
+        try {
+            for (Transaction x : wrappedIterable) {
+                transactions.add(x);
+            }
+            return transactions;
+        } finally {
+            try {
+                wrappedIterable.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public void initDatabase() {

@@ -21,12 +21,6 @@ public class Product {
     public Product() {
     }
 
-    public Product(String name, int quantity, double price) {
-        this.name = name;
-        this.quantity = quantity;
-        this.price = price;
-    }
-
     public Product(int id, String name, int quantity, double price) {
         this.id = id;
         this.name = name;
