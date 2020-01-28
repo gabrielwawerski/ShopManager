@@ -15,6 +15,8 @@ public class Product {
     private double price;
 
     public static final Product EMPTY_PRODUCT = new Product(999999);
+    
+    // TODO add properties here, instead of ProductProperties class??
 
     public Product() {
     }
