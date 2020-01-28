@@ -13,6 +13,11 @@ public class Product {
     private int quantity;
     @DatabaseField
     private double price;
+    
+    private IntegerProperty idProperty;
+    private StringProperty nameProperty;
+    private IntegerProperty quantityProperty;
+    private DoubleProperty priceProperty;
 
     public static final Product EMPTY_PRODUCT = new Product(999999);
     
@@ -26,6 +31,12 @@ public class Product {
         this.name = name;
         this.quantity = quantity;
         this.price = price;
+        
+        idProperty = new SimpleIntegerProperty(id);
+        nameProperty = new SimpleStringProperty(name);
+        quantityProperty = new SimpleIntegerProperty(quantity);
+        priceProperty = new SimpleDoubleProperty(price);
+        
     }
 
     private Product(int id) {
