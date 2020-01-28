@@ -89,7 +89,13 @@ public class DatabaseHandler {
                     foundProduct = dbProduct;
                 }
             }
-            return foundProduct == null ? Product.EMPTY_PRODUCT : foundProduct;
+
+            if (foundProduct == null) {
+                return Product.EMPTY_PRODUCT;
+            } else {
+                foundProduct.init();
+                return foundProduct;
+            }
         } finally {
             try {
                 wrappedIterable.close();
