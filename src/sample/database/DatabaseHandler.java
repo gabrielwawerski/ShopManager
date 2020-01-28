@@ -62,16 +62,17 @@ public class DatabaseHandler {
 
     public ArrayList<Product> getProductArrayList() {
         ArrayList<Product> products = new ArrayList<>();
-        CloseableWrappedIterable<Product> wrappedIterable = productDao.getWrappedIterable();
+        CloseableWrappedIterable<Product> productDaoIterable = productDao.getWrappedIterable();
 
         try {
-            for (Product x : wrappedIterable) {
-                products.add(x);
+            for (Product product : productDaoIterable) {
+                product.init();
+                products.add(product);
             }
             return products;
         } finally {
             try {
-                wrappedIterable.close();
+                productDaoIterable.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -84,7 +85,7 @@ public class DatabaseHandler {
 
         try {
             for (Product dbProduct : wrappedIterable) {
-                if (dbProduct.getId() == product.getId()) {
+                if (dbProduct.getIdProperty() == product.getIdProperty()) {
                     foundProduct = dbProduct;
                 }
             }

@@ -4,16 +4,16 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import sample.app.task.InitTransactionPropertiesTask;
 import sample.database.DatabaseHandler;
-import sample.app.task.InitProductPropertiesTask;
-import sample.product.ProductConverter;
-import sample.product.ProductProperty;
+import sample.product.Product;
 import sample.transaction.TransactionLogProperty;
 
 public class Context {
     public DatabaseHandler db;
     private static Context instance;
 
-    private ObservableList<ProductProperty> productProperties;
+    // TODO make helper class that updates database entry whenever value of Product object is changed!
+    // don't make direct calls to Product methods!!! (or update database inside it's methods?)
+    private ObservableList<Product> inventoryProducts;
     private ObservableList<TransactionLogProperty> transactionProperties;
 
     public static Context getInstance() {
@@ -33,19 +33,14 @@ public class Context {
     }
 
     private void initData() {
-        productProperties = FXCollections.observableArrayList();
+        inventoryProducts = FXCollections.observableArrayList();
         transactionProperties = FXCollections.observableArrayList();
         db = DatabaseHandler.getInstance();
         db.connect();
     }
 
     private void initInventory() {
-        InitProductPropertiesTask initProductsTask
-                = new InitProductPropertiesTask(productProperties, db.getProductArrayList());
-
-        Thread initProductsThread = new Thread(initProductsTask);
-        initProductsThread.setDaemon(true);
-        initProductsThread.start();
+        inventoryProducts = FXCollections.observableArrayList(db.getProductArrayList());
     }
 
     private void initTransactions() {
@@ -57,11 +52,11 @@ public class Context {
         initTransactionsThread.start();
     }
 
-    public ObservableList<ProductProperty> getProductProperties() {
-        return productProperties;
+    public ObservableList<Product> getInventoryProducts() {
+        return inventoryProducts;
     }
 
-    public void update(ProductProperty property) {
-        db.update(ProductConverter.toProduct(property));
+    public void update(Product property) {
+        db.update(property);
     }
 }

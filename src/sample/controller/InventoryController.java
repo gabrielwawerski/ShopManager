@@ -1,5 +1,6 @@
 package sample.controller;
 
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -16,7 +17,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import sample.Main;
 import sample.app.Context;
-import sample.product.ProductProperty;
+import sample.product.Product;
 
 import java.io.IOException;
 import java.net.URL;
@@ -32,15 +33,15 @@ public class InventoryController {
     public URL location;
 
     @FXML
-    public TableView<ProductProperty> productTable;
+    public TableView<Product> productTable;
     @FXML
-    public TableColumn<ProductProperty, Integer> idColumn;
+    public TableColumn<Product, Integer> idColumn;
     @FXML
-    public TableColumn<ProductProperty, String> nameColumn;
+    public TableColumn<Product, String> nameColumn;
     @FXML
-    public TableColumn<ProductProperty, Integer> quantityColumn;
+    public TableColumn<Product, Integer> quantityColumn;
     @FXML
-    public TableColumn<ProductProperty, Double> priceColumn;
+    public TableColumn<Product, Double> priceColumn;
 
     private Context context;
 
@@ -58,12 +59,12 @@ public class InventoryController {
         NavbarController navbarController = loader.getController();
         navbarController.disableButton(location.toString());
 
-        productTable.setItems(context.getProductProperties());
+        productTable.setItems(context.getInventoryProducts());
 
-        idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
-        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-        quantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
-        priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
+        idColumn.setCellValueFactory(new PropertyValueFactory<>("idProperty"));
+        nameColumn.setCellValueFactory(new PropertyValueFactory<>("nameProperty"));
+        quantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantityProperty"));
+        priceColumn.setCellValueFactory(new PropertyValueFactory<>("priceProperty"));
         editButton.setDisable(true);
         productTable.addEventFilter(MouseEvent.MOUSE_CLICKED, tableClicked);
     }
@@ -88,7 +89,7 @@ public class InventoryController {
             e.printStackTrace();
         }
 
-        ProductProperty selectedProduct = productTable.getSelectionModel().getSelectedItem();
+        Product selectedProduct = productTable.getSelectionModel().getSelectedItem();
         String nameStamp = selectedProduct.getName();
         double priceStamp = selectedProduct.getPrice();
 
@@ -108,7 +109,7 @@ public class InventoryController {
         // Show the dialog and wait until the user closes it
         dialogStage.showAndWait();
 
-        // check if data has changed, if it did, update database entry
+//         check if data has changed, if it did, update database entry
         if (editDialog.getProduct().getPrice() != priceStamp
                 || !editDialog.getProduct().getName().equals(nameStamp)) {
             context.update(editDialog.getProduct());

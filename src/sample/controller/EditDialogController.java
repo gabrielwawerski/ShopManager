@@ -4,7 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import sample.product.ProductProperty;
+import sample.product.Product;
 
 public class EditDialogController {
     @FXML
@@ -13,7 +13,7 @@ public class EditDialogController {
     public TextField priceTextField;
 
     private Stage dialogStage;
-    private ProductProperty product;
+    private Product product;
 
     public void handleOkButton(ActionEvent actionEvent) {
         // if price text field doesn't contain number, set it's text to original price
@@ -43,14 +43,14 @@ public class EditDialogController {
      * Sets fields info to product about to be edited.
      * @param product
      */
-    public void setProduct(ProductProperty product) {
+    public void setProduct(Product product) {
         this.product = product;
 
         nameTextField.setText(product.getName());
         priceTextField.setText(Double.toString(product.getPrice()));
     }
 
-    public ProductProperty getProduct() {
+    public Product getProduct() {
         return product;
     }
 }
