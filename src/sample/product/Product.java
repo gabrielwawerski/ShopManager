@@ -28,7 +28,7 @@ public class Product {
     }
 
     /**
-     * Needs to be called before binding, otherwise binding won't work. Needed because of ormlite implementation.
+     * Needs to be called when retrieving instances from database, otherwise binding won't work. Needed because of ormlite implementation.
      */
     public void init() {
         idProperty = new SimpleIntegerProperty(id);
