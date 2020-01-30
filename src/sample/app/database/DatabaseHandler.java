@@ -1,9 +1,9 @@
-package sample.database;
+package sample.app.database;
 
 import com.j256.ormlite.dao.CloseableWrappedIterable;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
-import sample.product.Product;
+import sample.app.product.Product;
 import sample.transaction.Transaction;
 
 import java.io.IOException;
@@ -84,18 +84,19 @@ public class DatabaseHandler {
         Product foundProduct = null;
 
         try {
+
             for (Product dbProduct : wrappedIterable) {
                 if (dbProduct.getIdProperty() == product.getIdProperty()) {
                     foundProduct = dbProduct;
                 }
             }
-
             if (foundProduct == null) {
                 return Product.EMPTY_PRODUCT;
             } else {
                 foundProduct.init();
                 return foundProduct;
             }
+
         } finally {
             try {
                 wrappedIterable.close();

@@ -1,4 +1,4 @@
-package sample.database;
+package sample.app.database;
 
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.support.ConnectionSource;

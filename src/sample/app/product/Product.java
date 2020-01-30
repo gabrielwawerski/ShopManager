@@ -1,4 +1,4 @@
-package sample.product;
+package sample.app.product;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
@@ -22,13 +22,12 @@ public class Product {
 
     public static final Product EMPTY_PRODUCT = new Product(999999);
 
-    // TODO add properties here, instead of ProductProperties class??
-
     public Product() {
     }
 
     /**
-     * Needs to be called when retrieving instances from database, otherwise binding won't work. Needed because of ormlite implementation.
+     * Needs to be called when retrieving instances from database, otherwise binding won't work.
+     * Needed because of ormlite implementation.
      */
     public void init() {
         idProperty = new SimpleIntegerProperty(id);
@@ -47,7 +46,6 @@ public class Product {
         nameProperty = new SimpleStringProperty(name);
         quantityProperty = new SimpleIntegerProperty(quantity);
         priceProperty = new SimpleDoubleProperty(price);
-
     }
 
     private Product(int id) {
@@ -64,7 +62,6 @@ public class Product {
 
     public int getId() {
         return id;
-        // TODO check if shouldn't be idProperty.get() instead
     }
 
     public void setId(int id) {
@@ -103,7 +100,8 @@ public class Product {
         return getId() + "  " + getName() + "  " + getQuantity() + "  " + getPrice();
     }
 
-    public int getIdProperty() {
+    //region Properties getters & setters
+    public final int getIdProperty() {
         return idProperty.get();
     }
 
@@ -111,11 +109,11 @@ public class Product {
         return idProperty;
     }
 
-    public void setIdProperty(int idProperty) {
+    public final void setIdProperty(int idProperty) {
         this.idProperty.set(idProperty);
     }
 
-    public String getNameProperty() {
+    public final String getNameProperty() {
         return nameProperty.get();
     }
 
@@ -123,11 +121,11 @@ public class Product {
         return nameProperty;
     }
 
-    public void setNameProperty(String nameProperty) {
+    public final void setNameProperty(String nameProperty) {
         this.nameProperty.set(nameProperty);
     }
 
-    public int getQuantityProperty() {
+    public final int getQuantityProperty() {
         return quantityProperty.get();
     }
 
@@ -135,11 +133,11 @@ public class Product {
         return quantityProperty;
     }
 
-    public void setQuantityProperty(int quantityProperty) {
+    public final void setQuantityProperty(int quantityProperty) {
         this.quantityProperty.set(quantityProperty);
     }
 
-    public double getPriceProperty() {
+    public final double getPriceProperty() {
         return priceProperty.get();
     }
 
@@ -147,7 +145,8 @@ public class Product {
         return priceProperty;
     }
 
-    public void setPriceProperty(double priceProperty) {
+    public final void setPriceProperty(double priceProperty) {
         this.priceProperty.set(priceProperty);
     }
+    //endregion
 }

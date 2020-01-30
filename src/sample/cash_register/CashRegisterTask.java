@@ -2,35 +2,42 @@ package sample.cash_register;
 
 import javafx.beans.property.*;
 import javafx.concurrent.Task;
+import sample.app.Context;
 import sample.transaction.TransactionBuilder;
 
 // 4 kasy - kazda oddzielny watek?
 public class CashRegisterTask extends Task<Void> {
-    private StringProperty cashRegisterId;
+    private IntegerProperty cashRegisterId;
     private StringProperty cashierName;
-    private StringProperty transactionCount;
-    private StringProperty currentTransactionId;
+    private IntegerProperty transactionCount;
+    private IntegerProperty currentTransactionId;
     private DoubleProperty subtotalCost;
     private DoubleProperty tax;
     private DoubleProperty totalCost;
 
+    private static int id = 1;
 
-    public CashRegisterTask() {
+    private final Context context;
+
+    public CashRegisterTask(Context context) {
+        this.context = context;
     }
 
     private void init() {
         initProperties();
         TransactionBuilder builder = new TransactionBuilder();
 
+        cashRegisterId.set(id++);
         cashierName.set(CashRegisterHelper.randomCashierName());
-        transactionCount.set("0");
+        transactionCount.set(0);
+        currentTransactionId.set(context.nextTransactionId());
     }
 
     private void initProperties() {
-        cashRegisterId = new SimpleStringProperty();
+        cashRegisterId = new SimpleIntegerProperty();
         cashierName = new SimpleStringProperty();
-        transactionCount = new SimpleStringProperty();
-        currentTransactionId = new SimpleStringProperty();
+        transactionCount = new SimpleIntegerProperty();
+        currentTransactionId = new SimpleIntegerProperty();
         subtotalCost = new SimpleDoubleProperty();
         tax = new SimpleDoubleProperty();
         totalCost = new SimpleDoubleProperty();
@@ -57,15 +64,15 @@ public class CashRegisterTask extends Task<Void> {
 //            return null;
     }
 
-    public String getCashRegisterId() {
+    public int getCashRegisterId() {
         return cashRegisterId.get();
     }
 
-    public StringProperty cashRegisterIdProperty() {
+    public IntegerProperty cashRegisterIdProperty() {
         return cashRegisterId;
     }
 
-    public void setCashRegisterId(String cashRegisterId) {
+    public void setCashRegisterId(int cashRegisterId) {
         this.cashRegisterId.set(cashRegisterId);
     }
 
@@ -81,27 +88,27 @@ public class CashRegisterTask extends Task<Void> {
         this.cashierName.set(cashierName);
     }
 
-    public String getTransactionCount() {
+    public int getTransactionCount() {
         return transactionCount.get();
     }
 
-    public StringProperty transactionCountProperty() {
+    public IntegerProperty transactionCountProperty() {
         return transactionCount;
     }
 
-    public void setTransactionCount(String transactionCount) {
+    public void setTransactionCount(int transactionCount) {
         this.transactionCount.set(transactionCount);
     }
 
-    public String getCurrentTransactionId() {
+    public int getCurrentTransactionId() {
         return currentTransactionId.get();
     }
 
-    public StringProperty currentTransactionIdProperty() {
+    public IntegerProperty currentTransactionIdProperty() {
         return currentTransactionId;
     }
 
-    public void setCurrentTransactionId(String currentTransactionId) {
+    public void setCurrentTransactionId(int currentTransactionId) {
         this.currentTransactionId.set(currentTransactionId);
     }
 

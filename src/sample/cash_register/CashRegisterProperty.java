@@ -8,40 +8,40 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class CashRegisterProperty {
-    private IntegerProperty id;
-    private StringProperty product;
+    private IntegerProperty productRow;
+    private StringProperty productName;
     private IntegerProperty quantity;
     private DoubleProperty price;
 
-    public CashRegisterProperty(int id, String product, int quantity, double price) {
-        this.id = new SimpleIntegerProperty(id);
-        this.product = new SimpleStringProperty(product);
+    public CashRegisterProperty(int productRow, String productName, int quantity, double price) {
+        this.productRow = new SimpleIntegerProperty(productRow);
+        this.productName = new SimpleStringProperty(productName);
         this.quantity = new SimpleIntegerProperty(quantity);
         this.price = new SimpleDoubleProperty(price);
     }
 
-    public final int getId() {
-        return id.get();
+    public final int getProductRow() {
+        return productRow.get();
     }
 
-    public IntegerProperty idProperty() {
-        return id;
+    public IntegerProperty productRowProperty() {
+        return productRow;
     }
 
-    public final void setId(int id) {
-        this.id.set(id);
+    public final void setProductRow(int productRow) {
+        this.productRow.set(productRow);
     }
 
-    public final String getProduct() {
-        return product.get();
+    public final String getProductName() {
+        return productName.get();
     }
 
-    public StringProperty productProperty() {
-        return product;
+    public StringProperty productNameProperty() {
+        return productName;
     }
 
-    public final void setProduct(String product) {
-        this.product.set(product);
+    public final void setProductName(String productName) {
+        this.productName.set(productName);
     }
 
     public final int getQuantity() {

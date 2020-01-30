@@ -1,7 +1,7 @@
 package sample.transaction;
 
-import sample.database.DatabaseHandler;
-import sample.product.Product;
+import sample.app.database.DatabaseHandler;
+import sample.app.product.Product;
 import sample.transaction.single_product.SingleProduct;
 import sample.util.Util;
 

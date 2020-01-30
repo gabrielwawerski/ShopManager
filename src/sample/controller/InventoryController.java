@@ -1,6 +1,5 @@
 package sample.controller;
 
-import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -17,7 +16,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import sample.Main;
 import sample.app.Context;
-import sample.product.Product;
+import sample.app.product.Product;
 
 import java.io.IOException;
 import java.net.URL;

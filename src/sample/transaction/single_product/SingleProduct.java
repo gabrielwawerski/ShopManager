@@ -1,6 +1,6 @@
 package sample.transaction.single_product;
 
-import sample.product.Product;
+import sample.app.product.Product;
 
 import java.io.Serializable;
 

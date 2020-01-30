@@ -5,7 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import sample.database.DatabaseHandler;
+import sample.app.database.DatabaseHandler;
 import sample.app.Context;
 
 // TODO split data from view / controller

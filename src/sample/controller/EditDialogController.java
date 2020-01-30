@@ -4,7 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import sample.product.Product;
+import sample.app.product.Product;
 
 public class EditDialogController {
     @FXML
