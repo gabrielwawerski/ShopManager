@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import sample.app.database.DatabaseHandler;
 import sample.app.product.Product;
+import sample.transaction.Transaction;
 
 public class Context {
     public DatabaseHandler db;
@@ -52,5 +53,12 @@ public class Context {
 
     public void update(Product property) {
         db.update(property);
+    }
+
+    public synchronized int nextTransactionId() {
+        return 0;
+    }
+
+    public void submitTransaction(Transaction transaction) {
     }
 }

@@ -23,26 +23,6 @@ public class CashRegisterTask extends Task<Void> {
         this.context = context;
     }
 
-    private void init() {
-        initProperties();
-        TransactionBuilder builder = new TransactionBuilder();
-
-        cashRegisterId.set(id++);
-        cashierName.set(CashRegisterHelper.randomCashierName());
-        transactionCount.set(0);
-        currentTransactionId.set(context.nextTransactionId());
-    }
-
-    private void initProperties() {
-        cashRegisterId = new SimpleIntegerProperty();
-        cashierName = new SimpleStringProperty();
-        transactionCount = new SimpleIntegerProperty();
-        currentTransactionId = new SimpleIntegerProperty();
-        subtotalCost = new SimpleDoubleProperty();
-        tax = new SimpleDoubleProperty();
-        totalCost = new SimpleDoubleProperty();
-    }
-
     @Override
     protected Void call() throws Exception {
         init();
@@ -62,6 +42,26 @@ public class CashRegisterTask extends Task<Void> {
             //endregion
         }
 //            return null;
+    }
+
+    private void init() {
+        initProperties();
+        TransactionBuilder builder = new TransactionBuilder();
+
+        cashRegisterId.set(id++);
+        cashierName.set(CashRegisterHelper.randomCashierName());
+        transactionCount.set(0);
+        currentTransactionId.set(context.nextTransactionId());
+    }
+
+    private void initProperties() {
+        cashRegisterId = new SimpleIntegerProperty();
+        cashierName = new SimpleStringProperty();
+        transactionCount = new SimpleIntegerProperty();
+        currentTransactionId = new SimpleIntegerProperty();
+        subtotalCost = new SimpleDoubleProperty();
+        tax = new SimpleDoubleProperty();
+        totalCost = new SimpleDoubleProperty();
     }
 
     public int getCashRegisterId() {
