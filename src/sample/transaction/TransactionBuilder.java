@@ -2,6 +2,7 @@ package sample.transaction;
 
 import sample.app.database.DatabaseHandler;
 import sample.app.product.Product;
+import sample.cash_register.CashRegisterProperty;
 import sample.transaction.single_product.SingleProduct;
 import sample.util.Util;
 
@@ -10,8 +11,9 @@ import java.util.ArrayList;
 public final class TransactionBuilder {
     private ProductLog productLog;
     private double subtotalCost;
-    private double totalCost;
+    private double totalCost = 0;
     private String date;
+    private int productRow = 1;
 
     private ArrayList<Product> databaseProducts;
 
@@ -32,6 +34,14 @@ public final class TransactionBuilder {
         return transaction;
     }
 
+    public void reset() {
+        productLog = new ProductLog();
+        subtotalCost = 0;
+        totalCost = 0;
+        date = "dummy";
+        productRow = 0;
+    }
+
     private void calculateCost() {
         // set subtotalcost, totalcost
     }
@@ -39,16 +49,19 @@ public final class TransactionBuilder {
     private void getDate() {
     }
 
-    public void addProduct() {
-        productLog.put(randomProduct());
-    }
-
-    private SingleProduct randomProduct() {
+    public CashRegisterProperty productScan() {
         Product dbProduct = databaseProducts.get(Util.random(0, databaseProducts.size()));
+        String name = dbProduct.getName();
         double price = dbProduct.getPrice();
         int quantity = randomQuantity();
+        productLog.put(new SingleProduct(name, quantity, price));
+        updateTotalCost(price);
 
-        return new SingleProduct(dbProduct.getName(), quantity, price);
+        return new CashRegisterProperty(productRow++, name, quantity, price);
+    }
+
+    private void updateTotalCost(double productPrice) {
+        totalCost += productPrice;
     }
 
     private int randomQuantity() {

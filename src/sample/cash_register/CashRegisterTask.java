@@ -1,23 +1,32 @@
 package sample.cash_register;
 
+import javafx.application.Platform;
 import javafx.beans.property.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import sample.app.Context;
 import sample.transaction.TransactionBuilder;
+import sample.util.Util;
 
 // 4 kasy - kazda oddzielny watek?
 public class CashRegisterTask extends Task<Void> {
-    private IntegerProperty cashRegisterId;
-    private StringProperty cashierName;
-    private IntegerProperty transactionCount;
-    private IntegerProperty currentTransactionId;
-    private DoubleProperty subtotalCost;
-    private DoubleProperty tax;
-    private DoubleProperty totalCost;
+    private ObservableList<CashRegisterProperty> transactionProductList;
 
     private static int id = 1;
 
     private final Context context;
+    private TransactionBuilder builder;
+
+    private StringProperty cashRegisterId;
+    private StringProperty cashierName;
+    private IntegerProperty transactionCount;
+    private IntegerProperty currentTransactionId;
+    private StringProperty subtotalCost;
+    private StringProperty tax;
+    private StringProperty totalCost;
+
+    private double _totalCost;
 
     public CashRegisterTask(Context context) {
         this.context = context;
@@ -28,55 +37,92 @@ public class CashRegisterTask extends Task<Void> {
         init();
 
         while (true) {
+            int i;
 
+            do {
+                sleep(200, 2000);
 
-            //region proper thread.sleep()
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException interrupted) {
-                if (isCancelled()) {
-                    updateMessage("Cancelled");
-//                    break;
-                }
-            }
-            //endregion
+                CashRegisterProperty property = builder.productScan();
+                transactionProductList.add(property);
+                _totalCost += property.getPrice();
+
+                Platform.runLater(() -> {
+                    totalCost.set(_totalCost + " zł");
+                });
+
+                sleep(1000, 3000);
+
+                i = Util.random(0, 20);
+            } while (i <= 10);
+            i = 0;
+            builder.build();
+            reset();
         }
 //            return null;
     }
 
+    private void reset() {
+        _totalCost = 0;
+        builder.reset();
+        transactionProductList.clear();
+    }
+
+    private void sleep(int sleepTimeMin, int sleepTimeMax) {
+        try {
+            Thread.sleep(Util.random(sleepTimeMin, sleepTimeMax));
+        } catch (InterruptedException interrupted) {
+            if (isCancelled()) {
+                updateMessage("Cancelled");
+//                    break;
+            }
+        }
+    }
+
+    public ObservableList<CashRegisterProperty> getTransactionProductList() {
+        return transactionProductList;
+    }
+
     private void init() {
         initProperties();
-        TransactionBuilder builder = new TransactionBuilder();
+        builder = new TransactionBuilder();
+        transactionProductList = FXCollections.observableArrayList();
+        _totalCost = 0;
 
-        cashRegisterId.set(id++);
-        cashierName.set(CashRegisterHelper.randomCashierName());
-        transactionCount.set(0);
-        currentTransactionId.set(context.nextTransactionId());
+        Platform.runLater(() -> {
+            cashRegisterId.set("Register " + getId());
+            cashierName.set(CashRegisterHelper.randomCashierName());
+            transactionCount.set(0);
+            currentTransactionId.set(context.getNextTransactionId());
+        });
     }
 
     private void initProperties() {
-        cashRegisterId = new SimpleIntegerProperty();
+        cashRegisterId = new SimpleStringProperty();
         cashierName = new SimpleStringProperty();
         transactionCount = new SimpleIntegerProperty();
         currentTransactionId = new SimpleIntegerProperty();
-        subtotalCost = new SimpleDoubleProperty();
-        tax = new SimpleDoubleProperty();
-        totalCost = new SimpleDoubleProperty();
+        subtotalCost = new SimpleStringProperty();
+        tax = new SimpleStringProperty();
+        totalCost = new SimpleStringProperty();
     }
 
-    public int getCashRegisterId() {
+    private int getId() {
+        return id++;
+    }
+
+    public final String getCashRegisterId() {
         return cashRegisterId.get();
     }
 
-    public IntegerProperty cashRegisterIdProperty() {
+    public StringProperty cashRegisterIdProperty() {
         return cashRegisterId;
     }
 
-    public void setCashRegisterId(int cashRegisterId) {
+    public final void setCashRegisterId(String cashRegisterId) {
         this.cashRegisterId.set(cashRegisterId);
     }
 
-    public String getCashierName() {
+    public final String getCashierName() {
         return cashierName.get();
     }
 
@@ -84,11 +130,11 @@ public class CashRegisterTask extends Task<Void> {
         return cashierName;
     }
 
-    public void setCashierName(String cashierName) {
+    public final void setCashierName(String cashierName) {
         this.cashierName.set(cashierName);
     }
 
-    public int getTransactionCount() {
+    public final int getTransactionCount() {
         return transactionCount.get();
     }
 
@@ -96,11 +142,11 @@ public class CashRegisterTask extends Task<Void> {
         return transactionCount;
     }
 
-    public void setTransactionCount(int transactionCount) {
+    public final void setTransactionCount(int transactionCount) {
         this.transactionCount.set(transactionCount);
     }
 
-    public int getCurrentTransactionId() {
+    public final int getCurrentTransactionId() {
         return currentTransactionId.get();
     }
 
@@ -108,43 +154,43 @@ public class CashRegisterTask extends Task<Void> {
         return currentTransactionId;
     }
 
-    public void setCurrentTransactionId(int currentTransactionId) {
+    public final void setCurrentTransactionId(int currentTransactionId) {
         this.currentTransactionId.set(currentTransactionId);
     }
 
-    public double getSubtotalCost() {
+    public final String getSubtotalCost() {
         return subtotalCost.get();
     }
 
-    public DoubleProperty subtotalCostProperty() {
+    public StringProperty subtotalCostProperty() {
         return subtotalCost;
     }
 
-    public void setSubtotalCost(double subtotalCost) {
+    public final void setSubtotalCost(String subtotalCost) {
         this.subtotalCost.set(subtotalCost);
     }
 
-    public double getTax() {
+    public final String getTax() {
         return tax.get();
     }
 
-    public DoubleProperty taxProperty() {
+    public StringProperty taxProperty() {
         return tax;
     }
 
-    public void setTax(double tax) {
+    public final void setTax(String tax) {
         this.tax.set(tax);
     }
 
-    public double getTotalCost() {
+    public final String getTotalCost() {
         return totalCost.get();
     }
 
-    public DoubleProperty totalCostProperty() {
+    public StringProperty totalCostProperty() {
         return totalCost;
     }
 
-    public void setTotalCost(double totalCost) {
+    public final void setTotalCost(String totalCost) {
         this.totalCost.set(totalCost);
     }
 }

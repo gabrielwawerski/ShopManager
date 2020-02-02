@@ -108,7 +108,7 @@ public class InventoryController {
         // Show the dialog and wait until the user closes it
         dialogStage.showAndWait();
 
-//         check if data has changed, if it did, update database entry
+//         check if data has changed, if it has, update database entry
         if (editDialog.getProduct().getPrice() != priceStamp
                 || !editDialog.getProduct().getName().equals(nameStamp)) {
             context.update(editDialog.getProduct());

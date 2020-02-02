@@ -1,6 +1,5 @@
 package sample.cash_register;
 
-import javafx.collections.ObservableList;
 import sample.util.Util;
 
 public final class CashRegisterHelper {
@@ -19,6 +18,5 @@ public final class CashRegisterHelper {
         return NAMES[Util.random(0, NAMES.length)];
     }
 
-    public ObservableList<CashRegisterProperty> getPropertyArrayList() {
-    }
+
 }

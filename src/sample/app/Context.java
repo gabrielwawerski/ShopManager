@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import sample.app.database.DatabaseHandler;
 import sample.app.product.Product;
+import sample.cash_register.CashRegisterTask;
 import sample.transaction.Transaction;
 
 public class Context {
@@ -13,6 +14,7 @@ public class Context {
     // TODO make helper class that updates database entry whenever value of Product object is changed!
     // don't make direct calls to Product methods!!! (or update database inside it's methods?)
     private ObservableList<Product> inventoryProducts;
+    private CashRegisterTask register1;
 
 //    private ObservableList<CashRegisterProperty> cashRegisterEntries;
 
@@ -26,7 +28,14 @@ public class Context {
     private Context() {
     }
 
+    public CashRegisterTask getRegister1() {
+        return register1;
+    }
+
     public void init() {
+        db = DatabaseHandler.getInstance();
+        db.connect();
+
         initData();
         initInventory();
         initCashRegisters();
@@ -35,8 +44,6 @@ public class Context {
 
     private void initData() {
         inventoryProducts = FXCollections.observableArrayList();
-        db = DatabaseHandler.getInstance();
-        db.connect();
     }
 
     private void initInventory() {
@@ -44,6 +51,10 @@ public class Context {
     }
 
     private void initCashRegisters() {
+        register1 = new CashRegisterTask(this);
+        Thread thread = new Thread(register1);
+        thread.setDaemon(true);
+        thread.start();
         // TODO start registers here; tasks?
     }
 
@@ -55,7 +66,7 @@ public class Context {
         db.update(property);
     }
 
-    public synchronized int nextTransactionId() {
+    public synchronized int getNextTransactionId() {
         return 0;
     }
 

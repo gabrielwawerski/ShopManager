@@ -27,9 +27,9 @@
                         <RowConstraints maxHeight="30.052174909912605" minHeight="10.0" prefHeight="30.052174909912605" vgrow="SOMETIMES" />
                         <RowConstraints maxHeight="30.052174909912605" minHeight="10.0" prefHeight="30.052174909912605" vgrow="SOMETIMES" />
                     </rowConstraints>
-                    <Label fx:id="cashierLabel1" text="Cashier" />
+                    <Label text="Cashier" />
                     <Label fx:id="cashierName1" GridPane.columnIndex="1" />
-                    <Label fx:id="transactionsLabel1" text="Transactions" GridPane.rowIndex="1" />
+                    <Label text="Transactions" GridPane.rowIndex="1" />
                     <Label fx:id="transactionsCount1" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                 </GridPane>
                 <AnchorPane layoutX="12.0" layoutY="63.0">
@@ -57,27 +57,13 @@
                     </columnConstraints>
                     <rowConstraints>
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
-                    <Label text="Subtotal">
-                        <font>
-                            <Font size="13.0" />
-                        </font>
-                    </Label>
-                    <Label fx:id="transactionSubtotal1" alignment="TOP_RIGHT" contentDisplay="RIGHT" GridPane.columnIndex="1">
-                        <font>
-                            <Font size="13.0" />
-                        </font>
-                    </Label>
-                    <Label text="Tax (23%)" GridPane.rowIndex="1" />
-                    <Label fx:id="transactionTax1" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                    <Label text="Total" GridPane.rowIndex="2">
+                    <Label text="Total">
                         <font>
                             <Font size="15.0" />
                         </font>
                     </Label>
-                    <Label fx:id="transactionTotal1" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                    <Label fx:id="transactionTotal1" GridPane.columnIndex="1">
                         <font>
                             <Font size="15.0" />
                         </font>
