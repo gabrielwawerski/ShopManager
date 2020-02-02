@@ -40,20 +40,34 @@ public class CashRegisterTask extends Task<Void> {
             int i;
 
             do {
-                sleep(200, 2000);
+                sleep(200, 1000);
 
                 CashRegisterProperty property = builder.productScan();
-                transactionProductList.add(property);
-                _totalCost += property.getPrice();
+
+                boolean found = false;
+
+                for (CashRegisterProperty x : transactionProductList) {
+                    if (x.getProductName().equals(property.getProductName())) {
+                        System.out.println("CONTAINS!: " + property.getProductName());
+                        x.setQuantity(x.getQuantity() + property.getQuantity());
+                        found = true;
+                    }
+                }
+
+
+                if (!found) {
+                    transactionProductList.add(property);
+                }
+
 
                 Platform.runLater(() -> {
-                    totalCost.set(_totalCost + " zł");
+                    totalCost.set(builder.getTotalCost() + " zł");
                 });
 
-                sleep(1000, 3000);
+                sleep(200, 1500);
 
                 i = Util.random(0, 20);
-            } while (i <= 10);
+            } while (i <= 18);
             i = 0;
             builder.build();
             reset();
@@ -62,7 +76,9 @@ public class CashRegisterTask extends Task<Void> {
     }
 
     private void reset() {
-        _totalCost = 0;
+        Platform.runLater(() -> {
+            totalCost.set("");
+        });
         builder.reset();
         transactionProductList.clear();
     }

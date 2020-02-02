@@ -6,8 +6,8 @@ import java.io.Serializable;
 
 public class SingleProduct implements Serializable {
     private final String name;
-    private final int quantity;
-    private final double price;
+    private int quantity;
+    private double price;
 
     public SingleProduct(String name, int quantity, double price) {
         this.name = name;
@@ -25,6 +25,10 @@ public class SingleProduct implements Serializable {
 
     public int getQuantity() {
         return quantity;
+    }
+
+    public void addQuantity(int quantity) {
+        this.quantity += quantity;
     }
 
     public double getPrice() {

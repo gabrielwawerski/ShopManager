@@ -12,22 +12,22 @@ public class Transaction {
     private String cashier;
     @DatabaseField(dataType = DataType.SERIALIZABLE)
     private ProductLog productLog;
-    @DatabaseField(dataType = DataType.SERIALIZABLE)
-    private Cost cost;
+    @DatabaseField
+    private double cost;
     @DatabaseField
     private String date;
 
     public Transaction() {
     }
 
-    public Transaction(String cashier, ProductLog productLog, Cost cost, String date) {
+    public Transaction(String cashier, ProductLog productLog, double cost, String date) {
         this.cashier = cashier;
         this.productLog = productLog;
         this.cost = cost;
         this.date = date;
     }
 
-    public Transaction(int transactionId, String cashier, ProductLog productLog, Cost cost, String date) {
+    public Transaction(int transactionId, String cashier, ProductLog productLog, double cost, String date) {
         this.transactionId = transactionId;
         this.cashier = cashier;
         this.productLog = productLog;
@@ -59,11 +59,11 @@ public class Transaction {
         this.productLog = productLog;
     }
 
-    public Cost getCost() {
+    public double getCost() {
         return cost;
     }
 
-    public void setCost(Cost cost) {
+    public void setCost(double cost) {
         this.cost = cost;
     }
 

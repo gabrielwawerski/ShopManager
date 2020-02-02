@@ -28,7 +28,7 @@ public final class TransactionBuilder {
 
         Transaction transaction = new Transaction();
         transaction.setProductLog(productLog);
-        transaction.setCost(Cost.of(subtotalCost, totalCost));
+        transaction.setCost(totalCost);
         transaction.setDate("DummyDate");
 
         return transaction;
@@ -49,19 +49,28 @@ public final class TransactionBuilder {
     private void getDate() {
     }
 
+    // TODO unikatowe przedmioty - po zeskanowaniu nie powinien sie powtarzac na liscie -
+    // - chyba ze dodac quantity do istniejacego produktu
     public CashRegisterProperty productScan() {
         Product dbProduct = databaseProducts.get(Util.random(0, databaseProducts.size()));
         String name = dbProduct.getName();
         double price = dbProduct.getPrice();
         int quantity = randomQuantity();
-        productLog.put(new SingleProduct(name, quantity, price));
-        updateTotalCost(price);
+
+        SingleProduct scannedProduct = new SingleProduct(name, quantity, price);
+
+        if (productLog.contains(scannedProduct)) {
+            productLog.addQuantity(scannedProduct);
+        }
+
+        productLog.put(scannedProduct);
+        updateTotalCost(quantity, price);
 
         return new CashRegisterProperty(productRow++, name, quantity, price);
     }
 
-    private void updateTotalCost(double productPrice) {
-        totalCost += productPrice;
+    private void updateTotalCost(int productQuantity, double productPrice) {
+        totalCost += productPrice * productQuantity;
     }
 
     private int randomQuantity() {
@@ -80,5 +89,9 @@ public final class TransactionBuilder {
             }
         }
         return quantity;
+    }
+
+    public double getTotalCost() {
+        return totalCost;
     }
 }

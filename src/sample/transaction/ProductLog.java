@@ -19,4 +19,30 @@ public class ProductLog implements Serializable {
     public ArrayList<SingleProduct> get() {
         return products;
     }
+
+    public boolean contains(SingleProduct product) {
+        for (SingleProduct x : products) {
+            if (x.getName().equals(product.getName())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void addQuantity(SingleProduct scannedProduct) {
+        if (!this.contains(scannedProduct)) {
+            throw new IllegalArgumentException("Product: " + scannedProduct.getName() + " is not in product log!");
+        }
+
+        retrieve(scannedProduct.getName()).addQuantity(scannedProduct.getQuantity());
+    }
+
+    private SingleProduct retrieve(String productName) {
+        for (SingleProduct x : products) {
+            if (x.getName().equals(productName)) {
+                return x;
+            }
+        }
+        throw new IllegalArgumentException("Error! fixme!");
+    }
 }
