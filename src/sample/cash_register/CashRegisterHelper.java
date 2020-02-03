@@ -15,7 +15,7 @@ public final class CashRegisterHelper {
     };
 
     public static String randomCashierName() {
-        return NAMES[Util.random(0, NAMES.length)];
+        return NAMES[Util.random(0, NAMES.length - 1)];
     }
 
 

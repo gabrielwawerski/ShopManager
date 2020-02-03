@@ -10,7 +10,6 @@ import java.util.ArrayList;
 
 public final class TransactionBuilder {
     private ProductLog productLog;
-    private double subtotalCost;
     private double totalCost = 0;
     private String date;
     private int productRow = 1;
@@ -23,30 +22,27 @@ public final class TransactionBuilder {
     }
 
     public Transaction build() {
-        calculateCost();
-        getDate();
-
         Transaction transaction = new Transaction();
         transaction.setProductLog(productLog);
-        transaction.setCost(totalCost);
-        transaction.setDate("DummyDate");
+        transaction.setCost(calculateCost());
+        transaction.setDate(getDate());
 
         return transaction;
     }
 
     public void reset() {
         productLog = new ProductLog();
-        subtotalCost = 0;
         totalCost = 0;
         date = "dummy";
-        productRow = 0;
+        productRow = 1;
     }
 
-    private void calculateCost() {
-        // set subtotalcost, totalcost
+    private double calculateCost() {
+        return 0;
     }
 
-    private void getDate() {
+    private String getDate() {
+        return null;
     }
 
     // TODO unikatowe przedmioty - po zeskanowaniu nie powinien sie powtarzac na liscie -
@@ -54,8 +50,8 @@ public final class TransactionBuilder {
     public CashRegisterProperty productScan() {
         Product dbProduct = databaseProducts.get(Util.random(0, databaseProducts.size()));
         String name = dbProduct.getName();
-        double price = dbProduct.getPrice();
         int quantity = randomQuantity();
+        double price = dbProduct.getPrice();
 
         SingleProduct scannedProduct = new SingleProduct(name, quantity, price);
 

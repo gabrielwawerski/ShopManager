@@ -29,6 +29,7 @@ public class SingleProduct implements Serializable {
 
     public void addQuantity(int quantity) {
         this.quantity += quantity;
+        this.price *= this.quantity;
     }
 
     public double getPrice() {

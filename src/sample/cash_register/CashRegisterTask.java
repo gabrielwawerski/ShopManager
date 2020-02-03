@@ -26,37 +26,50 @@ public class CashRegisterTask extends Task<Void> {
     private StringProperty tax;
     private StringProperty totalCost;
 
-    private double _totalCost;
-
     public CashRegisterTask(Context context) {
         this.context = context;
     }
 
+    // TODO fix loop hanging for no reason
     @Override
     protected Void call() throws Exception {
         init();
+        int i;
 
         while (true) {
-            int i;
+            System.out.println("going once more!");
+            if (isCancelled()) {
+                System.out.println("stopping!");
+                break;
+            }
+            i = 0;
 
             do {
+                System.out.println("i: " + i);
+                i = Util.random(0, 20);
+
+                if (isCancelled()) {
+                    System.out.println("stopping!");
+                    break;
+                }
+
                 sleep(200, 1000);
 
-                CashRegisterProperty property = builder.productScan();
+                CashRegisterProperty scannedProduct = builder.productScan();
 
-                boolean found = false;
+                boolean wasAlreadyScanned = false;
 
                 for (CashRegisterProperty x : transactionProductList) {
-                    if (x.getProductName().equals(property.getProductName())) {
-                        System.out.println("CONTAINS!: " + property.getProductName());
-                        x.setQuantity(x.getQuantity() + property.getQuantity());
-                        found = true;
+                    if (x.getProductName().equals(scannedProduct.getProductName())) {
+                        System.out.println("CONTAINS!: " + scannedProduct.getProductName());
+                        x.setQuantity(x.getQuantity() + scannedProduct.getQuantity());
+                        x.setPrice(x.getPrice() * x.getQuantity());
+                        wasAlreadyScanned = true;
                     }
                 }
 
-
-                if (!found) {
-                    transactionProductList.add(property);
+                if (!wasAlreadyScanned) {
+                    transactionProductList.add(scannedProduct);
                 }
 
 
@@ -65,17 +78,17 @@ public class CashRegisterTask extends Task<Void> {
                 });
 
                 sleep(200, 1500);
-
-                i = Util.random(0, 20);
-            } while (i <= 18);
-            i = 0;
+            } while (i <= 15);
             builder.build();
             reset();
+            System.out.println("STATE RESET!");
         }
-//            return null;
+        System.out.println("returning NULL!");
+        return null;
     }
 
     private void reset() {
+        System.out.println("resetting state...");
         Platform.runLater(() -> {
             totalCost.set("");
         });
@@ -89,7 +102,7 @@ public class CashRegisterTask extends Task<Void> {
         } catch (InterruptedException interrupted) {
             if (isCancelled()) {
                 updateMessage("Cancelled");
-//                    break;
+                System.out.println("sleep stopping!");
             }
         }
     }
@@ -102,7 +115,6 @@ public class CashRegisterTask extends Task<Void> {
         initProperties();
         builder = new TransactionBuilder();
         transactionProductList = FXCollections.observableArrayList();
-        _totalCost = 0;
 
         Platform.runLater(() -> {
             cashRegisterId.set("Register " + getId());
@@ -110,6 +122,7 @@ public class CashRegisterTask extends Task<Void> {
             transactionCount.set(0);
             currentTransactionId.set(context.getNextTransactionId());
         });
+        System.out.println("cash register " + getId() + " initialized!");
     }
 
     private void initProperties() {

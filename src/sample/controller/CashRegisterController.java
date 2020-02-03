@@ -41,10 +41,6 @@ public class CashRegisterController {
     @FXML
     public TableColumn<CashRegisterProperty, Double> transactionPriceCol1;
     @FXML
-    public Label transactionSubtotal1;
-    @FXML
-    public Label transactionTax1;
-    @FXML
     public Label transactionTotal1;
     //endregion
 
