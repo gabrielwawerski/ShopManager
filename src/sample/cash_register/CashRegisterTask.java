@@ -34,54 +34,47 @@ public class CashRegisterTask extends Task<Void> {
     @Override
     protected Void call() throws Exception {
         init();
-        int i;
 
         while (true) {
-            System.out.println("going once more!");
             if (isCancelled()) {
                 System.out.println("stopping!");
                 break;
             }
-            i = 0;
 
-            do {
-                System.out.println("i: " + i);
-                i = Util.random(0, 20);
+            System.out.println("going once more!");
+            int i = Util.random(0, 20);
+            System.out.println("i: " + i);
 
-                if (isCancelled()) {
-                    System.out.println("stopping!");
-                    break;
+            sleep(200, 1000);
+
+            CashRegisterProperty scannedProduct = builder.productScan();
+
+            boolean wasAlreadyScanned = false;
+
+            for (CashRegisterProperty x : transactionProductList) {
+                if (x.getProductName().equals(scannedProduct.getProductName())) {
+                    System.out.println("CONTAINS!: " + scannedProduct.getProductName());
+                    x.setQuantity(x.getQuantity() + scannedProduct.getQuantity());
+                    x.setPrice(x.getPrice() * x.getQuantity());
+                    wasAlreadyScanned = true;
                 }
+            }
 
-                sleep(200, 1000);
-
-                CashRegisterProperty scannedProduct = builder.productScan();
-
-                boolean wasAlreadyScanned = false;
-
-                for (CashRegisterProperty x : transactionProductList) {
-                    if (x.getProductName().equals(scannedProduct.getProductName())) {
-                        System.out.println("CONTAINS!: " + scannedProduct.getProductName());
-                        x.setQuantity(x.getQuantity() + scannedProduct.getQuantity());
-                        x.setPrice(x.getPrice() * x.getQuantity());
-                        wasAlreadyScanned = true;
-                    }
-                }
-
-                if (!wasAlreadyScanned) {
-                    transactionProductList.add(scannedProduct);
-                }
+            if (!wasAlreadyScanned) {
+                transactionProductList.add(scannedProduct);
+            }
 
 
-                Platform.runLater(() -> {
-                    totalCost.set(builder.getTotalCost() + " zł");
-                });
+            Platform.runLater(() -> {
+                totalCost.set(builder.getTotalCost() + " zł");
+            });
 
-                sleep(200, 1500);
-            } while (i <= 15);
-            builder.build();
-            reset();
-            System.out.println("STATE RESET!");
+            sleep(200, 1500);
+            if (i > 15) {
+//            builder.build();
+                reset();
+                System.out.println("STATE RESET!");
+            }
         }
         System.out.println("returning NULL!");
         return null;
