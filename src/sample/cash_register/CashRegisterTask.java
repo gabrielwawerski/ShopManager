@@ -53,7 +53,7 @@ public class CashRegisterTask extends Task<Void> {
             boolean wasAlreadyScanned = false;
 
             // maybe hangs because of iterating over observablelist
-            // TODO check the way of handling observablr list iterating
+            // TODO check correct way of handling observablr list iterating
             for (CashRegisterProperty x : transactionProductList) {
                 if (x.getProductName().equals(scannedProduct.getProductName())) {
                     System.out.println("CONTAINS!: " + scannedProduct.getProductName());
@@ -74,6 +74,7 @@ public class CashRegisterTask extends Task<Void> {
 
             sleep(200, 1500);
             if (i > 15) {
+            // create transaction here, update database here - only the products that have changed
 //            builder.build();
                 reset();
                 System.out.println("STATE RESET!");

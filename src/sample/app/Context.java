@@ -16,7 +16,8 @@ public class Context {
     private ObservableList<Product> inventoryProducts;
     private CashRegisterTask register1;
 
-//    private ObservableList<CashRegisterProperty> cashRegisterEntries;
+    // TODO store observable lists of cash registers here?
+    // make this class the hub of observable list for easy synchronization with database?
 
     public static Context getInstance() {
         if (instance == null) {
