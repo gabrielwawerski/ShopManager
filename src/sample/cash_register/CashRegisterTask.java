@@ -35,25 +35,19 @@ public class CashRegisterTask extends Task<Void> {
     protected Void call() throws Exception {
         init();
 
-        // TODO comment all code inside and add counter,check if hangs then
         while (true) {
             if (isCancelled()) {
-                System.out.println("stopping!");
+                System.out.println("cancelled");
                 break;
             }
-
-            System.out.println("going once more!");
             int i = Util.random(0, 20);
-            System.out.println("i: " + i);
-
-            sleep(200, 1000);
 
             CashRegisterProperty scannedProduct = builder.productScan();
 
+            sleep(200, 200);
+
             boolean wasAlreadyScanned = false;
 
-            // maybe hangs because of iterating over observablelist
-            // TODO check correct way of handling observablr list iterating
             for (CashRegisterProperty x : transactionProductList) {
                 if (x.getProductName().equals(scannedProduct.getProductName())) {
                     System.out.println("CONTAINS!: " + scannedProduct.getProductName());
@@ -80,7 +74,6 @@ public class CashRegisterTask extends Task<Void> {
                 System.out.println("STATE RESET!");
             }
         }
-        System.out.println("returning NULL!");
         return null;
     }
 

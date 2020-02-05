@@ -1,5 +1,6 @@
 package sample.transaction;
 
+import javafx.collections.ObservableList;
 import sample.app.database.DatabaseHandler;
 import sample.app.product.Product;
 import sample.cash_register.CashRegisterProperty;
@@ -48,11 +49,11 @@ public final class TransactionBuilder {
     // TODO unikatowe przedmioty - po zeskanowaniu nie powinien sie powtarzac na liscie -
     // - chyba ze dodac quantity do istniejacego produktu
     public CashRegisterProperty productScan() {
-        Product dbProduct = databaseProducts.get(Util.random(0, databaseProducts.size()));
+        Product dbProduct = databaseProducts.get(Util.random(0, databaseProducts.size() - 1));
         String name = dbProduct.getName();
         int quantity = randomQuantity();
         double price = dbProduct.getPrice();
-
+//
         SingleProduct scannedProduct = new SingleProduct(name, quantity, price);
 
         if (productLog.contains(scannedProduct)) {
@@ -62,6 +63,7 @@ public final class TransactionBuilder {
         productLog.put(scannedProduct);
         updateTotalCost(quantity, price);
 
+        System.out.println("scanned: " + name);
         return new CashRegisterProperty(productRow++, name, quantity, price);
     }
 
