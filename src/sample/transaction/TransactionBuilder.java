@@ -56,11 +56,8 @@ public final class TransactionBuilder {
 //
         SingleProduct scannedProduct = new SingleProduct(name, quantity, price);
 
-        if (productLog.contains(scannedProduct)) {
-            productLog.addQuantity(scannedProduct);
-        } else {
-            productLog.put(scannedProduct);
-        }
+        productLog.add(scannedProduct);
+        
         updateTotalCost(quantity, price);
 
         System.out.println("scanned: " + name);
