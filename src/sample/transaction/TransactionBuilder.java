@@ -71,11 +71,13 @@ public final class TransactionBuilder {
         totalCost += productPrice * productQuantity;
     }
 
+    // TODO add pseudorandom quantity
+    // e.g. more probable for client to buy more than 1 bulki, than to buy more than 1 mleko
     private int randomQuantity() {
         int quantity;
         int random = Util.random(0, 4);
 
-        if (random <= 1) {
+        if (random >= 1) {
             quantity = 1;
         } else {
             random = Util.random(0, 10);
