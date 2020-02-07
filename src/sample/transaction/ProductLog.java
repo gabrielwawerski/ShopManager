@@ -34,12 +34,12 @@ public class ProductLog implements Serializable {
             throw new IllegalArgumentException("Product: " + scannedProduct.getName() + " is not in product log!");
         }
 
-        retrieve(scannedProduct.getName()).addQuantity(scannedProduct.getQuantity());
+        retrieve(scannedProduct).addQuantity(scannedProduct.getQuantity());
     }
 
-    private SingleProduct retrieve(String productName) {
+    private SingleProduct retrieve(SingleProduct product) {
         for (SingleProduct x : products) {
-            if (x.getName().equals(productName)) {
+            if (x.getName().equals(product.getName())) {
                 return x;
             }
         }
