@@ -1,13 +1,9 @@
 package sample.transaction;
 
-import javafx.collections.ObservableList;
-import sample.app.database.DatabaseHandler;
 import sample.app.product.Product;
+import sample.cash_register.CashRegisterHelper;
 import sample.cash_register.CashRegisterProperty;
-import sample.transaction.single_product.SingleProduct;
 import sample.util.Util;
-
-import java.util.ArrayList;
 
 public final class TransactionBuilder {
     private ProductLog productLog;
@@ -15,11 +11,8 @@ public final class TransactionBuilder {
     private String date;
     private int productRow = 1;
 
-    private ArrayList<Product> databaseProducts;
-
     public TransactionBuilder() {
         productLog = new ProductLog();
-        databaseProducts = DatabaseHandler.getInstance().getProductArrayList();
     }
 
     public Transaction build() {
@@ -49,19 +42,21 @@ public final class TransactionBuilder {
     // TODO unikatowe przedmioty - po zeskanowaniu nie powinien sie powtarzac na liscie -
     // - chyba ze dodac quantity do istniejacego produktu
     public CashRegisterProperty productScan() {
-        Product dbProduct = databaseProducts.get(Util.random(0, databaseProducts.size() - 1));
+        Product dbProduct = CashRegisterHelper.randomProduct();
         String name = dbProduct.getName();
         int quantity = randomQuantity();
         double price = dbProduct.getPrice();
-//
-        SingleProduct scannedProduct = new SingleProduct(name, quantity, price);
 
-        productLog.add(scannedProduct);
-        
+        SingleProduct scannedProduct = SingleProduct.fromProduct(dbProduct);
         updateTotalCost(quantity, price);
 
-        System.out.println("scanned: " + name);
-        return new CashRegisterProperty(productRow++, name, quantity, price);
+        if (!productLog.contains(scannedProduct)) {
+            productLog.add(scannedProduct);
+            return new CashRegisterProperty(productRow++, name, quantity, price);
+        } else {
+            productLog.add(scannedProduct);
+            return new CashRegisterProperty(productRow, name, quantity, price);
+        }
     }
 
     private void updateTotalCost(int productQuantity, double productPrice) {

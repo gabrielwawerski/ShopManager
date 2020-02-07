@@ -8,7 +8,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import sample.app.Context;
-import sample.cash_register.CashRegisterHelper;
 import sample.cash_register.CashRegisterProperty;
 import sample.cash_register.CashRegisterTask;
 
@@ -59,7 +58,6 @@ public class CashRegisterController {
         borderPane.setTop(loader.getRoot());
 
         context = Context.getInstance();
-        CashRegisterHelper helper = new CashRegisterHelper();
         CashRegisterTask register1 = context.getRegister1();
 
         transactionProductLog1.setItems(register1.getTransactionProductList());

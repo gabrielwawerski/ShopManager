@@ -22,15 +22,13 @@ public class CashRegisterTask extends Task<Void> {
     private StringProperty cashierName;
     private IntegerProperty transactionCount;
     private IntegerProperty currentTransactionId;
-    private StringProperty subtotalCost;
-    private StringProperty tax;
     private StringProperty totalCost;
 
     public CashRegisterTask(Context context) {
         this.context = context;
     }
 
-    // TODO fix loop hanging for no reason
+    // TODO fix price formatting - allow only 2 digit precision
     @Override
     protected Void call() throws Exception {
         init();
@@ -40,19 +38,15 @@ public class CashRegisterTask extends Task<Void> {
                 System.out.println("cancelled");
                 break;
             }
-            int i = Util.random(0, 20);
+
 
             CashRegisterProperty scannedProduct = builder.productScan();
-
-            sleep(200, 200);
-
             boolean wasAlreadyScanned = false;
 
             for (CashRegisterProperty x : transactionProductList) {
                 if (x.getProductName().equals(scannedProduct.getProductName())) {
-                    System.out.println("CONTAINS!: " + scannedProduct.getProductName());
                     x.setQuantity(x.getQuantity() + scannedProduct.getQuantity());
-                    x.setPrice(x.getPrice() * x.getQuantity());
+                    x.setPrice(CashRegisterHelper.findProduct(x).getPrice() * x.getQuantity());
                     wasAlreadyScanned = true;
                 }
             }
@@ -61,18 +55,19 @@ public class CashRegisterTask extends Task<Void> {
                 transactionProductList.add(scannedProduct);
             }
 
-
             Platform.runLater(() -> {
                 totalCost.set(builder.getTotalCost() + " zł");
             });
 
+//            if (Util.random(0, 20) > 15) {
+//                // create transaction here, update database here - only the products that have changed
+//                // do it in a way that rest of the logic knows about it - now mainly inventory!!
+//                // so do it in Context class?
+////                builder.build();
+//                reset();
+//                System.out.println("STATE RESET!");
+//            }
             sleep(200, 1500);
-            if (i > 15) {
-            // create transaction here, update database here - only the products that have changed
-//            builder.build();
-                reset();
-                System.out.println("STATE RESET!");
-            }
         }
         return null;
     }
@@ -120,8 +115,6 @@ public class CashRegisterTask extends Task<Void> {
         cashierName = new SimpleStringProperty();
         transactionCount = new SimpleIntegerProperty();
         currentTransactionId = new SimpleIntegerProperty();
-        subtotalCost = new SimpleStringProperty();
-        tax = new SimpleStringProperty();
         totalCost = new SimpleStringProperty();
     }
 
@@ -175,30 +168,6 @@ public class CashRegisterTask extends Task<Void> {
 
     public final void setCurrentTransactionId(int currentTransactionId) {
         this.currentTransactionId.set(currentTransactionId);
-    }
-
-    public final String getSubtotalCost() {
-        return subtotalCost.get();
-    }
-
-    public StringProperty subtotalCostProperty() {
-        return subtotalCost;
-    }
-
-    public final void setSubtotalCost(String subtotalCost) {
-        this.subtotalCost.set(subtotalCost);
-    }
-
-    public final String getTax() {
-        return tax.get();
-    }
-
-    public StringProperty taxProperty() {
-        return tax;
-    }
-
-    public final void setTax(String tax) {
-        this.tax.set(tax);
     }
 
     public final String getTotalCost() {

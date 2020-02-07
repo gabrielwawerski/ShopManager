@@ -1,4 +1,4 @@
-package sample.transaction.single_product;
+package sample.transaction;
 
 import sample.app.product.Product;
 
@@ -9,7 +9,7 @@ public class SingleProduct implements Serializable {
     private int quantity;
     private double price;
 
-    public SingleProduct(String name, int quantity, double price) {
+    private SingleProduct(String name, int quantity, double price) {
         this.name = name;
         this.quantity = quantity;
         this.price = price;
