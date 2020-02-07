@@ -30,11 +30,7 @@ public class ProductLog implements Serializable {
     }
 
     public void addQuantity(SingleProduct scannedProduct) {
-        if (!this.contains(scannedProduct)) {
-            throw new IllegalArgumentException("Product: " + scannedProduct.getName() + " is not in product log!");
-        }
-
-        retrieve(scannedProduct).addQuantity(scannedProduct.getQuantity());
+ retrieve(scannedProduct).addQuantity(scannedProduct.getQuantity());
     }
 
     private SingleProduct retrieve(SingleProduct product) {
