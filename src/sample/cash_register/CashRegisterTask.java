@@ -18,10 +18,11 @@ public class CashRegisterTask extends Task<Void> {
 
     private int id;
     private static int _id = 1;
+    private double _totalCost;
 
     private final Context context;
     private TransactionBuilder builder;
-    private DecimalFormat formatter = new DecimalFormat("#.##");
+    private DecimalFormat formatter;
 
     private StringProperty cashRegisterId;
     private StringProperty cashierName;
@@ -49,22 +50,27 @@ public class CashRegisterTask extends Task<Void> {
             CashRegisterProperty scannedProduct = builder.productScan();
             boolean wasAlreadyScanned = false;
 
+            // Check if product was already scanned. If it was, update it's quantity and price
             for (CashRegisterProperty x : transactionProductList) {
                 if (x.getProductName().equals(scannedProduct.getProductName())) {
-                    x.setQuantity(x.getQuantity() + scannedProduct.getQuantity());
-                    x.setPrice(CashRegisterHelper.findProduct(x).getPrice() * x.getQuantity());
+                    Platform.runLater(() -> {
+                        x.setQuantity(x.getQuantity() + scannedProduct.getQuantity());
+                        CashRegisterHelper.updateProductPrice(x);
+                    });
                     wasAlreadyScanned = true;
-                    System.out.println("product scanned already!");
+                    System.out.println("UPDATED: " + scannedProduct.getProductName() + " +" + scannedProduct.getQuantity());
                 }
             }
             if (!wasAlreadyScanned) {
-                System.out.println("not yet scanned! adding product: " + scannedProduct.getProductName());
                 transactionProductList.add(scannedProduct);
+                System.out.println("SCANNED: " + scannedProduct.getProductName());
             }
 
             Platform.runLater(() -> {
-                updateTotalCost(scannedProduct.getQuantity() * scannedProduct.getPrice());
+                updateTotalCost(scannedProduct.getQuantity() * Double.parseDouble(scannedProduct.getPrice()));
             });
+
+            sleep(200, 1500);
 
             if (Util.random(0, 20) > 15) {
                 Transaction transaction = builder.build();
@@ -73,17 +79,13 @@ public class CashRegisterTask extends Task<Void> {
                 prepareRegister();
                 System.out.println("STATE RESET!");
             }
-            sleep(200, 1500);
         }
         return null;
     }
 
-    private void addTotalCost() {
-
-    }
-
     private void updateTotalCost(double value) {
-        setTotalCost(getTotalCost() + formatter.format(value) + " zł");
+        _totalCost += value;
+        setTotalCost(formatter.format(_totalCost) + " zł");
     }
 
     // TODO fix - sometimes resets twice
@@ -101,6 +103,7 @@ public class CashRegisterTask extends Task<Void> {
         });
         builder.reset();
         transactionProductList.clear();
+        _totalCost = 0;
     }
 
     private void sleep(int sleepTimeMin, int sleepTimeMax) {
@@ -122,6 +125,8 @@ public class CashRegisterTask extends Task<Void> {
         initProperties();
         builder = new TransactionBuilder();
         transactionProductList = FXCollections.observableArrayList();
+        formatter = new DecimalFormat("#.##");
+        _totalCost = 0;
 
         Platform.runLater(() -> {
             setCashRegisterId("Register " + getId());

@@ -1,8 +1,6 @@
 package sample.cash_register;
 
-import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -11,13 +9,13 @@ public class CashRegisterProperty {
     private IntegerProperty productRow;
     private StringProperty productName;
     private IntegerProperty quantity;
-    private DoubleProperty price;
+    private StringProperty price;
 
     public CashRegisterProperty(int productRow, String productName, int quantity, double price) {
         this.productRow = new SimpleIntegerProperty(productRow);
         this.productName = new SimpleStringProperty(productName);
         this.quantity = new SimpleIntegerProperty(quantity);
-        this.price = new SimpleDoubleProperty(price);
+        this.price = new SimpleStringProperty(String.valueOf(price));
     }
 
     public final int getProductRow() {
@@ -56,15 +54,15 @@ public class CashRegisterProperty {
         this.quantity.set(quantity);
     }
 
-    public final double getPrice() {
+    public final String getPrice() {
         return price.get();
     }
 
-    public DoubleProperty priceProperty() {
+    public StringProperty priceProperty() {
         return price;
     }
 
-    public final void setPrice(double price) {
+    public final void setPrice(String price) {
         this.price.set(price);
     }
 }

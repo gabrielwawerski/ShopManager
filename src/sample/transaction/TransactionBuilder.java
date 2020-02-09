@@ -31,7 +31,7 @@ public class TransactionBuilder {
     public CashRegisterProperty productScan() {
         Product dbProduct = CashRegisterHelper.randomProduct();
         String name = dbProduct.getName();
-        int quantity = randomQuantity();
+        int quantity = CashRegisterHelper.randomQuantity();
         double price = dbProduct.getPrice();
 
         SingleProduct scannedProduct = SingleProduct.fromProduct(dbProduct);
@@ -58,26 +58,6 @@ public class TransactionBuilder {
 
     private void updateTotalCost(int productQuantity, double productPrice) {
         totalCost += productPrice * productQuantity; // TODO check if correctly calculates total cost
-    }
-
-    // TODO add pseudorandom quantity
-    // e.g. more probable for client to buy more than 1 bulki, than to buy more than 1 mleko
-    private int randomQuantity() {
-        int quantity;
-        int random = Util.random(0, 4);
-
-        if (random >= 1) {
-            quantity = 1;
-        } else {
-            random = Util.random(0, 10);
-
-            if (random < 8) {
-                quantity = Util.random(1, 3);
-            } else {
-                quantity = Util.random(1, 10);
-            }
-        }
-        return quantity;
     }
 
     public double getTotalCost() {

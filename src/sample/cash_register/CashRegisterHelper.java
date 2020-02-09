@@ -4,10 +4,12 @@ import sample.app.database.DatabaseHandler;
 import sample.app.product.Product;
 import sample.util.Util;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public final class CashRegisterHelper {
     private static ArrayList<Product> databaseProducts = DatabaseHandler.getInstance().getProductArrayList();
+    private static final DecimalFormat FORMATTER = new DecimalFormat("#.##");
 
     private static final String[] NAMES = {
             "Aubrey Lewis", "Audrey Clarke", "Avery Wright",
@@ -35,7 +37,11 @@ public final class CashRegisterHelper {
         return random;
     }
 
-    public static Product findProduct(CashRegisterProperty property) {
+    public static void updateProductPrice(CashRegisterProperty property) {
+        property.setPrice(FORMATTER.format(findProduct(property).getPrice() * property.getQuantity()));
+    }
+
+    private static Product findProduct(CashRegisterProperty property) {
         for (Product x : databaseProducts) {
             if (x.getName().equals(property.getProductName())) {
                 return x;
@@ -47,5 +53,25 @@ public final class CashRegisterHelper {
 
     public static Product randomProduct() {
         return databaseProducts.get(Util.random(0, databaseProducts.size() - 1));
+    }
+
+    // TODO add pseudorandom quantity
+    // e.g. more probable for client to buy more than 1 bulki, than to buy more than 1 mleko
+    public static int randomQuantity() {
+        int quantity;
+        int random = Util.random(0, 4);
+
+        if (random >= 1) {
+            quantity = 1;
+        } else {
+            random = Util.random(0, 10);
+
+            if (random < 8) {
+                quantity = Util.random(1, 3);
+            } else {
+                quantity = Util.random(1, 10);
+            }
+        }
+        return quantity;
     }
 }
