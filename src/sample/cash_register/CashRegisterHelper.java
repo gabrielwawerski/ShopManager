@@ -20,8 +20,19 @@ public final class CashRegisterHelper {
             "William Jones"
     };
 
+    private static ArrayList<String> usedNames = new ArrayList<>(4);
+
     public static String randomCashierName() {
-        return NAMES[Util.random(0, NAMES.length - 1)];
+        String random = NAMES[Util.random(0, NAMES.length - 1)];
+
+        if (!usedNames.contains(random)) {
+            usedNames.add(random);
+        } else {
+            while (usedNames.contains(random)) {
+                random = NAMES[Util.random(0, NAMES.length - 1)];
+            }
+        }
+        return random;
     }
 
     public static Product findProduct(CashRegisterProperty property) {

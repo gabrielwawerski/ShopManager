@@ -6,17 +6,22 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import sample.app.Context;
+import sample.transaction.Transaction;
 import sample.transaction.TransactionBuilder;
 import sample.util.Util;
+
+import java.text.DecimalFormat;
 
 // 4 kasy - kazda oddzielny watek?
 public class CashRegisterTask extends Task<Void> {
     private ObservableList<CashRegisterProperty> transactionProductList;
 
-    private static int id = 1;
+    private int id;
+    private static int _id = 1;
 
     private final Context context;
     private TransactionBuilder builder;
+    private DecimalFormat formatter = new DecimalFormat("#.##");
 
     private StringProperty cashRegisterId;
     private StringProperty cashierName;
@@ -26,6 +31,7 @@ public class CashRegisterTask extends Task<Void> {
 
     public CashRegisterTask(Context context) {
         this.context = context;
+        setId();
     }
 
     // TODO fix price formatting - allow only 2 digit precision
@@ -38,7 +44,7 @@ public class CashRegisterTask extends Task<Void> {
                 System.out.println("cancelled");
                 break;
             }
-
+            System.out.println("transaction: " + transactionCount.get());
 
             CashRegisterProperty scannedProduct = builder.productScan();
             boolean wasAlreadyScanned = false;
@@ -48,34 +54,50 @@ public class CashRegisterTask extends Task<Void> {
                     x.setQuantity(x.getQuantity() + scannedProduct.getQuantity());
                     x.setPrice(CashRegisterHelper.findProduct(x).getPrice() * x.getQuantity());
                     wasAlreadyScanned = true;
+                    System.out.println("product scanned already!");
                 }
             }
-
             if (!wasAlreadyScanned) {
+                System.out.println("not yet scanned! adding product: " + scannedProduct.getProductName());
                 transactionProductList.add(scannedProduct);
             }
 
             Platform.runLater(() -> {
-                totalCost.set(builder.getTotalCost() + " zł");
+                updateTotalCost(scannedProduct.getQuantity() * scannedProduct.getPrice());
             });
 
-//            if (Util.random(0, 20) > 15) {
-//                // create transaction here, update database here - only the products that have changed
-//                // do it in a way that rest of the logic knows about it - now mainly inventory!!
-//                // so do it in Context class?
-////                builder.build();
-//                reset();
-//                System.out.println("STATE RESET!");
-//            }
+            if (Util.random(0, 20) > 15) {
+                Transaction transaction = builder.build();
+                context.submitTransaction(transaction);
+                reset();
+                prepareRegister();
+                System.out.println("STATE RESET!");
+            }
             sleep(200, 1500);
         }
         return null;
     }
 
-    private void reset() {
-        System.out.println("resetting state...");
+    private void addTotalCost() {
+
+    }
+
+    private void updateTotalCost(double value) {
+        setTotalCost(getTotalCost() + formatter.format(value) + " zł");
+    }
+
+    // TODO fix - sometimes resets twice
+    private void prepareRegister() {
         Platform.runLater(() -> {
-            totalCost.set("");
+            setTransactionCount(getTransactionCount() + 1);
+            setCurrentTransactionId(context.getNextTransactionId());
+        });
+        System.out.println("REGISTER " + getId() + " PREPARED!");
+    }
+
+    private void reset() {
+        Platform.runLater(() -> {
+            setTotalCost("");
         });
         builder.reset();
         transactionProductList.clear();
@@ -102,12 +124,10 @@ public class CashRegisterTask extends Task<Void> {
         transactionProductList = FXCollections.observableArrayList();
 
         Platform.runLater(() -> {
-            cashRegisterId.set("Register " + getId());
-            cashierName.set(CashRegisterHelper.randomCashierName());
-            transactionCount.set(0);
-            currentTransactionId.set(context.getNextTransactionId());
+            setCashRegisterId("Register " + getId());
+            setCashierName(CashRegisterHelper.randomCashierName());
+            setTransactionCount(0);
         });
-        System.out.println("cash register " + getId() + " initialized!");
     }
 
     private void initProperties() {
@@ -118,10 +138,15 @@ public class CashRegisterTask extends Task<Void> {
         totalCost = new SimpleStringProperty();
     }
 
-    private int getId() {
-        return id++;
+    public int getId() {
+        return id;
     }
 
+    private void setId() {
+        id = _id++;
+    }
+
+    //region Properties
     public final String getCashRegisterId() {
         return cashRegisterId.get();
     }
@@ -181,4 +206,5 @@ public class CashRegisterTask extends Task<Void> {
     public final void setTotalCost(String totalCost) {
         this.totalCost.set(totalCost);
     }
+    //endregion
 }

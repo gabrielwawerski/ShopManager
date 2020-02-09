@@ -5,42 +5,29 @@ import sample.cash_register.CashRegisterHelper;
 import sample.cash_register.CashRegisterProperty;
 import sample.util.Util;
 
-public final class TransactionBuilder {
+import java.text.Format;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+public class TransactionBuilder {
     private ProductLog productLog;
     private double totalCost = 0;
-    private String date;
     private int productRow = 1;
+    private Format formatter;
 
     public TransactionBuilder() {
         productLog = new ProductLog();
+        formatter = new SimpleDateFormat("dd.MM.yy HH:mm:ss");
     }
 
     public Transaction build() {
         Transaction transaction = new Transaction();
         transaction.setProductLog(productLog);
-        transaction.setCost(calculateCost());
+        transaction.setCost(totalCost);
         transaction.setDate(getDate());
-
         return transaction;
     }
 
-    public void reset() {
-        productLog = new ProductLog();
-        totalCost = 0;
-        date = "dummy";
-        productRow = 1;
-    }
-
-    private double calculateCost() {
-        return 0;
-    }
-
-    private String getDate() {
-        return null;
-    }
-
-    // TODO unikatowe przedmioty - po zeskanowaniu nie powinien sie powtarzac na liscie -
-    // - chyba ze dodac quantity do istniejacego produktu
     public CashRegisterProperty productScan() {
         Product dbProduct = CashRegisterHelper.randomProduct();
         String name = dbProduct.getName();
@@ -59,8 +46,18 @@ public final class TransactionBuilder {
         }
     }
 
+    public void reset() {
+        productLog = new ProductLog();
+        totalCost = 0;
+        productRow = 1;
+    }
+
+    private String getDate() {
+        return formatter.format(new Date());
+    }
+
     private void updateTotalCost(int productQuantity, double productPrice) {
-        totalCost += productPrice * productQuantity;
+        totalCost += productPrice * productQuantity; // TODO check if correctly calculates total cost
     }
 
     // TODO add pseudorandom quantity

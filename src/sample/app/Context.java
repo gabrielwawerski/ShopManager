@@ -15,6 +15,9 @@ public class Context {
     // don't make direct calls to Product methods!!! (or update database inside it's methods?)
     private ObservableList<Product> inventoryProducts;
     private CashRegisterTask register1;
+    private CashRegisterTask register2;
+    private CashRegisterTask register3;
+    private CashRegisterTask register4;
 
     // TODO store observable lists of cash registers here?
     // make this class the hub of observable list for easy synchronization with database?
@@ -31,6 +34,18 @@ public class Context {
 
     public CashRegisterTask getRegister1() {
         return register1;
+    }
+
+    public CashRegisterTask getRegister2() {
+        return register2;
+    }
+
+    public CashRegisterTask getRegister3() {
+        return register3;
+    }
+
+    public CashRegisterTask getRegister4() {
+        return register4;
     }
 
     public void init() {
@@ -53,10 +68,29 @@ public class Context {
 
     private void initCashRegisters() {
         register1 = new CashRegisterTask(this);
-        Thread thread = new Thread(register1);
-        thread.setDaemon(true);
-        thread.start();
-        // TODO start registers here; tasks?
+//        register2 = new CashRegisterTask(this);
+//        register3 = new CashRegisterTask(this);
+//        register4 = new CashRegisterTask(this);
+
+        Thread thread1 = new Thread(register1);
+//        Thread thread2 = new Thread(register2);
+//        Thread thread3 = new Thread(register3);
+//        Thread thread4 = new Thread(register4);
+
+        thread1.setDaemon(true);
+//        thread2.setDaemon(true);
+//        thread3.setDaemon(true);
+//        thread4.setDaemon(true);
+
+        thread1.start();
+//        thread2.start();
+//        thread3.start();
+//        thread4.start();
+
+        System.out.println("cash register " + register1.getId() + " initialized!");
+//        System.out.println("cash register " + register2.getId() + " initialized!");
+//        System.out.println("cash register " + register3.getId() + " initialized!");
+//        System.out.println("cash register " + register4.getId() + " initialized!");
     }
 
     public ObservableList<Product> getInventoryProducts() {
@@ -72,5 +106,6 @@ public class Context {
     }
 
     public void submitTransaction(Transaction transaction) {
+        System.out.println(transaction.getDate());
     }
 }
