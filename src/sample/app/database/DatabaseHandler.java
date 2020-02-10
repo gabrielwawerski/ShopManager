@@ -9,6 +9,7 @@ import sample.transaction.Transaction;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class DatabaseHandler {
     private static DatabaseConnection db;
@@ -57,6 +58,24 @@ public class DatabaseHandler {
             productDao.refresh(product);
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void refreshAll(List<Product> products) {
+        CloseableWrappedIterable<Product> productDaoIterable = productDao.getWrappedIterable();
+
+        try {
+            for (Product product : products) {
+                productDao.refresh(product);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                productDaoIterable.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 

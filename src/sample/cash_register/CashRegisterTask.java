@@ -30,6 +30,14 @@ public class CashRegisterTask extends Task<Void> {
     private IntegerProperty currentTransactionId;
     private StringProperty totalCost;
 
+    // thread sleep limits for when transaction is not yet completed
+    private static final int MIN_SLEEP_ONGOING = 500;
+    private static final int MAX_SLEEP_ONGOING = 2000;
+
+    // ...when transaction has been completed
+    private static final int MIN_SLEEP_FINISHED = 5000;
+    private static final int MAX_SLEEP_FINISHED = 10000;
+
     public CashRegisterTask(Context context) {
         this.context = context;
         setId();
@@ -70,11 +78,11 @@ public class CashRegisterTask extends Task<Void> {
                 updateTotalCost(scannedProduct.getQuantity() * Double.parseDouble(scannedProduct.getPrice()));
             });
 
-            sleep(200, 1500);
+            sleep(MIN_SLEEP_ONGOING, MAX_SLEEP_ONGOING);
 
             if (Util.random(0, 20) > 15) {
                 Transaction transaction = builder.build();
-                context.submitTransaction(transaction);
+//                context.submitTransaction(transaction);
                 reset();
                 prepareRegister();
                 System.out.println("STATE RESET!");
@@ -123,7 +131,7 @@ public class CashRegisterTask extends Task<Void> {
 
     private void init() {
         initProperties();
-        builder = new TransactionBuilder();
+
         transactionProductList = FXCollections.observableArrayList();
         formatter = new DecimalFormat("#.##");
         _totalCost = 0;
@@ -133,6 +141,7 @@ public class CashRegisterTask extends Task<Void> {
             setCashierName(CashRegisterHelper.randomCashierName());
             setTransactionCount(0);
         });
+        builder = new TransactionBuilder(getCashierName());
     }
 
     private void initProperties() {

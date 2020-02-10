@@ -31,6 +31,10 @@ public class ProductLog implements Serializable {
         return false;
     }
 
+    public void clear() {
+        products.clear();
+    }
+
     private void addQuantity(SingleProduct scannedProduct) {
         retrieve(scannedProduct).addQuantity(scannedProduct.getQuantity());
     }

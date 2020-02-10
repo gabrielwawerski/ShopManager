@@ -5,7 +5,10 @@ import javafx.collections.ObservableList;
 import sample.app.database.DatabaseHandler;
 import sample.app.product.Product;
 import sample.cash_register.CashRegisterTask;
+import sample.transaction.SingleProduct;
 import sample.transaction.Transaction;
+
+import java.util.List;
 
 public class Context {
     public DatabaseHandler db;
@@ -13,7 +16,8 @@ public class Context {
 
     // TODO make helper class that updates database entry whenever value of Product object is changed!
     // don't make direct calls to Product methods!!! (or update database inside it's methods?)
-    private ObservableList<Product> inventoryProducts;
+        private ObservableList<Product> inventoryProducts;
+
     private CashRegisterTask register1;
     private CashRegisterTask register2;
     private CashRegisterTask register3;
@@ -106,6 +110,15 @@ public class Context {
     }
 
     public void submitTransaction(Transaction transaction) {
-        System.out.println(transaction.getDate());
+        db.create(transaction);
+        refreshData(transaction.getProductLog().get());
+    }
+
+    private void refreshData(List<SingleProduct> data) {
+
+    }
+
+    private void refreshData() {
+        db.refreshAll(inventoryProducts);
     }
 }
