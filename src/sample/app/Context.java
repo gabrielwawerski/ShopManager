@@ -17,6 +17,8 @@ public class Context {
     // TODO make helper class that updates database entry whenever value of Product object is changed!
     // don't make direct calls to Product methods!!! (or update database inside it's methods?)
         private ObservableList<Product> inventoryProducts;
+        
+        private int nextTransactionId;
 
     private CashRegisterTask register1;
     private CashRegisterTask register2;
@@ -64,6 +66,7 @@ public class Context {
 
     private void initData() {
         inventoryProducts = FXCollections.observableArrayList();
+        setNextTransactionId();
     }
 
     private void initInventory() {
@@ -108,13 +111,17 @@ public class Context {
     public synchronized int getNextTransactionId() {
         return 0;
     }
+    
+    private void setNextTransactionId() {
+        nextTransactionId = // TODO
+    }
 
     public void submitTransaction(Transaction transaction) {
         db.create(transaction);
         refreshData(transaction.getProductLog().get());
     }
 
-    private void refreshData(List<SingleProduct> data) {
+    private void refreshData(List<Product> data) {
 
     }
 
