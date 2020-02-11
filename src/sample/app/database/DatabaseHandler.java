@@ -3,6 +3,7 @@ package sample.app.database;
 import com.j256.ormlite.dao.CloseableWrappedIterable;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
+import com.j256.ormlite.table.TableUtils;
 import sample.app.product.Product;
 import sample.transaction.Transaction;
 
@@ -15,8 +16,10 @@ public class DatabaseHandler {
     private static DatabaseConnection db;
     private static Dao<Product, Integer> productDao;
     private static Dao<Transaction, Integer> transactionDao;
+    private ArrayList<Product> products;
 
     private static DatabaseHandler instance;
+    private ArrayList<Transaction> transactions;
 
     private DatabaseHandler() {
     }
@@ -80,22 +83,47 @@ public class DatabaseHandler {
     }
 
     public ArrayList<Product> getProductArrayList() {
-        ArrayList<Product> products = new ArrayList<>();
-        CloseableWrappedIterable<Product> productDaoIterable = productDao.getWrappedIterable();
+        if (products == null) {
+            products = new ArrayList<>();
+            CloseableWrappedIterable<Product> productDaoIterable = productDao.getWrappedIterable();
 
-        try {
-            for (Product product : productDaoIterable) {
-                product.init();
-                products.add(product);
-            }
-            return products;
-        } finally {
             try {
-                productDaoIterable.close();
-            } catch (IOException e) {
-                e.printStackTrace();
+                for (Product product : productDaoIterable) {
+                    product.init();
+                    products.add(product);
+                }
+                return products;
+            } finally {
+                try {
+                    productDaoIterable.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
+        return products;
+    }
+
+    public ArrayList<Transaction> getTransactionArrayList() {
+        if (transactions == null) {
+            transactions = new ArrayList<>();
+            System.out.println("Transactions created.");
+            CloseableWrappedIterable<Transaction> wrappedIterable = transactionDao.getWrappedIterable();
+
+            try {
+                for (Transaction x : wrappedIterable) {
+                    transactions.add(x);
+                }
+                return transactions;
+            } finally {
+                try {
+                    wrappedIterable.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return transactions;
     }
 
     public Product findDbProduct(Product product) {
@@ -141,25 +169,11 @@ public class DatabaseHandler {
         System.out.println("Connected to database.");
     }
 
-    public ArrayList<Transaction> getTransactionArrayList() {
-        ArrayList<Transaction> transactions = new ArrayList<>();
-        CloseableWrappedIterable<Transaction> wrappedIterable = transactionDao.getWrappedIterable();
-
-        try {
-            for (Transaction x : wrappedIterable) {
-                transactions.add(x);
-            }
-            return transactions;
-        } finally {
-            try {
-                wrappedIterable.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
     public void initDatabase() {
+        for (Product x : products) {
+            x.setQuantity(1000);
+            update(x);
+        }
 //        Product apple = new Product("Apple", 15, 0.49);
 //        Product krokiety = new Product("Krokiety", 9, 2.29);
 //        Product ham = new Product("Ham", 29, 1.29);
@@ -171,6 +185,12 @@ public class DatabaseHandler {
 //            productDao.create(krokiety);
 //            productDao.create(ham);
 //            productDao.create(milk);
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+
+//        try {
+//            TableUtils.createTable(db.getConnectionSource(), Transaction.class);
 //        } catch (SQLException e) {
 //            e.printStackTrace();
 //        }

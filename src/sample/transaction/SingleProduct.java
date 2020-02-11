@@ -9,14 +9,10 @@ public class SingleProduct implements Serializable {
     private int quantity;
     private double price;
 
-    private SingleProduct(String name, int quantity, double price) {
-        this.name = name;
+    public SingleProduct(Product product, int quantity) {
+        this.name = product.getName();
         this.quantity = quantity;
-        this.price = price;
-    }
-
-    public static SingleProduct fromProduct(Product product) {
-        return new SingleProduct(product.getName(), product.getQuantity(), product.getPrice());
+        this.price = product.getPrice();
     }
 
     public String getName() {

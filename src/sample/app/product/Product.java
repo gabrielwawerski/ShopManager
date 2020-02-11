@@ -4,8 +4,10 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 import javafx.beans.property.*;
 
+import java.io.Serializable;
+
 @DatabaseTable(tableName = "products")
-public class Product {
+public class Product implements Serializable {
     @DatabaseField(generatedId = true)
     private int id;
     @DatabaseField(unique = true)
@@ -58,6 +60,14 @@ public class Product {
         nameProperty = new SimpleStringProperty("");
         quantityProperty = new SimpleIntegerProperty(0);
         priceProperty = new SimpleDoubleProperty(0);
+    }
+
+    public void addQuantity(int quantity) {
+        int _quantity = this.quantity + quantity;
+        double _price = price * this.quantity;
+
+        setQuantity(_quantity);
+        setPrice(_price);
     }
 
     public int getId() {

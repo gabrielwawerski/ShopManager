@@ -22,6 +22,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         Context context = Context.getInstance();
         context.init();
+        context.db.initDatabase();
 
         Parent root = FXMLLoader.load(getClass().getResource("MainWindow.fxml"));
         stage = primaryStage;

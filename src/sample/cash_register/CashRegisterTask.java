@@ -82,11 +82,13 @@ public class CashRegisterTask extends Task<Void> {
 
             if (Util.random(0, 20) > 15) {
                 Transaction transaction = builder.build();
-//                context.submitTransaction(transaction);
+                context.submitTransaction(transaction);
                 reset();
                 prepareRegister();
                 System.out.println("STATE RESET!");
+                sleep(MIN_SLEEP_FINISHED, MAX_SLEEP_FINISHED);
             }
+
         }
         return null;
     }
@@ -135,13 +137,15 @@ public class CashRegisterTask extends Task<Void> {
         transactionProductList = FXCollections.observableArrayList();
         formatter = new DecimalFormat("#.##");
         _totalCost = 0;
+        String cashierName = CashRegisterHelper.randomCashierName();
 
         Platform.runLater(() -> {
             setCashRegisterId("Register " + getId());
-            setCashierName(CashRegisterHelper.randomCashierName());
+            setCashierName(cashierName);
             setTransactionCount(0);
+            setCurrentTransactionId(context.nextTransactionId());
         });
-        builder = new TransactionBuilder(getCashierName());
+        builder = new TransactionBuilder(cashierName);
     }
 
     private void initProperties() {

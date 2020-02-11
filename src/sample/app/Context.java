@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import sample.app.database.DatabaseHandler;
 import sample.app.product.Product;
 import sample.cash_register.CashRegisterTask;
+import sample.transaction.ProductLog;
 import sample.transaction.SingleProduct;
 import sample.transaction.Transaction;
 
@@ -16,9 +17,10 @@ public class Context {
 
     // TODO make helper class that updates database entry whenever value of Product object is changed!
     // don't make direct calls to Product methods!!! (or update database inside it's methods?)
-        private ObservableList<Product> inventoryProducts;
-        
-        private int nextTransactionId;
+    private ObservableList<Product> inventoryProducts;
+    private ObservableList<Transaction> transactions;
+
+    private int nextTransactionId;
 
     private CashRegisterTask register1;
     private CashRegisterTask register2;
@@ -38,39 +40,42 @@ public class Context {
     private Context() {
     }
 
-    public CashRegisterTask getRegister1() {
-        return register1;
-    }
-
-    public CashRegisterTask getRegister2() {
-        return register2;
-    }
-
-    public CashRegisterTask getRegister3() {
-        return register3;
-    }
-
-    public CashRegisterTask getRegister4() {
-        return register4;
-    }
-
     public void init() {
         db = DatabaseHandler.getInstance();
         db.connect();
 
         initData();
         initInventory();
+        initTransactions();
         initCashRegisters();
-//        initTransactions();
+        printTransactions();
+    }
+
+    private void printTransactions() {
+        for (Transaction x : transactions) {
+            System.out.println("TRANSACTION: " + x.getTransactionId());
+            System.out.println("ProductLog: ");
+            for (SingleProduct y : x.getProductLog().get()) {
+                System.out.println(y.getQuantity() + " " + y.getName() + "\n" + y.getPrice() + " zl");
+            }
+
+            System.out.println("\nTotal cost: " + x.getCost());
+            System.out.println(x.getDate() + "\n");
+        }
     }
 
     private void initData() {
         inventoryProducts = FXCollections.observableArrayList();
-        setNextTransactionId();
+        transactions = FXCollections.observableArrayList();
     }
 
     private void initInventory() {
         inventoryProducts.addAll(db.getProductArrayList());
+    }
+
+    private void initTransactions() {
+        transactions.addAll(db.getTransactionArrayList());
+        initNextTransactionId();
     }
 
     private void initCashRegisters() {
@@ -100,32 +105,76 @@ public class Context {
 //        System.out.println("cash register " + register4.getId() + " initialized!");
     }
 
-    public ObservableList<Product> getInventoryProducts() {
-        return inventoryProducts;
-    }
-
     public void update(Product property) {
         db.update(property);
     }
 
     public synchronized int getNextTransactionId() {
-        return 0;
+        return nextTransactionId++;
     }
-    
-    private void setNextTransactionId() {
-        nextTransactionId = // TODO
+
+    public int nextTransactionId() {
+        return nextTransactionId;
+    }
+
+    private void initNextTransactionId() {
+        if (transactions.size() == 0) {
+            nextTransactionId = 1;
+        } else {
+            nextTransactionId = transactions.get(transactions.size() - 1).getTransactionId() + 1;
+        }
     }
 
     public void submitTransaction(Transaction transaction) {
         db.create(transaction);
-        refreshData(transaction.getProductLog().get());
+        updateInventory(transaction.getProductLog());
     }
 
-    private void refreshData(List<Product> data) {
+    private void updateInventory(ProductLog productLog) {
+        List<SingleProduct> _productLog = productLog.get();
 
+        for (SingleProduct x : _productLog) {
+            Product inventoryProduct = getProduct(x);
+
+            System.out.println(inventoryProduct.getName() + " before: " + inventoryProduct.getQuantity());
+
+            inventoryProduct.setQuantity(inventoryProduct.getQuantity() - x.getQuantity());
+
+            System.out.println(inventoryProduct.getName() + " after: " + inventoryProduct.getQuantity());
+            db.update(inventoryProduct);
+        }
+    }
+
+    private Product getProduct(SingleProduct singleProduct) {
+        for (Product x : inventoryProducts) {
+            if (x.getName().equals(singleProduct.getName())) {
+                return x;
+            }
+        }
+        throw new IllegalStateException("fixme");
     }
 
     private void refreshData() {
         db.refreshAll(inventoryProducts);
+    }
+
+    public ObservableList<Product> getInventoryProducts() {
+        return inventoryProducts;
+    }
+
+    public CashRegisterTask getRegister1() {
+        return register1;
+    }
+
+    public CashRegisterTask getRegister2() {
+        return register2;
+    }
+
+    public CashRegisterTask getRegister3() {
+        return register3;
+    }
+
+    public CashRegisterTask getRegister4() {
+        return register4;
     }
 }
