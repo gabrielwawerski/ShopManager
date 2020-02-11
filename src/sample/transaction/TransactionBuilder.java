@@ -37,14 +37,13 @@ public class TransactionBuilder {
         int quantity = CashRegisterHelper.randomQuantity();
         double price = dbProduct.getPrice();
 
-        SingleProduct scannedProduct = SingleProduct.fromProduct(dbProduct);
         updateTotalCost(quantity, price);
 
-        if (!productLog.contains(scannedProduct)) {
-            productLog.add(scannedProduct);
+        if (!productLog.contains(dbProduct)) {
+            productLog.add(dbProduct);
             return new CashRegisterProperty(productRow++, name, quantity, price);
         } else {
-            productLog.add(scannedProduct);
+            productLog.add(dbProduct);
             return new CashRegisterProperty(productRow, name, quantity, price);
         }
     }

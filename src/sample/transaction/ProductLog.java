@@ -4,17 +4,17 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class ProductLog implements Serializable {
-    private final ArrayList<SingleProduct> products;
+    private final ArrayList<Product> products;
 
     public ProductLog() {
         products = new ArrayList<>();
     }
 
     /**
-     * Adds {@link SingleProduct} to the {@link #products} ArrayList. If product is in the arraylist already,
+     * Adds {@link Product} to the {@link #products} ArrayList. If product is in the arraylist already,
      * updates it's quantity instead.
      */
-    public void add(SingleProduct product) {
+    public void add(Product product) {
         if (contains(product)) {
             addQuantity(product);
         } else {
@@ -22,9 +22,9 @@ public class ProductLog implements Serializable {
         }
     }
 
-    public boolean contains(SingleProduct product) {
-        for (SingleProduct x : products) {
-            if (x.getName().equals(product.getName())) {
+    public boolean contains(Product product) {
+        for (Product x : products) {
+            if (x.getId().equals(product.getId())) {
                 return true;
             }
         }
@@ -35,20 +35,20 @@ public class ProductLog implements Serializable {
         products.clear();
     }
 
-    private void addQuantity(SingleProduct scannedProduct) {
+    private void addQuantity(Product scannedProduct) {
         retrieve(scannedProduct).addQuantity(scannedProduct.getQuantity());
     }
 
-    private SingleProduct retrieve(SingleProduct product) {
-        for (SingleProduct x : products) {
-            if (x.getName().equals(product.getName())) {
+    private Product retrieve(Product product) {
+        for (Product x : products) {
+            if (x.getId().equals(product.getId())) {
                 return x;
             }
         }
         throw new IllegalArgumentException("Error! fixme!");
     }
 
-    public ArrayList<SingleProduct> get() {
+    public ArrayList<Product> get() {
         return products;
     }
 }
