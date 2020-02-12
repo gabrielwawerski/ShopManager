@@ -92,7 +92,7 @@ public class Product implements Serializable {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public synchronized void setQuantity(int quantity) {
         this.quantity = quantity;
         setQuantityProperty(quantity);
     }
