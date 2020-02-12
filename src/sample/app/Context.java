@@ -131,10 +131,8 @@ public class Context {
         updateInventory(transaction.getProductLog());
     }
 
-    private void updateInventory(ProductLog productLog) {
-        List<SingleProduct> _productLog = productLog.get();
-
-        for (SingleProduct x : _productLog) {
+    private synchronized void updateInventory(ProductLog productLog) {
+        for (SingleProduct x : productLog) {
             Product inventoryProduct = getProduct(x);
 
             System.out.println(inventoryProduct.getName() + " before: " + inventoryProduct.getQuantity());
