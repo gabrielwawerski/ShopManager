@@ -1,3 +1,4 @@
+
 package sample.app;
 
 import javafx.collections.FXCollections;
@@ -138,6 +139,8 @@ public class Context {
 
             System.out.println(inventoryProduct.getName() + " before: " + inventoryProduct.getQuantity());
 
+
+            // TODO should be synchronized!
             inventoryProduct.setQuantity(inventoryProduct.getQuantity() - x.getQuantity());
 
             System.out.println(inventoryProduct.getName() + " after: " + inventoryProduct.getQuantity());
