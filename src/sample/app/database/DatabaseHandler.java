@@ -48,7 +48,7 @@ public class DatabaseHandler {
         }
     }
 
-    public void update(Product product) {
+    public synchronized void update(Product product) {
         try {
             productDao.update(product);
         } catch (SQLException e) {
