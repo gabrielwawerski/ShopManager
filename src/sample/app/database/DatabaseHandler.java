@@ -48,7 +48,7 @@ public class DatabaseHandler {
         }
     }
 
-    public synchronized void update(Product product) {
+    public void update(Product product) {
         try {
             productDao.update(product);
         } catch (SQLException e) {
@@ -124,33 +124,6 @@ public class DatabaseHandler {
             }
         }
         return transactions;
-    }
-
-    public Product findDbProduct(Product product) {
-        CloseableWrappedIterable<Product> wrappedIterable = productDao.getWrappedIterable();
-        Product foundProduct = null;
-
-        try {
-
-            for (Product dbProduct : wrappedIterable) {
-                if (dbProduct.getIdProperty() == product.getIdProperty()) {
-                    foundProduct = dbProduct;
-                }
-            }
-            if (foundProduct == null) {
-                return Product.EMPTY_PRODUCT;
-            } else {
-                foundProduct.init();
-                return foundProduct;
-            }
-
-        } finally {
-            try {
-                wrappedIterable.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
     }
 
     public void close() {

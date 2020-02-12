@@ -111,7 +111,7 @@ public class Context {
     }
 
     public synchronized int getNextTransactionId() {
-        return nextTransactionId++;
+        return ++nextTransactionId;
     }
 
     public int nextTransactionId() {
@@ -132,15 +132,10 @@ public class Context {
     }
 
     private synchronized void updateInventory(ProductLog productLog) {
-        for (SingleProduct x : productLog) {
+        for (SingleProduct x : productLog.get()) {
             Product inventoryProduct = getProduct(x);
-
             System.out.println(inventoryProduct.getName() + " before: " + inventoryProduct.getQuantity());
-
-
-            // TODO should be synchronized!
             inventoryProduct.setQuantity(inventoryProduct.getQuantity() - x.getQuantity());
-
             System.out.println(inventoryProduct.getName() + " after: " + inventoryProduct.getQuantity());
             db.update(inventoryProduct);
         }
@@ -153,10 +148,6 @@ public class Context {
             }
         }
         throw new IllegalStateException("fixme");
-    }
-
-    private void refreshData() {
-        db.refreshAll(inventoryProducts);
     }
 
     public ObservableList<Product> getInventoryProducts() {

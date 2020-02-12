@@ -12,7 +12,6 @@ import sample.util.Util;
 
 import java.text.DecimalFormat;
 
-// 4 kasy - kazda oddzielny watek?
 public class CashRegisterTask extends Task<Void> {
     private ObservableList<CashRegisterProperty> transactionProductList;
 
@@ -35,8 +34,11 @@ public class CashRegisterTask extends Task<Void> {
     private static final int MAX_SLEEP_ONGOING = 2000;
 
     // ...when transaction has been completed
-    private static final int MIN_SLEEP_FINISHED = 5000;
-    private static final int MAX_SLEEP_FINISHED = 10000;
+    private static final int MIN_SLEEP_FINISHED = 2000;
+    private static final int MAX_SLEEP_FINISHED = 5000;
+
+    private static final int MIN_SLEEP_AWAITING = 1000;
+    private static final int MAX_SLEEP_AWAITING = 5000;
 
     public CashRegisterTask(Context context) {
         this.context = context;
@@ -83,23 +85,31 @@ public class CashRegisterTask extends Task<Void> {
             if (Util.random(0, 20) > 15) {
                 Transaction transaction = builder.build();
                 context.submitTransaction(transaction);
-                reset();
-                prepareRegister();
-                System.out.println("STATE RESET!");
+
+                builder.reset();
                 sleep(MIN_SLEEP_FINISHED, MAX_SLEEP_FINISHED);
+                Platform.runLater(() -> {
+                    setTotalCost("PAID");
+                });
+                sleep(MIN_SLEEP_AWAITING, MAX_SLEEP_AWAITING);
+                prepareRegister();
+                sleep(500, 500);
             }
 
         }
         return null;
     }
 
-    private void updateTotalCost(double value) {
-        _totalCost += value;
-        setTotalCost(formatter.format(_totalCost) + " zł");
+    private void resetTotalCost() {
+        Platform.runLater(() -> setTotalCost(""));
+        _totalCost = 0;
     }
 
     // TODO fix - sometimes resets twice
+
     private void prepareRegister() {
+        resetTotalCost();
+        transactionProductList.clear();
         Platform.runLater(() -> {
             setTransactionCount(getTransactionCount() + 1);
             setCurrentTransactionId(context.getNextTransactionId());
@@ -107,13 +117,9 @@ public class CashRegisterTask extends Task<Void> {
         System.out.println("REGISTER " + getId() + " PREPARED!");
     }
 
-    private void reset() {
-        Platform.runLater(() -> {
-            setTotalCost("");
-        });
-        builder.reset();
-        transactionProductList.clear();
-        _totalCost = 0;
+    private void updateTotalCost(double value) {
+        _totalCost += value;
+        setTotalCost(formatter.format(_totalCost) + " zł");
     }
 
     private void sleep(int sleepTimeMin, int sleepTimeMax) {
@@ -125,10 +131,6 @@ public class CashRegisterTask extends Task<Void> {
                 System.out.println("sleep stopping!");
             }
         }
-    }
-
-    public ObservableList<CashRegisterProperty> getTransactionProductList() {
-        return transactionProductList;
     }
 
     private void init() {
@@ -162,6 +164,10 @@ public class CashRegisterTask extends Task<Void> {
 
     private void setId() {
         id = _id++;
+    }
+
+    public ObservableList<CashRegisterProperty> getTransactionProductList() {
+        return transactionProductList;
     }
 
     //region Properties
