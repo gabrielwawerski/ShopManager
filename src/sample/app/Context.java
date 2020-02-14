@@ -10,8 +10,6 @@ import sample.transaction.ProductLog;
 import sample.transaction.SingleProduct;
 import sample.transaction.Transaction;
 
-import java.util.List;
-
 public class Context {
     public DatabaseHandler db;
     private static Context instance;
@@ -81,29 +79,29 @@ public class Context {
 
     private void initCashRegisters() {
         register1 = new CashRegisterTask(this);
-//        register2 = new CashRegisterTask(this);
-//        register3 = new CashRegisterTask(this);
-//        register4 = new CashRegisterTask(this);
+        register2 = new CashRegisterTask(this);
+        register3 = new CashRegisterTask(this);
+        register4 = new CashRegisterTask(this);
 
         Thread thread1 = new Thread(register1);
-//        Thread thread2 = new Thread(register2);
-//        Thread thread3 = new Thread(register3);
-//        Thread thread4 = new Thread(register4);
+        Thread thread2 = new Thread(register2);
+        Thread thread3 = new Thread(register3);
+        Thread thread4 = new Thread(register4);
 
         thread1.setDaemon(true);
-//        thread2.setDaemon(true);
-//        thread3.setDaemon(true);
-//        thread4.setDaemon(true);
+        thread2.setDaemon(true);
+        thread3.setDaemon(true);
+        thread4.setDaemon(true);
 
         thread1.start();
-//        thread2.start();
-//        thread3.start();
-//        thread4.start();
+        thread2.start();
+        thread3.start();
+        thread4.start();
 
         System.out.println("cash register " + register1.getId() + " initialized!");
-//        System.out.println("cash register " + register2.getId() + " initialized!");
-//        System.out.println("cash register " + register3.getId() + " initialized!");
-//        System.out.println("cash register " + register4.getId() + " initialized!");
+        System.out.println("cash register " + register2.getId() + " initialized!");
+        System.out.println("cash register " + register3.getId() + " initialized!");
+        System.out.println("cash register " + register4.getId() + " initialized!");
     }
 
     public void update(Product property) {
